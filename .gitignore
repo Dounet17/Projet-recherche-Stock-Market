@@ -1,0 +1,38 @@
+# Environnements virtuels
+venv/
+env/
+.env
+
+# Fichiers de cache Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Dossiers de données
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+*.csv
+*.json
+*.pkl
+*.h5
+
+# Résultats et graphiques
+results/metrics/*
+results/figures/*
+!results/metrics/.gitkeep
+!results/figures/.gitkeep
+
+# Fichiers Jupyter Notebook
+.ipynb_checkpoints/
+
+# Fichiers système et configuration d'éditeurs
+.vscode/
+.idea/
+.DS_Store
+
+# Poids des modèles d'IA
+*.pt
+*.bin
+*.safetensors
