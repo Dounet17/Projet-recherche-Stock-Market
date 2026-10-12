@@ -42,7 +42,7 @@ Running the NLP sentiment analysis models (like FinBERT) over thousands of rows 
 git clone [https://github.com/Dounet17/Projet-recherche-Stock-Market.git](https://github.com/Dounet17/Projet-recherche-Stock-Market.git)
 
 # Navigate to the directory
-cd Stock-Market-Analysis
+cd Projet-recherche-Stock-Market
 
 # Create a virtual environment
 python3 -m venv venv
