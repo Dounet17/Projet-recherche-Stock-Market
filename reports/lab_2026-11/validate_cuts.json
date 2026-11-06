@@ -1,0 +1,105 @@
+{
+  "tested": 120,
+  "alpaca_separates_at_cut": 54,
+  "alpaca_keeps_both_societies": 65,
+  "no_answer": 1,
+  "median_days_between_end_and_cut": 0.0,
+  "examples_kept_together": [
+    {
+      "symbol": "ZBZX",
+      "last_before": "2022-04-07",
+      "first_after": "2023-10-05",
+      "sessions": 374,
+      "asof_last": "2023-10-05",
+      "days_after_cut": 546.0
+    },
+    {
+      "symbol": "MDXG",
+      "last_before": "2018-11-07",
+      "first_after": "2020-11-04",
+      "sessions": 500,
+      "asof_last": "2024-12-31",
+      "days_after_cut": 2246.0
+    },
+    {
+      "symbol": "GUT.RTWI",
+      "last_before": "2022-03-14",
+      "first_after": "2024-09-06",
+      "sessions": 623,
+      "asof_last": "2024-09-11",
+      "days_after_cut": 912.0
+    },
+    {
+      "symbol": "OPP.RT",
+      "last_before": "2019-12-09",
+      "first_after": "2020-09-09",
+      "sessions": 188,
+      "asof_last": "2022-09-22",
+      "days_after_cut": 1017.0
+    },
+    {
+      "symbol": "BWV",
+      "last_before": "2018-04-12",
+      "first_after": "2022-02-18",
+      "sessions": 971,
+      "asof_last": "2023-12-21",
+      "days_after_cut": 2079.0
+    },
+    {
+      "symbol": "MPAC",
+      "last_before": "2018-11-09",
+      "first_after": "2021-06-08",
+      "sessions": 645,
+      "asof_last": "2022-10-31",
+      "days_after_cut": 1451.0
+    },
+    {
+      "symbol": "COW",
+      "last_before": "2018-04-12",
+      "first_after": "2018-11-16",
+      "sessions": 152,
+      "asof_last": "2023-06-08",
+      "days_after_cut": 1883.0
+    },
+    {
+      "symbol": "CBO",
+      "last_before": "2022-10-25",
+      "first_after": "2023-08-22",
+      "sessions": 205,
+      "asof_last": "2023-08-22",
+      "days_after_cut": 301.0
+    },
+    {
+      "symbol": "ZVV",
+      "last_before": "2021-06-01",
+      "first_after": "2022-04-04",
+      "sessions": 212,
+      "asof_last": "2024-12-31",
+      "days_after_cut": 1309.0
+    },
+    {
+      "symbol": "RIV.RT",
+      "last_before": "2020-11-05",
+      "first_after": "2021-10-05",
+      "sessions": 228,
+      "asof_last": "2022-11-07",
+      "days_after_cut": 732.0
+    },
+    {
+      "symbol": "SPAQ",
+      "last_before": "2022-03-16",
+      "first_after": "2023-01-30",
+      "sessions": 218,
+      "asof_last": "2024-08-22",
+      "days_after_cut": 890.0
+    },
+    {
+      "symbol": "CBX",
+      "last_before": "2019-07-31",
+      "first_after": "2020-08-26",
+      "sessions": 270,
+      "asof_last": "2022-05-06",
+      "days_after_cut": 1010.0
+    }
+  ]
+}

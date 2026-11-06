@@ -1,0 +1,9 @@
+# Corrections relues le 06/11/2026 : titres dont le nom actuel évoque un fonds alors qu'ils sont classés en action, ou l'inverse.
+# clear_cik = yes retire un faux rattachement à une société dont les dépôts portent le même préfixe.
+security_id,security_type,clear_cik
+LAZR#0,common,
+EDC#0,fund,yes
+INTL#1,fund,yes
+SCAP#1,fund,yes
+SRET#0,fund,yes
+UCC#0,fund,yes
