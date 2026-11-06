@@ -1,0 +1,10 @@
+case,scenario,spread_60
+after_8k_retrospective,base,0.008775164375584014
+after_8k_retrospective,optimistic,0.00875750874170787
+after_8k_retrospective,pessimistic,0.008830765767921227
+after_8k_available,base,-0.0020451733610844965
+after_8k_available,optimistic,-0.002082016729297114
+after_8k_available,pessimistic,-0.001993100740520662
+after_filing,base,-0.002555387017802047
+after_filing,optimistic,-0.002572115151211903
+after_filing,pessimistic,-0.002431544269702196
