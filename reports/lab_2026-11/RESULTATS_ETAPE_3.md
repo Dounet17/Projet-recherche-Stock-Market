@@ -30,7 +30,8 @@ Vocabulaire : le Sharpe mesure le gain par unité de risque ; le drawdown, la pi
 | Capital final | 12 488 | 13 470 | 16 490 | 24 531 |
 | Par an | 3,2 % | | 7,4 % | 13,7 % |
 | Volatilité | 9,5 % | | 18,3 % | 18,4 % |
-| Sharpe | 0,38 | 0,50 | 0,48 | 0,79 |
+| Sharpe, sans retirer le taux sans risque | 0,38 | | 0,48 | 0,79 |
+| Sharpe au-delà du taux sans risque | | 0,27 | 0,36 | |
 | Pire chute du portefeuille | -15,4 % | | -36,6 % | -32,0 % |
 | Exposition moyenne, en dollars | 51 % | 51 % | 87 % | 100 % |
 | Rotation par an | 6,7 fois | | 0,26 fois | 0,29 fois |
@@ -69,8 +70,8 @@ Sensibilités, toutes achetables, capital moyen : hypothèse optimiste 12 490 co
 ## Lecture
 
 1. **La règle ne bat pas le buy and hold en capital.** Elle perd sur environ deux actions sur trois, à tous les horizons, dans tous les univers et sous toutes les hypothèses testées.
-2. **C'est une assurance, pas une source de gain.** Elle divise par deux la volatilité et par plus de deux la chute du portefeuille, mais aussi le gain. Une fois retirée la baisse d'exposition, il ne reste presque rien : alpha de -0,2 % par an (intervalle à 95 % de -3,5 % à +3,2 %), 0,9 % avec BIL (de -2,4 % à +4,3 %).
-3. **Le Sharpe du portefeuille est à peu près égal.** 0,38 contre 0,48 à 0 %, 0,50 contre 0,48 avec BIL. On ne peut pas conclure qu'elle fait mieux ou moins bien par unité de risque.
+2. **C'est une assurance, pas une source de gain.** Elle divise par deux la volatilité et par plus de deux la chute du portefeuille, mais aussi le gain. Une fois retirée la baisse d'exposition, il ne reste presque rien : alpha de -0,2 % par an (intervalle à 95 % de -3,5 % à +3,2 %) avec des liquidités à 0 %, et de -0,4 % (de -3,7 % à +3,1 %) avec BIL, au-delà du taux sans risque.
+3. **Le Sharpe du portefeuille n'est pas nettement différent.** Avec BIL et au-delà du taux sans risque, 0,27 contre 0,36 (écart de -0,48 à +0,28). On ne peut pas conclure qu'elle fait mieux ou moins bien par unité de risque.
 4. **L'écart de capital n'est pas statistiquement net.** Écart annuel contre son buy and hold de -4,0 % (intervalle de -12,4 % à +4,9 %), p unilatérale de 0,82. Une hypothèse « elle gagne » n'est pas soutenue, ce qui ne prouve pas qu'elle perd toujours.
 5. **Contre SPY, elle ne soutient aucun avantage.** p unilatérale de 0,99 ; p corrigée sur les 4 essais du journal de 0,996.
 6. **Une explication possible, non mesurée ici.** Les rebonds rapides se feraient en grande partie quand la règle est sortie. Les résultats par date d'achat vont dans ce sens, sans le démontrer.
@@ -80,6 +81,7 @@ Sensibilités, toutes achetables, capital moyen : hypothèse optimiste 12 490 co
 - **Moteur.** Chaque ligne de cas synthétiques, de vraies lignes et le cas des liquidités en BIL sont égaux à `lab.backtest`. Le buy and hold recalculé par ce code est égal à la table de référence.
 - **Anti-fuite.** `lab.check_no_lookahead` passe.
 - **Audit indépendant de Codex, en lecture seule.** 123 lignes recalculées sans notre code, dont faillites et ordres bloqués, soit 336 résultats sans écart ; signal concordant sur 74 523 observations ; agrégats et décalage de BIL corrects. Défauts corrigés à sa suite : exposition et rotation moyennées par titre au lieu d'être pondérées en dollars (51 % et non 58 % ; 87 % et non 100 %), p corrigée absente, médiane du rapport non calculée. Les capitaux n'ont pas bougé.
+- **Correction après l'étape 4.** Une première version donnait, avec BIL, un Sharpe de 0,50 contre 0,48 et un alpha de 0,9 %. Ces valeurs ne retiraient pas le taux sans risque et comptaient donc l'intérêt des bons comme une performance. Remplacées ci-dessus. Les autres chiffres n'ont pas changé.
 - **Multiple extrême.** CVNA fait 100 fois avec la règle contre 11 fois en la gardant. Codex le reproduit, sans saut aberrant. Les extrêmes influencent la moyenne sans changer le sens du résultat.
 
 ## Limites

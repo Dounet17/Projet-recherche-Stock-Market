@@ -126,7 +126,7 @@ class SameAsEngine(unittest.TestCase):
 @unittest.skipUnless((ROOT / "data" / "universe_clean" / "prices_dev.parquet").exists(), "grand dataset absent")
 class RealData(unittest.TestCase):
     def test_real_lines_match_the_backtest(self):
-        from run_step3_sma200 import sma200
+        from stock_rules import sma200
         from universe_data import load_universe
 
         market = load_universe(symbols=("AAPL", "SIVB", "TWTR", "GME", "BBBY"))
@@ -138,6 +138,58 @@ class RealData(unittest.TestCase):
         self.assertGreaterEqual(len(table), 8)
         for line in table.itertuples():
             self.assertAlmostEqual(line.rule_base, engine_multiple(market, signal, line.security_id, line.start, market.data.dates[-1], "base"), places=9, msg=f"{line.security_id} {line.start}")
+
+
+class Rules(unittest.TestCase):
+    def frames(self, close):
+        dates = pd.bdate_range("2020-01-01", periods=len(close))
+        return SimpleNamespace(close=pd.DataFrame({"A": close}, index=dates, dtype=float))
+
+    def test_state_machine(self):
+        from stock_rules import state_machine
+
+        idx = pd.bdate_range("2020-01-01", periods=6)
+        enter = pd.DataFrame({"A": [False, True, False, False, True, False]}, index=idx)
+        leave = pd.DataFrame({"A": [True, False, False, True, True, False]}, index=idx)
+        self.assertEqual(state_machine(enter, leave).A.tolist(), [0, 1, 1, 0, 1, 1])
+
+    def test_bollinger_enters_low_and_leaves_above_the_average(self):
+        from stock_rules import bollinger_reversion
+
+        close = [100.0, 101.0] * 110 + [80.0, 85.0, 90.0, 95.0, 105.0, 110.0]
+        state = bollinger_reversion(self.frames(close), window=20).A
+        self.assertEqual(state.iloc[220 - 1], 0.0)
+        self.assertEqual(state.iloc[220], 1.0)    # chute sous la bande basse
+        self.assertEqual(state.iloc[223], 1.0)    # 95 sous la moyenne de 97,9
+        self.assertEqual(state.iloc[224], 0.0)    # 105 au-dessus de la moyenne de 98,15
+
+    def test_no_order_without_enough_history(self):
+        from stock_rules import bollinger_reversion, rsi2_reversion, sma200
+
+        data = self.frames(list(100 + np.sin(np.arange(250.0))))
+        for rule in (sma200, bollinger_reversion, rsi2_reversion):
+            signal = rule(data).A
+            self.assertTrue(signal.iloc[:179].isna().all(), rule.__name__)
+            self.assertTrue(signal.iloc[179:].notna().all(), rule.__name__)
+
+    def test_a_missing_day_holds_the_position(self):
+        from stock_rules import sma200
+
+        close = list(100.0 + np.arange(250.0))
+        close[230] = np.nan
+        self.assertTrue(np.isnan(sma200(self.frames(close)).A.iloc[230]))
+
+    def test_same_as_the_laboratory_definitions(self):
+        from price_lab import rule_bollinger_reversion, rule_rsi2_reversion
+        from stock_rules import bollinger_reversion, rsi2_reversion
+
+        rng = np.random.default_rng(1)
+        close = pd.Series(100 * np.exp(rng.normal(0, 0.02, 700).cumsum()), index=pd.bdate_range("2018-01-01", periods=700))
+        data = SimpleNamespace(close=close.to_frame("A"))
+        # L'entrée à 180 séances peut créer un état différent avant 200 : on compare une fois les deux définis et resynchronisés.
+        pd.testing.assert_series_equal(bollinger_reversion(data).A.iloc[179:], rule_bollinger_reversion(close).iloc[179:].astype(float), check_names=False)
+        ours, theirs = rsi2_reversion(data).A.iloc[260:], rule_rsi2_reversion(close).iloc[260:].astype(float)
+        self.assertGreater((ours == theirs).mean(), 0.98)
 
 
 if __name__ == "__main__":

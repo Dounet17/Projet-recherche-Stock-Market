@@ -86,27 +86,29 @@
   "median_rule_bil": 1.275050435303508,
   "share_rule_wins_bil": 0.31643002028397565,
   "bil_vs_own_buy_hold": {
-   "annual_log_excess": -0.037634293058138715,
+   "annual_log_excess": -0.03762006739786458,
    "excess_ci95": [
-    -0.11616290105598434,
-    0.042603678342211064
+    -0.11615422946720871,
+    0.042626763336388214
    ],
    "excess_p_one_sided": 0.83075,
-   "sharpe_difference": 0.0413414927567709,
+   "sharpe_difference": -0.056137132522958044,
    "sharpe_diff_ci95": [
-    -0.31326766562061176,
-    0.3839411760512243
+    -0.4119652344671831,
+    0.2833196240277999
    ],
-   "sharpe_diff_p_one_sided": 0.374,
-   "beta": 0.45742502340606983,
-   "annual_alpha": 0.014887497657009913,
+   "sharpe_diff_p_one_sided": 0.589,
+   "beta": 0.4575635962511485,
+   "annual_alpha": 0.002982240771709395,
    "alpha_ci95": [
-    -0.01923896477905645,
-    0.04782990387529485
+    -0.03114298991473389,
+    0.035934036495050205
    ],
-   "alpha_p_one_sided": 0.16725
+   "alpha_p_one_sided": 0.395
   },
-  "sharpe_rule_bil": 0.682994083767873,
+  "excess_sharpe_rule_bil": 0.46731711058407444,
+  "excess_sharpe_buy_hold": 0.5234542431070325,
+  "excess_sharpe_rule_cash0": 0.38414710641106814,
   "mean_rule_cost_x2": 1.430681083780151,
   "mean_bh_cost_x2": 2.0351825475962197,
   "mean_rule_optimistic": 1.477206175660905,
@@ -209,27 +211,29 @@
   "median_rule_bil": 1.1970183696242902,
   "share_rule_wins_bil": 0.3448275862068966,
   "bil_vs_own_buy_hold": {
-   "annual_log_excess": -0.03320545542519343,
+   "annual_log_excess": -0.03318931143378289,
    "excess_ci95": [
-    -0.11562204073421739,
-    0.05305708924823236
+    -0.1156114939368017,
+    0.053070749761045526
    ],
    "excess_p_one_sided": 0.78375,
-   "sharpe_difference": 0.050675360929106184,
+   "sharpe_difference": -0.05443130093230958,
    "sharpe_diff_ci95": [
-    -0.33569019292905006,
-    0.4184099378749421
+    -0.43912373529498844,
+    0.3164548817037238
    ],
-   "sharpe_diff_p_one_sided": 0.357,
-   "beta": 0.43688837778006895,
-   "annual_alpha": 0.014847552575029961,
+   "sharpe_diff_p_one_sided": 0.5815,
+   "beta": 0.4370537090598439,
+   "annual_alpha": 0.0024915274235270462,
    "alpha_ci95": [
-    -0.020307423291287752,
-    0.04847622355036801
+    -0.0323621241498982,
+    0.037205942591509666
    ],
-   "alpha_p_one_sided": 0.17425
+   "alpha_p_one_sided": 0.3975
   },
-  "sharpe_rule_bil": 0.6300649832850486,
+  "excess_sharpe_rule_bil": 0.406572113835805,
+  "excess_sharpe_buy_hold": 0.46100341476811457,
+  "excess_sharpe_rule_cash0": 0.31006189239683346,
   "mean_rule_cost_x2": 1.3323639222556138,
   "mean_bh_cost_x2": 1.8744803858181134,
   "mean_rule_optimistic": 1.3940781444938048,
@@ -332,27 +336,29 @@
   "median_rule_bil": 1.0725071434470346,
   "share_rule_wins_bil": 0.4025438294946717,
   "bil_vs_own_buy_hold": {
-   "annual_log_excess": -0.02893519008000243,
+   "annual_log_excess": -0.028916543708234366,
    "excess_ci95": [
-    -0.11296945521610219,
-    0.05951329980888652
+    -0.11294623986368221,
+    0.05956301539329275
    ],
-   "excess_p_one_sided": 0.7455,
-   "sharpe_difference": 0.017126020638784045,
+   "excess_p_one_sided": 0.74525,
+   "sharpe_difference": -0.09557511465049534,
    "sharpe_diff_ci95": [
-    -0.3621921141437406,
-    0.3915949738761532
+    -0.48138783914837,
+    0.2797914776504447
    ],
-   "sharpe_diff_p_one_sided": 0.4225,
-   "beta": 0.4326163151209617,
-   "annual_alpha": 0.008841508208664457,
+   "sharpe_diff_p_one_sided": 0.658,
+   "beta": 0.4328470770616307,
+   "annual_alpha": -0.003609364988881551,
    "alpha_ci95": [
-    -0.024291725383603673,
-    0.04252230441959329
+    -0.036827539253555995,
+    0.03068860460990003
    ],
-   "alpha_p_one_sided": 0.2605
+   "alpha_p_one_sided": 0.53925
   },
-  "sharpe_rule_bil": 0.4995885879259294,
+  "excess_sharpe_rule_bil": 0.2671632826212038,
+  "excess_sharpe_buy_hold": 0.36273839727169915,
+  "excess_sharpe_rule_cash0": 0.1517944233257021,
   "mean_rule_cost_x2": 1.1371622186209978,
   "mean_bh_cost_x2": 1.6433627349117614,
   "mean_rule_optimistic": 1.2489404312030328,
@@ -369,9 +375,11 @@
   "share_rule_beats_spy": 0.07803368855276728
  },
  "romano_wolf_p_vs_spy_all_trials": {
-  "control_liquid_equal_weight__top=500": 0.9958,
-  "step3_sma200_by_stock": 0.9958,
-  "test_a_momentum__lookback=252__top=50": 0.9578,
-  "test_b_low_pe__liquid=1000__min_pe=3.0__top=50": 0.9958
+  "control_liquid_equal_weight__top=500": 0.999,
+  "step3_sma200_by_stock": 0.999,
+  "step4_bollinger_by_stock": 0.9992,
+  "step4_rsi2_by_stock": 0.999,
+  "test_a_momentum__lookback=252__top=50": 0.9785,
+  "test_b_low_pe__liquid=1000__min_pe=3.0__top=50": 0.999
  }
 }
