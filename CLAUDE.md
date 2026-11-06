@@ -103,6 +103,7 @@ Comparatif détaillé de toutes les sources : `reports/Datasets bourse et résea
 - `notebooks/` : un notebook par étape, numérotés (`01_collecte_donnees`, `02_finbert_vs_jev`, ...). Ils importent le code de `src/`.
 - `src/collect.py` : téléchargements (posts de Musk, barres et news Alpaca, calendrier de bourse). `src/timeutils.py` : heure depuis l'identifiant, séances de bourse. `src/sentiment.py` : FinBERT et Jev. `src/universe_clean.py` : règles de nettoyage du grand dataset quotidien.
 - `data/` (non versionné) : fichiers Parquet produits par `01_collecte_donnees`, plus les caches de classification (`finbert_musk_tesla.parquet`, `jev_musk_tesla.parquet`) qui évitent de rappeler l'API de Jev.
+- Cadre d'expérience sur le grand univers (`reports/lab_2026-11/CADRE_EXPERIENCES.md`, à lire avant un test) : `src/universe_data.py` (`load_universe`), `lab.backtest(..., exits=...)` (disparitions, frais par titre), `src/experiment.py` (`run_experiment`, `top_n`). Hors intraday, qui reste dans `src/backtest.py`.
 - Exécuter un notebook en ligne de commande : `venv/bin/jupyter nbconvert --to notebook --execute --inplace --ExecutePreprocessor.timeout=-1 notebooks/<nom>.ipynb`.
 - L'API Alpaca est lente (environ 20 min pour 7 ans de barres à la minute d'un symbole) : `collect.py` télécharge par année en parallèle et réessaie en cas d'erreur réseau.
 - Plus tard, si les résultats le justifient : interface web affichant la courbe du portefeuille, les points d'achat et de vente et la raison de chaque décision.
