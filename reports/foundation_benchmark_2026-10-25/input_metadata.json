@@ -1,0 +1,29 @@
+{
+  "context_regular_bars": 128,
+  "forecast_open_steps": 17,
+  "entry_forecast_index": 1,
+  "exit_forecast_index": 16,
+  "last_bar_start_offset_min": -2,
+  "last_bar_available_offset_min": -1,
+  "rows": 18000,
+  "columns": [
+    "open",
+    "high",
+    "low",
+    "close",
+    "volume",
+    "qqq_open",
+    "social_count_60",
+    "social_fb_score_mean",
+    "social_jev_sent_score_mean",
+    "social_jev_impact_score_mean",
+    "social_jev_relevant_p_mean"
+  ],
+  "historical_filled_bars": {
+    "tsla": 968,
+    "qqq": 834
+  },
+  "overnight": "Les fenêtres peuvent contenir des séances successives ; aucune barre de nuit artificielle",
+  "inference": "Poids figés, aucune adaptation sur les cibles de test",
+  "timestamp_unit": "ns"
+}

@@ -1,0 +1,258 @@
+Contrôle anti-fuite réussi pour toutes les familles
+TSLA__sma200 69566 0.78
+TSLA__sma200_monthly 182011 1.04
+TSLA__sma100 49431 0.7
+TSLA__golden_cross 98589 0.88
+TSLA__tsmom_252 68288 0.78
+TSLA__tsmom_126 216377 1.08
+TSLA__donchian_100_50 72935 0.85
+TSLA__bollinger_reversion 20383 0.47
+TSLA__rsi2_reversion 8292 0.03
+TSLA__vol_target_30 81105 1.01
+TSLA__trend_vol_target_30 40667 0.86
+TSLA__vol_regime 183013 0.98
+TSLA__drawdown_stop_25 49599 0.73
+TSLA__market_filter_qqq 320181 1.14
+TSLA__ml_logistic 17494 0.4
+TSLA__ml_boosting 13788 0.34
+NVDA__sma200 352712 1.39
+NVDA__sma200_monthly 341451 1.35
+NVDA__sma100 191591 1.22
+NVDA__golden_cross 398172 1.4
+NVDA__tsmom_252 137673 1.06
+NVDA__tsmom_126 243159 1.24
+NVDA__donchian_100_50 171063 1.24
+NVDA__bollinger_reversion 15500 0.36
+NVDA__rsi2_reversion 27106 0.78
+NVDA__vol_target_30 162408 1.35
+NVDA__trend_vol_target_30 164427 1.49
+NVDA__vol_regime 326221 1.32
+NVDA__drawdown_stop_25 130336 1.09
+NVDA__market_filter_qqq 187289 1.2
+NVDA__ml_logistic 9859 0.2
+NVDA__ml_boosting 46143 0.77
+AAPL__sma200 32647 0.78
+AAPL__sma200_monthly 36434 0.83
+AAPL__sma100 25621 0.68
+AAPL__golden_cross 30444 0.72
+AAPL__tsmom_252 33131 0.74
+AAPL__tsmom_126 31598 0.75
+AAPL__donchian_100_50 23742 0.68
+AAPL__bollinger_reversion 11846 0.23
+AAPL__rsi2_reversion 10144 0.08
+AAPL__vol_target_30 61526 1.12
+AAPL__trend_vol_target_30 34455 0.87
+AAPL__vol_regime 66995 1.13
+AAPL__drawdown_stop_25 34845 0.77
+AAPL__market_filter_qqq 60161 1.15
+AAPL__ml_logistic 21488 0.74
+AAPL__ml_boosting 13635 0.35
+MSFT__sma200 43038 1.01
+MSFT__sma200_monthly 39898 0.95
+MSFT__sma100 21774 0.62
+MSFT__golden_cross 51731 1.1
+MSFT__tsmom_252 42087 0.95
+MSFT__tsmom_126 39854 0.96
+MSFT__donchian_100_50 27709 0.86
+MSFT__bollinger_reversion 24353 0.98
+MSFT__rsi2_reversion 17678 0.8
+MSFT__vol_target_30 47182 1.03
+MSFT__trend_vol_target_30 40271 1.04
+MSFT__vol_regime 45648 1.01
+MSFT__drawdown_stop_25 36836 0.87
+MSFT__market_filter_qqq 41572 1.03
+MSFT__ml_logistic 29196 0.81
+MSFT__ml_boosting 24149 0.72
+AMZN__sma200 20156 0.52
+AMZN__sma200_monthly 29271 0.69
+AMZN__sma100 20217 0.52
+AMZN__golden_cross 31875 0.74
+AMZN__tsmom_252 47758 0.92
+AMZN__tsmom_126 20713 0.53
+AMZN__donchian_100_50 16953 0.45
+AMZN__bollinger_reversion 20689 0.65
+AMZN__rsi2_reversion 9450 -0.01
+AMZN__vol_target_30 34449 0.76
+AMZN__trend_vol_target_30 18817 0.5
+AMZN__vol_regime 21964 0.52
+AMZN__drawdown_stop_25 32504 0.71
+AMZN__market_filter_qqq 36233 0.8
+AMZN__ml_logistic 9255 0.08
+AMZN__ml_boosting 11633 0.22
+GOOGL__sma200 23834 0.63
+GOOGL__sma200_monthly 26206 0.66
+GOOGL__sma100 17078 0.46
+GOOGL__golden_cross 33230 0.79
+GOOGL__tsmom_252 21724 0.55
+GOOGL__tsmom_126 21569 0.56
+GOOGL__donchian_100_50 16057 0.46
+GOOGL__bollinger_reversion 15963 0.49
+GOOGL__rsi2_reversion 15350 0.6
+GOOGL__vol_target_30 34220 0.78
+GOOGL__trend_vol_target_30 24256 0.66
+GOOGL__vol_regime 37081 0.81
+GOOGL__drawdown_stop_25 28929 0.69
+GOOGL__market_filter_qqq 30715 0.76
+GOOGL__ml_logistic 19606 0.55
+GOOGL__ml_boosting 20012 0.58
+META__sma200 34241 0.75
+META__sma200_monthly 35433 0.75
+META__sma100 44265 0.88
+META__golden_cross 34786 0.75
+META__tsmom_252 25193 0.58
+META__tsmom_126 33822 0.75
+META__donchian_100_50 18353 0.46
+META__bollinger_reversion 15893 0.42
+META__rsi2_reversion 23827 0.99
+META__vol_target_30 30258 0.64
+META__trend_vol_target_30 28435 0.7
+META__vol_regime 32117 0.63
+META__drawdown_stop_25 42650 0.79
+META__market_filter_qqq 32140 0.66
+META__ml_logistic 30107 0.67
+META__ml_boosting 5735 -0.09
+SPY__sma200 18020 0.7
+SPY__sma200_monthly 14215 0.4
+SPY__sma100 19388 0.82
+SPY__golden_cross 19060 0.69
+SPY__tsmom_252 18067 0.64
+SPY__tsmom_126 17103 0.64
+SPY__donchian_100_50 17389 0.79
+SPY__bollinger_reversion 14099 0.46
+SPY__rsi2_reversion 10183 0.07
+SPY__vol_target_30 23281 0.8
+SPY__trend_vol_target_30 18110 0.71
+SPY__vol_regime 20297 0.76
+SPY__drawdown_stop_25 20281 0.67
+SPY__market_filter_qqq 19394 0.74
+SPY__ml_logistic 10622 0.13
+SPY__ml_boosting 13713 0.4
+QQQ__sma200 27523 0.89
+QQQ__sma200_monthly 25876 0.79
+QQQ__sma100 17315 0.55
+QQQ__golden_cross 34239 0.99
+QQQ__tsmom_252 28173 0.84
+QQQ__tsmom_126 27088 0.87
+QQQ__donchian_100_50 19236 0.68
+QQQ__bollinger_reversion 13573 0.38
+QQQ__rsi2_reversion 11652 0.29
+QQQ__vol_target_30 31607 0.88
+QQQ__trend_vol_target_30 27505 0.91
+QQQ__vol_regime 29030 0.88
+QQQ__drawdown_stop_25 26431 0.77
+QQQ__market_filter_qqq 27523 0.89
+QQQ__ml_logistic 12454 0.28
+QQQ__ml_boosting 17024 0.52
+IWM__sma200 11501 0.2
+IWM__sma200_monthly 10872 0.16
+IWM__sma100 10856 0.15
+IWM__golden_cross 7625 -0.12
+IWM__tsmom_252 11875 0.23
+IWM__tsmom_126 8804 -0.03
+IWM__donchian_100_50 11309 0.19
+IWM__bollinger_reversion 9163 -0.02
+IWM__rsi2_reversion 10230 0.08
+IWM__vol_target_30 14827 0.37
+IWM__trend_vol_target_30 11657 0.22
+IWM__vol_regime 13227 0.29
+IWM__drawdown_stop_25 9873 0.1
+IWM__market_filter_qqq 11839 0.22
+IWM__ml_logistic 9280 0.02
+IWM__ml_boosting 9889 0.09
+dual_momentum 15046 0.44
+gtaa5_trend 12110 0.4
+gtaa9_trend 13405 0.58
+sector_top3_mom 16133 0.48
+sector_top3_mom_nofilter 17685 0.55
+assets_top3_mom 13065 0.35
+inverse_vol_4 16092 0.77
+qqq_trend_ief 23483 0.71
+qqq_trend_gld 28827 0.84
+spy_trend_ief 13692 0.36
+megacap_equal 95603 1.18
+megacap_top3_mom 196415 1.38
+megacap_top3_mom_nofilter 195461 1.37
+megacap_top1_mom 711559 1.37
+megacap_top3_voladj 156235 1.32
+
+Buy and hold : {"TSLA": {"final_capital": 203541.498, "sharpe": 0.977, "max_drawdown": -0.75}, "NVDA": {"final_capital": 284805.062, "sharpe": 1.173, "max_drawdown": -0.672}, "AAPL": {"final_capital": 63001.873, "sharpe": 1.019, "max_drawdown": -0.374}, "MSFT": {"final_capital": 53346.436, "sharpe": 1.019, "max_drawdown": -0.365}, "AMZN": {"final_capital": 38010.596, "sharpe": 0.71, "max_drawdown": -0.558}, "GOOGL": {"final_capital": 36389.279, "sharpe": 0.758, "max_drawdown": -0.435}, "META": {"final_capital": 33428.107, "sharpe": 0.627, "max_drawdown": -0.764}, "SPY": {"final_capital": 24530.205, "sharpe": 0.791, "max_drawdown": -0.32}, "QQQ": {"final_capital": 34705.001, "sharpe": 0.882, "max_drawdown": -0.366}, "IWM": {"final_capital": 15844.132, "sharpe": 0.391, "max_drawdown": -0.415}}
+
+Essais : 175 Battent le capital final : 21 Battent le Sharpe : 56 Stables : 9
+
+Par famille de règle, part des actifs où le buy and hold est battu :
+                     beats_final  beats_sharpe  beats_cost10  stable_excess
+rule                                                                       
+bollinger_reversion          0.0           0.0           0.0            0.0
+donchian_100_50              0.0           0.2           0.0            0.0
+drawdown_stop_25             0.1           0.2           0.1            0.0
+golden_cross                 0.2           0.6           0.2            0.1
+market_filter_qqq            0.1           0.8           0.1            0.0
+ml_boosting                  0.0           0.0           0.0            0.0
+ml_logistic                  0.0           0.1           0.0            0.0
+rsi2_reversion               0.0           0.1           0.0            0.0
+sma100                       0.1           0.3           0.1            0.0
+sma200                       0.2           0.3           0.2            0.1
+sma200_monthly               0.2           0.3           0.2            0.0
+trend_vol_target_30          0.0           0.4           0.0            0.0
+tsmom_126                    0.2           0.3           0.1            0.0
+tsmom_252                    0.1           0.1           0.1            0.1
+vol_regime                   0.3           0.5           0.3            0.0
+vol_target_30                0.0           0.8           0.0            0.0
+
+Meilleurs écarts de capital, p corrigées dans reports/run_family_correction.py :
+                          benchmark  final_capital  benchmark_final  sharpe  benchmark_sharpe  max_drawdown   beta  annual_alpha  excess_h1  excess_h2
+name                                                                                                                                                  
+megacap_top1_mom                SPY     711558.844        24530.205   1.374             0.791        -0.594  1.573         0.536      2.326      1.041
+megacap_top3_mom                SPY     196415.148        24530.205   1.376             0.791        -0.400  1.295         0.302      1.393      0.687
+megacap_top3_mom_nofilter       SPY     195461.069        24530.205   1.370             0.791        -0.400  1.319         0.298      1.425      0.651
+megacap_top3_voladj             SPY     156235.375        24530.205   1.317             0.791        -0.393  1.249         0.271      1.284      0.568
+megacap_equal                   SPY      95603.100        24530.205   1.180             0.791        -0.489  1.432         0.165      0.982      0.379
+TSLA__market_filter_qqq        TSLA     320181.149       203541.498   1.140             0.977        -0.525  0.762         0.167     -0.057      0.510
+NVDA__golden_cross             NVDA     398171.911       284805.062   1.397             1.173        -0.373  0.728         0.178      0.199      0.136
+META__sma100                   META      44264.826        33428.107   0.883             0.627        -0.285  0.477         0.130     -0.471      0.752
+META__drawdown_stop_25         META      42650.482        33428.107   0.789             0.627        -0.404  0.649         0.095     -0.270      0.514
+AMZN__tsmom_252                AMZN      47758.298        38010.596   0.924             0.710        -0.340  0.631         0.103      0.039      0.190
+NVDA__sma200                   NVDA     352711.826       284805.062   1.389             1.173        -0.485  0.681         0.183      0.194      0.019
+NVDA__sma200_monthly           NVDA     341451.162       284805.062   1.350             1.173        -0.447  0.725         0.158      0.262     -0.081
+qqq_trend_gld                   SPY      28826.918        24530.205   0.837             0.791        -0.292  0.889         0.044      0.035      0.126
+NVDA__vol_regime               NVDA     326221.398       284805.062   1.318             1.173        -0.711  0.753         0.137      0.264     -0.128
+AAPL__vol_regime               AAPL      66995.345        63001.873   1.132             1.019        -0.290  0.810         0.059     -0.012      0.073
+
+Rotations :
+                          benchmark  final_capital  benchmark_final  sharpe  benchmark_sharpe  max_drawdown   beta  annual_alpha  excess_h1  excess_h2  excess_vs_qqq  sharpe_diff_vs_qqq  alpha_vs_qqq  final_capital_bil
+name                                                                                                                                                                                                                      
+dual_momentum                   SPY      15046.026        24530.205   0.444             0.791        -0.320  0.726        -0.034     -0.358     -0.131         -0.120              -0.438        -0.039          15046.026
+gtaa5_trend                     SPY      12110.129        24530.205   0.402             0.791        -0.157  0.296        -0.013     -0.448     -0.258         -0.151              -0.480        -0.012          12776.312
+gtaa9_trend                     SPY      13404.648        24530.205   0.580             0.791        -0.119  0.292         0.002     -0.391     -0.213         -0.136              -0.301        -0.002          14064.745
+sector_top3_mom                 SPY      16132.946        24530.205   0.476             0.791        -0.291  0.775        -0.029     -0.304     -0.115         -0.110              -0.405        -0.023          16259.336
+sector_top3_mom_nofilter        SPY      17685.338        24530.205   0.547             0.791        -0.291  0.787        -0.017     -0.238     -0.090         -0.097              -0.334        -0.012          17763.508
+assets_top3_mom                 SPY      13064.569        24530.205   0.347             0.791        -0.278  0.508        -0.026     -0.442     -0.188         -0.140              -0.535        -0.034          13256.994
+inverse_vol_4                   SPY      16091.509        24530.205   0.770             0.791        -0.201  0.299         0.029     -0.262     -0.160         -0.110              -0.112         0.027          16091.509
+qqq_trend_ief                   SPY      23482.953        24530.205   0.706             0.791        -0.296  0.858         0.018     -0.066      0.023         -0.056              -0.175        -0.010          23482.953
+qqq_trend_gld                   SPY      28826.918        24530.205   0.837             0.791        -0.292  0.889         0.044      0.035      0.126         -0.027              -0.045         0.017          28826.918
+spy_trend_ief                   SPY      13692.160        24530.205   0.360             0.791        -0.335  0.743        -0.050     -0.415     -0.168         -0.133              -0.522        -0.053          13692.160
+megacap_equal                   SPY      95603.100        24530.205   1.180             0.791        -0.489  1.432         0.165      0.982      0.379          0.145               0.299         0.109          95603.100
+megacap_top3_mom                SPY     196415.148        24530.205   1.376             0.791        -0.400  1.295         0.302      1.393      0.687          0.248               0.494         0.247         201753.227
+megacap_top3_mom_nofilter       SPY     195461.069        24530.205   1.370             0.791        -0.400  1.319         0.298      1.425      0.651          0.247               0.488         0.242         200292.728
+megacap_top1_mom                SPY     711558.844        24530.205   1.374             0.791        -0.594  1.573         0.536      2.326      1.041          0.432               0.492         0.464         726240.836
+megacap_top3_voladj             SPY     156235.375        24530.205   1.317             0.791        -0.393  1.249         0.271      1.284      0.568          0.215               0.435         0.218         160481.467
+
+TSLA :
+                          benchmark  final_capital  benchmark_final  sharpe  benchmark_sharpe  max_drawdown   beta  annual_alpha  excess_h1  excess_h2  final_capital_cost10  final_capital_bil
+name                                                                                                                                                                                           
+TSLA__sma200                   TSLA      69565.764       203541.498   0.784             0.977        -0.603  0.638         0.002     -0.883     -0.191             66969.951          75539.147
+TSLA__sma200_monthly           TSLA     182010.751       203541.498   1.038             0.977        -0.594  0.651         0.135     -0.199      0.087            180740.175         198394.184
+TSLA__sma100                   TSLA      49430.702       203541.498   0.697             0.977        -0.595  0.613        -0.036     -1.247     -0.168             46877.225          52971.070
+TSLA__golden_cross             TSLA      98589.412       203541.498   0.875             0.977        -0.655  0.650         0.047     -0.459     -0.266             97999.205         107608.475
+TSLA__tsmom_252                TSLA      68287.993       203541.498   0.775             0.977        -0.634  0.661        -0.010     -0.725     -0.367             65739.860          75307.552
+TSLA__tsmom_126                TSLA     216376.748       203541.498   1.076             0.977        -0.594  0.670         0.151     -0.436      0.497            209138.261         234911.754
+TSLA__donchian_100_50          TSLA      72934.556       203541.498   0.849             0.977        -0.589  0.467         0.083     -1.251      0.225             72497.933          81197.243
+TSLA__bollinger_reversion      TSLA      20382.938       203541.498   0.467             0.977        -0.541  0.264        -0.012     -2.284     -0.017             19819.715          22900.051
+TSLA__rsi2_reversion           TSLA       8291.784       203541.498   0.025             0.977        -0.584  0.148        -0.090     -3.205      0.005              8038.495           9535.955
+TSLA__vol_target_30            TSLA      81105.455       203541.498   1.012             0.977        -0.470  0.505         0.034     -0.949      0.029             80057.438          86515.545
+TSLA__trend_vol_target_30      TSLA      40666.812       203541.498   0.860             0.977        -0.449  0.310         0.037     -1.478     -0.132             39505.701          45467.881
+TSLA__vol_regime               TSLA     183012.966       203541.498   0.984             0.977        -0.731  0.839         0.054     -0.033     -0.073            180105.897         185388.921
+TSLA__drawdown_stop_25         TSLA      49598.826       203541.498   0.735             0.977        -0.633  0.443         0.038     -1.273     -0.139             48664.650          54711.458
+TSLA__market_filter_qqq        TSLA     320181.149       203541.498   1.140             0.977        -0.525  0.762         0.167     -0.057      0.510            314465.200         327762.674
+TSLA__ml_logistic              TSLA      17494.110       203541.498   0.404             0.977        -0.676  0.482        -0.127     -2.580      0.126             15686.217          18746.763
+TSLA__ml_boosting              TSLA      13787.596       203541.498   0.338             0.977        -0.763  0.537        -0.185     -2.224     -0.468             12057.281          14783.168

@@ -1,0 +1,80 @@
+Loading weights:   0%|          | 0/170 [00:00<?, ?it/s]Loading weights:   1%|          | 1/170 [00:00<00:33,  5.02it/s]Loading weights:  12%|█▏        | 20/170 [00:00<00:01, 76.85it/s]Loading weights:  19%|█▉        | 33/170 [00:01<00:05, 27.25it/s]Loading weights: 100%|██████████| 170/170 [00:01<00:00, 147.85it/s]
+/home/tomda/Documents/Projet-recherche-Stock-Market/.venv-forecast/lib/python3.12/site-packages/torch/nn/modules/linear.py:125: UserWarning: Attempting to use hipBLASLt on an unsupported architecture! Overriding blas backend to hipblas (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:310.)
+  return F.linear(input, self.weight, self.bias)
+chronos2_univariate: 32/18000, 0.9 s écoulées
+chronos2_univariate: 1312/18000, 17.3 s écoulées
+chronos2_univariate: 2592/18000, 33.8 s écoulées
+chronos2_univariate: 3872/18000, 50.2 s écoulées
+chronos2_univariate: 5152/18000, 66.7 s écoulées
+chronos2_univariate: 6432/18000, 83.1 s écoulées
+chronos2_univariate: 7712/18000, 99.5 s écoulées
+chronos2_univariate: 8992/18000, 116.0 s écoulées
+chronos2_univariate: 10272/18000, 132.1 s écoulées
+chronos2_univariate: 11552/18000, 147.9 s écoulées
+chronos2_univariate: 12832/18000, 163.7 s écoulées
+chronos2_univariate: 14112/18000, 179.9 s écoulées
+chronos2_univariate: 15392/18000, 196.1 s écoulées
+chronos2_univariate: 16672/18000, 212.4 s écoulées
+chronos2_univariate: 17952/18000, 228.6 s écoulées
+chronos2_univariate: 18000/18000, 229.4 s écoulées
+chronos2_market: 32/18000, 0.4 s écoulées
+chronos2_market: 1312/18000, 17.6 s écoulées
+chronos2_market: 2592/18000, 34.8 s écoulées
+chronos2_market: 3872/18000, 51.9 s écoulées
+chronos2_market: 5152/18000, 68.8 s écoulées
+chronos2_market: 6432/18000, 86.0 s écoulées
+chronos2_market: 7712/18000, 103.2 s écoulées
+chronos2_market: 8992/18000, 120.2 s écoulées
+chronos2_market: 10272/18000, 137.4 s écoulées
+chronos2_market: 11552/18000, 154.6 s écoulées
+chronos2_market: 12832/18000, 171.7 s écoulées
+chronos2_market: 14112/18000, 188.8 s écoulées
+chronos2_market: 15392/18000, 205.8 s écoulées
+chronos2_market: 16672/18000, 223.3 s écoulées
+chronos2_market: 17952/18000, 240.8 s écoulées
+chronos2_market: 18000/18000, 241.7 s écoulées
+chronos2_jev: 32/18000, 0.9 s écoulées
+chronos2_jev: 1312/18000, 38.8 s écoulées
+chronos2_jev: 2592/18000, 76.6 s écoulées
+chronos2_jev: 3872/18000, 114.5 s écoulées
+chronos2_jev: 5152/18000, 152.2 s écoulées
+chronos2_jev: 6432/18000, 181.9 s écoulées
+chronos2_jev: 7712/18000, 193.2 s écoulées
+chronos2_jev: 8992/18000, 206.7 s écoulées
+chronos2_jev: 10272/18000, 219.9 s écoulées
+chronos2_jev: 11552/18000, 233.2 s écoulées
+chronos2_jev: 12832/18000, 246.7 s écoulées
+chronos2_jev: 14112/18000, 259.9 s écoulées
+chronos2_jev: 15392/18000, 273.3 s écoulées
+chronos2_jev: 16672/18000, 286.6 s écoulées
+chronos2_jev: 17952/18000, 299.9 s écoulées
+chronos2_jev: 18000/18000, 300.4 s écoulées
+[
+  {
+    "model": "chronos2",
+    "variant": "univariate",
+    "rows": 18000,
+    "device": "cuda",
+    "seconds": 229.16514274699057,
+    "median_batch_seconds": 0.40908286800004134,
+    "batch_size": 32
+  },
+  {
+    "model": "chronos2",
+    "variant": "market",
+    "rows": 18000,
+    "device": "cuda",
+    "seconds": 241.4521935119883,
+    "median_batch_seconds": 0.43221068200000445,
+    "batch_size": 32
+  },
+  {
+    "model": "chronos2",
+    "variant": "jev",
+    "rows": 18000,
+    "device": "cuda",
+    "seconds": 300.1386207930036,
+    "median_batch_seconds": 0.3600983839996843,
+    "batch_size": 32
+  }
+]

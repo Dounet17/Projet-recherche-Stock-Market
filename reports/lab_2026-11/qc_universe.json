@@ -1,0 +1,128 @@
+{
+  "symbols": 17418,
+  "from_alpaca_list": 11199,
+  "found_by_enumeration": 6219,
+  "rows": 21548620,
+  "last_date": "2024-12-31 05:00:00+00:00",
+  "known_disappeared_found": "48 / 50",
+  "adjusted_without_raw": [
+    "ABB",
+    "ACAB",
+    "CHAA",
+    "DCRN",
+    "EFHT",
+    "ETE",
+    "HCLP",
+    "IMH",
+    "NH",
+    "OBNK"
+  ],
+  "alias_groups": 503,
+  "alias_symbols_to_drop": 503,
+  "alias_examples": [
+    [
+      "NCQ",
+      "TMQ"
+    ],
+    [
+      "GDP",
+      "GDPP"
+    ],
+    [
+      "AACG",
+      "ATAI"
+    ],
+    [
+      "CCLD",
+      "MTBC"
+    ],
+    [
+      "ACPW",
+      "PIOI"
+    ],
+    [
+      "AKG",
+      "GAU"
+    ],
+    [
+      "BASI",
+      "NOTV"
+    ],
+    [
+      "ARCW",
+      "RMTO"
+    ],
+    [
+      "SGOC",
+      "TROO"
+    ],
+    [
+      "GNSS",
+      "LRAD"
+    ],
+    [
+      "PYDS",
+      "USIO"
+    ],
+    [
+      "FCRE",
+      "PHMD"
+    ],
+    [
+      "NWY",
+      "RTW"
+    ],
+    [
+      "APYX",
+      "BVX"
+    ],
+    [
+      "IA",
+      "ISSC"
+    ]
+  ],
+  "alias_contains_fb_meta": false,
+  "symbols_with_non_positive_close": [
+    "JTAI",
+    "LDTC",
+    "PRSR"
+  ],
+  "daily_moves_above_100pct": 2213,
+  "symbols_with_such_moves": 1512,
+  "non_positive_closes": 2237,
+  "symbols_with_gap_over_30_days": 3,
+  "suspects": {
+    "CA": {
+      "first": "2016-01-04",
+      "last": "2024-12-31",
+      "days": 2264,
+      "longest_gap_days": 4,
+      "first_close": 24.04,
+      "last_close": 23.96
+    },
+    "LB": {
+      "first": "2016-01-04",
+      "last": "2024-12-31",
+      "days": 2264,
+      "longest_gap_days": 4,
+      "first_close": 72.36,
+      "last_close": 63.89
+    },
+    "MON": {
+      "first": "2016-01-04",
+      "last": "2022-12-23",
+      "days": 1758,
+      "longest_gap_days": 4,
+      "first_close": 92.96,
+      "last_close": 10.07
+    },
+    "SBNY": {
+      "first": "2016-01-04",
+      "last": "2024-12-31",
+      "days": 2264,
+      "longest_gap_days": 4,
+      "first_close": 134.69,
+      "last_close": 70.0
+    }
+  }
+}

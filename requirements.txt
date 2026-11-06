@@ -1,7 +1,16 @@
+# PyTorch version CPU (plus légère) : à installer d'abord avec
+#   pip install torch --index-url https://download.pytorch.org/whl/cpu
+torch
+transformers
 yfinance
 pandas
+pyarrow
 numpy
+scipy
 scikit-learn
-transformers
-torch
 matplotlib
+requests
+python-dotenv
+jupyter
+ipykernel
+nbconvert

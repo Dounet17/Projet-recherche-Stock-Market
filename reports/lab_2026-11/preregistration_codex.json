@@ -1,0 +1,16 @@
+{
+  "owner": "codex",
+  "development_end": "2024-12-31",
+  "validation_read": false,
+  "strategies": [],
+  "selection_rule": "Hors contrôles : rendement supérieur à TSLA aux deux coûts, p corrigée <= 0.10 aux deux coûts, excès positif en 2022-2024 et au moins trois années positives; trois stratégies au maximum.",
+  "justification": "Aucune variante ne satisfait les critères figés de rendement, correction multiple et stabilité.",
+  "holdout_data_needed": {
+    "period": "2025-01-01 au 2026-10-30, collecte et ouverture réservées au coordinateur",
+    "posts": "Posts Musk complets, identifiants int64, texte original et heures recalculées depuis les identifiants; compléter la couverture après mai 2025 sans utiliser les réactions futures.",
+    "news": "News TSLA Benzinga avec identifiant, titre, created_at et updated_at; idéalement archives des versions pour garantir le texte disponible à chaque date, et FinBERT local avec le même modèle et 128 tokens.",
+    "earnings": "Dates et EPS réellement publiés, consensus enregistré avant publication et preuves horodatées des annonces du calendrier; les règles actuelles de calendrier utilisent seulement dernier résultat +91 jours.",
+    "prices_calendar": "Panel ajusté et calendrier de clôtures ouverts par lab.load_panel avec autorisation explicite, sans téléchargement effectué par Codex.",
+    "required_for_empty_selection": false
+  }
+}

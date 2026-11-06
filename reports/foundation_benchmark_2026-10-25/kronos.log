@@ -1,0 +1,11 @@
+Loading weights from local directory
+Loading weights from local directory
+/home/tomda/Documents/Projet-recherche-Stock-Market/.venv-forecast/lib/python3.12/site-packages/torch/nn/modules/linear.py:125: UserWarning: Attempting to use hipBLASLt on an unsupported architecture! Overriding blas backend to hipblas (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:310.)
+  return F.linear(input, self.weight, self.bias)
+kronos_univariate: 32/18000, 4.4 s écoulées
+kronos_univariate: 1312/18000, 158.6 s écoulées
+kronos_univariate: 2592/18000, 341.7 s écoulées
+kronos_univariate: 3872/18000, 488.5 s écoulées
+kronos_univariate: 5152/18000, 637.5 s écoulées
+kronos_univariate: 6432/18000, 787.5 s écoulées
+kronos_univariate: 7712/18000, 946.7 s écoulées

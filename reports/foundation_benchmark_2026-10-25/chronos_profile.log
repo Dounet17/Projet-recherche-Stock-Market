@@ -1,0 +1,45 @@
+Loading weights:   0%|          | 0/170 [00:00<?, ?it/s]Loading weights:   1%|          | 1/170 [00:00<00:32,  5.14it/s]Loading weights:   8%|▊         | 13/170 [00:01<00:12, 12.66it/s]Loading weights: 100%|██████████| 170/170 [00:01<00:00, 158.60it/s]
+/home/tomda/Documents/Projet-recherche-Stock-Market/.venv-forecast/lib/python3.12/site-packages/torch/nn/modules/linear.py:125: UserWarning: Attempting to use hipBLASLt on an unsupported architecture! Overriding blas backend to hipblas (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:310.)
+  return F.linear(input, self.weight, self.bias)
+chronos_synth_univariate: 32/32, 0.5 s écoulées
+chronos_synth_market: 32/32, 0.1 s écoulées
+chronos_synth_finbert: 32/32, 0.1 s écoulées
+chronos_synth_jev: 32/32, 0.2 s écoulées
+[
+  {
+    "model": "chronos_synth",
+    "variant": "univariate",
+    "rows": 32,
+    "device": "cuda",
+    "seconds": 0.4922779799999262,
+    "median_batch_seconds": 0.4922779799999262,
+    "batch_size": 32
+  },
+  {
+    "model": "chronos_synth",
+    "variant": "market",
+    "rows": 32,
+    "device": "cuda",
+    "seconds": 0.07279461399957654,
+    "median_batch_seconds": 0.07279461399957654,
+    "batch_size": 32
+  },
+  {
+    "model": "chronos_synth",
+    "variant": "finbert",
+    "rows": 32,
+    "device": "cuda",
+    "seconds": 0.09186195299935207,
+    "median_batch_seconds": 0.09186195299935207,
+    "batch_size": 32
+  },
+  {
+    "model": "chronos_synth",
+    "variant": "jev",
+    "rows": 32,
+    "device": "cuda",
+    "seconds": 0.15257566099990072,
+    "median_batch_seconds": 0.15257566099990072,
+    "batch_size": 32
+  }
+]

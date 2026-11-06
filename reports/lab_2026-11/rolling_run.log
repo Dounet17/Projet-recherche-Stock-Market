@@ -1,0 +1,96 @@
+fait 1 6 13
+fait 3 6 9
+fait 5 6 5
+fait 3 1 49
+
+=== Durée 1 an(s), un départ tous les 6 mois, 13 tests ===
+                   strategy     reference  tests  median_final  ref_median_final  mean_final  ref_mean_final  worst_final  ref_worst_final  share_beats_ref  share_loses_money  ref_share_loses_money
+               TSLA__sma200          TSLA     13      11773.74          13215.58    17663.06        20965.09      5457.03          3132.16             0.23               0.31                   0.31
+        TSLA__vol_target_30          TSLA     13      12417.34          13215.58    14843.99        20965.09      5986.06          3132.16             0.38               0.23                   0.31
+    TSLA__market_filter_qqq          TSLA     13      13995.29          13215.58    21599.67        20965.09      5453.05          3132.16             0.38               0.23                   0.31
+          TSLA__ml_boosting          TSLA     13      10728.82          13215.58    10845.69        20965.09      3778.79          3132.16             0.46               0.38                   0.31
+           megacap_top3_mom           SPY     13      15880.85          11902.43    16354.70        11488.74      7691.11          8113.04             0.85               0.23                   0.23
+    social__musk_jev_exit_5          TSLA     13      15285.95          13215.58    20977.87        20965.09      3702.10          3132.16             0.62               0.38                   0.31
+social__news_finbert_exit_5          TSLA     13      14194.13          13215.58    21708.92        20965.09      5068.88          3132.16             0.62               0.23                   0.31
+      megacap_top3_vs_equal megacap_equal     13      15880.85          15456.94    16354.70        14630.50      7691.11          5330.55             0.69               0.23                   0.23
+Stratégies battant leur référence en médiane : 14 / 191 | en moyenne : 15
+                     strategy     reference  share_beats_ref  median_final  ref_median_final  worst_final  ref_worst_final
+             megacap_top1_mom           SPY             0.85      15873.47          11902.43      7861.34          8113.04
+    megacap_top3_mom_nofilter           SPY             0.85      15642.81          11902.43      7414.58          8113.04
+             megacap_top3_mom           SPY             0.85      15880.85          11902.43      7691.11          8113.04
+          megacap_top3_voladj           SPY             0.85      15880.85          11902.43      7905.26          8113.04
+                megacap_equal           SPY             0.77      15456.94          11902.43      5330.55          8113.04
+                qqq_trend_gld           SPY             0.69      12731.42          11902.43      8062.55          8113.04
+        megacap_top3_vs_equal megacap_equal             0.69      15880.85          15456.94      7691.11          5330.55
+      social__musk_jev_exit_5          TSLA             0.62      15285.95          13215.58      3702.10          3132.16
+  social__news_finbert_exit_5          TSLA             0.62      14194.13          13215.58      5068.88          3132.16
+social__earnings_proxy_exit_3          TSLA             0.54      12607.03          13215.58      3509.09          3132.16
+
+=== Durée 3 an(s), un départ tous les 6 mois, 9 tests ===
+                   strategy     reference  tests  median_final  ref_median_final  mean_final  ref_mean_final  worst_final  ref_worst_final  share_beats_ref  share_loses_money  ref_share_loses_money
+               TSLA__sma200          TSLA      9      53314.21          42342.78    52912.39        70719.13      8102.87          8744.59             0.11               0.33                   0.11
+        TSLA__vol_target_30          TSLA      9      33291.32          42342.78    35710.64        70719.13     11447.39          8744.59             0.33               0.00                   0.11
+    TSLA__market_filter_qqq          TSLA      9      89126.20          42342.78    87814.55        70719.13     14557.01          8744.59             0.67               0.00                   0.11
+          TSLA__ml_boosting          TSLA      9       7623.33          42342.78    11325.83        70719.13      4528.80          8744.59             0.00               0.56                   0.11
+           megacap_top3_mom           SPY      9      36761.73          13321.67    39530.76        14630.80     19344.54         12328.83             1.00               0.00                   0.00
+    social__musk_jev_exit_5          TSLA      9      50647.91          42342.78    72056.55        70719.13     12476.56          8744.59             0.78               0.00                   0.11
+social__news_finbert_exit_5          TSLA      9      68540.03          42342.78    87608.70        70719.13     11815.28          8744.59             1.00               0.00                   0.11
+      megacap_top3_vs_equal megacap_equal      9      36761.73          22606.77    39530.76        27050.70     19344.54         17426.86             1.00               0.00                   0.00
+Stratégies battant leur référence en médiane : 60 / 191 | en moyenne : 31
+                   strategy     reference  share_beats_ref  median_final  ref_median_final  worst_final  ref_worst_final
+social__news_finbert_exit_5          TSLA             1.00      68540.03          42342.78     11815.28          8744.59
+      megacap_top3_vs_equal megacap_equal             1.00      36761.73          22606.77     19344.54         17426.86
+              megacap_equal           SPY             1.00      22606.77          13321.67     17426.86         12328.83
+  megacap_top3_mom_nofilter           SPY             1.00      35439.99          13321.67     18649.02         12328.83
+           megacap_top1_mom           SPY             1.00      90663.90          13321.67     22028.21         12328.83
+           megacap_top3_mom           SPY             1.00      36761.73          13321.67     19344.54         12328.83
+            AMZN__tsmom_252          AMZN             1.00      16071.89          11502.49     10156.51          8857.27
+        megacap_top3_voladj           SPY             1.00      35896.57          13321.67     20493.20         12328.83
+         NVDA__golden_cross          NVDA             0.89      50243.52          38052.41     32991.11         24081.84
+          GOOGL__vol_regime         GOOGL             0.89      17562.24          16482.07     14376.03         12889.17
+
+=== Durée 5 an(s), un départ tous les 6 mois, 5 tests ===
+                   strategy     reference  tests  median_final  ref_median_final  mean_final  ref_mean_final  worst_final  ref_worst_final  share_beats_ref  share_loses_money  ref_share_loses_money
+               TSLA__sma200          TSLA      5      83186.16         124862.79    74020.58       114083.52     43267.52         57610.62              0.0                0.0                    0.0
+        TSLA__vol_target_30          TSLA      5      63664.42         124862.79    59659.35       114083.52     42411.56         57610.62              0.0                0.0                    0.0
+    TSLA__market_filter_qqq          TSLA      5     191065.51         124862.79   198743.91       114083.52    137712.56         57610.62              1.0                0.0                    0.0
+          TSLA__ml_boosting          TSLA      5       7511.16         124862.79     9098.55       114083.52      6705.33         57610.62              0.0                0.8                    0.0
+           megacap_top3_mom           SPY      5      90176.87          19646.18    95502.21        18755.76     58768.39         15393.76              1.0                0.0                    0.0
+    social__musk_jev_exit_5          TSLA      5     177003.62         124862.79   155170.26       114083.52     60941.30         57610.62              1.0                0.0                    0.0
+social__news_finbert_exit_5          TSLA      5     188858.30         124862.79   179193.31       114083.52    118753.24         57610.62              1.0                0.0                    0.0
+      megacap_top3_vs_equal megacap_equal      5      90176.87          60336.78    95502.21        51966.46     58768.39         26997.51              1.0                0.0                    0.0
+Stratégies battant leur référence en médiane : 26 / 191 | en moyenne : 31
+                 strategy     reference  share_beats_ref  median_final  ref_median_final  worst_final  ref_worst_final
+          TSLA__tsmom_126          TSLA              1.0     135542.35         124862.79     97074.51         57610.62
+  TSLA__market_filter_qqq          TSLA              1.0     191065.51         124862.79    137712.56         57610.62
+            megacap_equal           SPY              1.0      60336.78          19646.18     26997.51         15393.76
+         megacap_top1_mom           SPY              1.0     306500.05          19646.18    152727.68         15393.76
+      megacap_top3_voladj           SPY              1.0      91543.20          19646.18     54150.19         15393.76
+megacap_top3_mom_nofilter           SPY              1.0      89738.55          19646.18     58482.92         15393.76
+  social__musk_jev_exit_5          TSLA              1.0     177003.62         124862.79     60941.30         57610.62
+         megacap_top3_mom           SPY              1.0      90176.87          19646.18     58768.39         15393.76
+    megacap_top3_vs_equal megacap_equal              1.0      90176.87          60336.78     58768.39         26997.51
+            qqq_trend_gld           SPY              1.0      23434.90          19646.18     15844.96         15393.76
+
+=== Durée 3 an(s), un départ tous les 1 mois, 49 tests ===
+                   strategy     reference  tests  median_final  ref_median_final  mean_final  ref_mean_final  worst_final  ref_worst_final  share_beats_ref  share_loses_money  ref_share_loses_money
+               TSLA__sma200          TSLA     49      53562.11          58729.92    54636.24        78505.71      5581.07          6752.75             0.04               0.29                   0.22
+        TSLA__vol_target_30          TSLA     49      33291.32          58729.92    37650.70        78505.71      9224.69          6752.75             0.35               0.02                   0.22
+    TSLA__market_filter_qqq          TSLA     49      89126.20          58729.92    90560.63        78505.71     11241.21          6752.75             0.73               0.00                   0.22
+          TSLA__ml_boosting          TSLA     49       7623.33          58729.92    12262.42        78505.71      3601.28          6752.75             0.00               0.51                   0.22
+           megacap_top3_mom           SPY     49      39239.39          14058.25    37735.25        14616.94     19193.70         12328.83             1.00               0.00                   0.00
+    social__musk_jev_exit_5          TSLA     49      71643.96          58729.92    80075.98        78505.71      8876.69          6752.75             0.69               0.02                   0.22
+social__news_finbert_exit_5          TSLA     49      80854.64          58729.92    92990.09        78505.71      8798.06          6752.75             0.96               0.02                   0.22
+      megacap_top3_vs_equal megacap_equal     49      39239.39          22606.77    37735.25        26428.76     19193.70         16925.53             1.00               0.00                   0.00
+Stratégies battant leur référence en médiane : 48 / 191 | en moyenne : 32
+                   strategy     reference  share_beats_ref  median_final  ref_median_final  worst_final  ref_worst_final
+           megacap_top3_mom           SPY             1.00      39239.39          14058.25     19193.70         12328.83
+        megacap_top3_voladj           SPY             1.00      39563.24          14058.25     19732.86         12328.83
+           megacap_top1_mom           SPY             1.00      81925.38          14058.25     21090.15         12328.83
+  megacap_top3_mom_nofilter           SPY             1.00      37828.57          14058.25     18503.61         12328.83
+              megacap_equal           SPY             1.00      22606.77          14058.25     16925.53         12328.83
+      megacap_top3_vs_equal megacap_equal             1.00      39239.39          22606.77     19193.70         16925.53
+            AMZN__tsmom_252          AMZN             0.98      16071.89          11545.21      8638.74          7732.98
+social__news_finbert_exit_5          TSLA             0.96      80854.64          58729.92      8798.06          6752.75
+          GOOGL__vol_regime         GOOGL             0.94      18447.24          16649.59     12209.89         11216.93
+         NVDA__golden_cross          NVDA             0.92      50002.33          41195.17     26956.10         22092.46

@@ -1,0 +1,39 @@
+[info] loaded EMA weights (step=50000)
+KiT pilote 1/36 : 27.62 s
+/home/tomda/Documents/Projet-recherche-Stock-Market/.venv-forecast/lib/python3.12/site-packages/torch/nn/modules/linear.py:125: UserWarning: Attempting to use hipBLASLt on an unsupported architecture! Overriding blas backend to hipblas (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:310.)
+  return F.linear(input, self.weight, self.bias)
+KiT pilote 2/36 : 54.62 s
+KiT pilote 3/36 : 64.00 s
+KiT pilote 4/36 : 64.45 s
+KiT pilote 5/36 : 61.86 s
+KiT pilote 6/36 : 54.32 s
+KiT pilote 7/36 : 63.85 s
+KiT pilote 8/36 : 59.52 s
+KiT pilote 9/36 : 54.46 s
+KiT pilote 10/36 : 58.70 s
+KiT pilote 11/36 : 59.70 s
+KiT pilote 12/36 : 59.66 s
+KiT pilote 13/36 : 60.12 s
+KiT pilote 14/36 : 59.61 s
+KiT pilote 15/36 : 63.68 s
+KiT pilote 16/36 : 64.00 s
+KiT pilote 17/36 : 62.49 s
+KiT pilote 18/36 : 46.12 s
+KiT pilote 19/36 : 47.28 s
+KiT pilote 20/36 : 43.83 s
+KiT pilote 21/36 : 39.38 s
+KiT pilote 22/36 : 39.54 s
+KiT pilote 23/36 : 32.23 s
+KiT pilote 24/36 : 18.74 s
+KiT pilote 25/36 : 40.57 s
+KiT pilote 26/36 : 77.19 s
+KiT pilote 27/36 : 40.72 s
+KiT pilote 28/36 : 34.32 s
+KiT pilote 29/36 : 34.35 s
+KiT pilote 30/36 : 34.41 s
+KiT pilote 31/36 : 34.50 s
+KiT pilote 32/36 : 34.26 s
+KiT pilote 33/36 : 34.33 s
+KiT pilote 34/36 : 34.34 s
+KiT pilote 35/36 : 34.36 s
+KiT pilote 36/36 : 34.40 s

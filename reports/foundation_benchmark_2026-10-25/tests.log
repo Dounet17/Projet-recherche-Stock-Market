@@ -1,0 +1,18 @@
+test_cash_stays_cash (test_backtest.AccountingTests.test_cash_stays_cash) ... ok
+test_contiguous_position_pays_one_round_trip (test_backtest.AccountingTests.test_contiguous_position_pays_one_round_trip) ... ok
+test_costs_reduce_wealth (test_backtest.AccountingTests.test_costs_reduce_wealth) ... ok
+test_gap_forces_liquidation (test_backtest.AccountingTests.test_gap_forces_liquidation) ... ok
+test_overlap_is_rejected (test_backtest.AccountingTests.test_overlap_is_rejected) ... ok
+test_future_and_too_recent_posts_cannot_change_decision (test_backtest.AvailabilityTests.test_future_and_too_recent_posts_cannot_change_decision) ... ok
+test_no_post_means_zero_social_features (test_backtest.AvailabilityTests.test_no_post_means_zero_social_features) ... ok
+test_prices_after_decision_do_not_change_features (test_backtest.AvailabilityTests.test_prices_after_decision_do_not_change_features) ... ok
+test_excludes_price_move_before_entry (test_foundation_benchmark.ForecastTimingTests.test_excludes_price_move_before_entry) ... ok
+test_microsecond_and_nanosecond_indices_encode_the_same_real_time (test_foundation_benchmark.ForecastTimingTests.test_microsecond_and_nanosecond_indices_encode_the_same_real_time) ... ok
+test_missing_or_negative_predictions_are_rejected (test_foundation_benchmark.ForecastTimingTests.test_missing_or_negative_predictions_are_rejected) ... ok
+test_pre_entry_prediction_cannot_change_signal (test_foundation_benchmark.ForecastTimingTests.test_pre_entry_prediction_cannot_change_signal) ... ok
+test_zero_control_preserves_market_and_removes_social_information (test_foundation_benchmark.ForecastTimingTests.test_zero_control_preserves_market_and_removes_social_information) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.058s
+
+OK

@@ -1,0 +1,97 @@
+test_alpha_correction_refits_beta_in_each_bootstrap_sample (tests.test_price_audit.ConfirmedPriceBugs.test_alpha_correction_refits_beta_in_each_bootstrap_sample) ... FAIL
+test_band_must_prevent_small_trades_caused_by_drift (tests.test_price_audit.ConfirmedPriceBugs.test_band_must_prevent_small_trades_caused_by_drift) ... FAIL
+test_monthly_hold_must_not_rebalance_inside_the_month (tests.test_price_audit.ConfirmedPriceBugs.test_monthly_hold_must_not_rebalance_inside_the_month) ... FAIL
+test_multiple_testing_family_includes_initial_and_robustness_trials (tests.test_price_audit.ConfirmedPriceBugs.test_multiple_testing_family_includes_initial_and_robustness_trials) ... FAIL
+test_preregistered_calls_are_standalone_python_expressions (tests.test_price_audit.ConfirmedPriceBugs.test_preregistered_calls_are_standalone_python_expressions) ... 
+  test_preregistered_calls_are_standalone_python_expressions (tests.test_price_audit.ConfirmedPriceBugs.test_preregistered_calls_are_standalone_python_expressions) (strategy='tsla_filter_qqq_200') ... FAIL
+test_preregistered_statistical_rule_has_an_explicit_significance_level (tests.test_price_audit.ConfirmedPriceBugs.test_preregistered_statistical_rule_has_an_explicit_significance_level) ... FAIL
+test_risk_success_requires_positive_alpha_as_in_protocol (tests.test_price_audit.ConfirmedPriceBugs.test_risk_success_requires_positive_alpha_as_in_protocol) ... FAIL
+test_rsi_without_losses_is_one_hundred (tests.test_price_audit.ConfirmedPriceBugs.test_rsi_without_losses_is_one_hundred) ... FAIL
+test_equal_without_references_exclude_the_same_removed_asset (tests.test_price_audit.VerifiedPriceProperties.test_equal_without_references_exclude_the_same_removed_asset) ... ok
+test_ml_purge_keeps_all_training_targets_before_annual_boundary (tests.test_price_audit.VerifiedPriceProperties.test_ml_purge_keeps_all_training_targets_before_annual_boundary) ... ok
+test_momentum_does_not_replace_filtered_ranks_with_lower_ranks (tests.test_price_audit.VerifiedPriceProperties.test_momentum_does_not_replace_filtered_ranks_with_lower_ranks) ... ok
+test_monthly_decisions_do_not_use_the_rest_of_the_month (tests.test_price_audit.VerifiedPriceProperties.test_monthly_decisions_do_not_use_the_rest_of_the_month) ... ok
+test_state_machine_is_causal_and_entry_wins_a_tie (tests.test_price_audit.VerifiedPriceProperties.test_state_machine_is_causal_and_entry_wins_a_tie) ... ok
+
+======================================================================
+FAIL: test_alpha_correction_refits_beta_in_each_bootstrap_sample (tests.test_price_audit.ConfirmedPriceBugs.test_alpha_correction_refits_beta_in_each_bootstrap_sample)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/tomda/Documents/Projet-recherche-Stock-Market/tests/test_price_audit.py", line 101, in test_alpha_correction_refits_beta_in_each_bootstrap_sample
+    self.assertAlmostEqual(actual, comparison["alpha_p_one_sided"], places=12)
+AssertionError: np.float64(0.010050251256281407) != 0.08542713567839195 within 12 places (np.float64(0.07537688442211055) difference)
+
+======================================================================
+FAIL: test_band_must_prevent_small_trades_caused_by_drift (tests.test_price_audit.ConfirmedPriceBugs.test_band_must_prevent_small_trades_caused_by_drift)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/tomda/Documents/Projet-recherche-Stock-Market/tests/test_price_audit.py", line 80, in test_band_must_prevent_small_trades_caused_by_drift
+    self.assertAlmostEqual(float(result.turnover.iloc[1:-1].sum()), 0.0)
+AssertionError: 0.07142857142857151 != 0.0 within 7 places (0.07142857142857151 difference)
+
+======================================================================
+FAIL: test_monthly_hold_must_not_rebalance_inside_the_month (tests.test_price_audit.ConfirmedPriceBugs.test_monthly_hold_must_not_rebalance_inside_the_month)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/tomda/Documents/Projet-recherche-Stock-Market/tests/test_price_audit.py", line 72, in test_monthly_hold_must_not_rebalance_inside_the_month
+    self.assertAlmostEqual(float(result.turnover.iloc[1:-1].sum()), 0.0)
+AssertionError: 0.14285714285714313 != 0.0 within 7 places (0.14285714285714313 difference)
+
+======================================================================
+FAIL: test_multiple_testing_family_includes_initial_and_robustness_trials (tests.test_price_audit.ConfirmedPriceBugs.test_multiple_testing_family_includes_initial_and_robustness_trials)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/tomda/Documents/Projet-recherche-Stock-Market/tests/test_price_audit.py", line 107, in test_multiple_testing_family_includes_initial_and_robustness_trials
+    self.assertAlmostEqual(robust.loc[name, "rw_p"], corrected["robust_" + name], places=12)
+AssertionError: np.float64(0.297) != np.float64(0.80575) within 12 places (np.float64(0.50875) difference)
+
+======================================================================
+FAIL: test_preregistered_calls_are_standalone_python_expressions (tests.test_price_audit.ConfirmedPriceBugs.test_preregistered_calls_are_standalone_python_expressions) (strategy='tsla_filter_qqq_200')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/tomda/Documents/Projet-recherche-Stock-Market/tests/test_price_audit.py", line 113, in test_preregistered_calls_are_standalone_python_expressions
+    expression = ast.parse(entry["call"], mode="eval")
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/ast.py", line 52, in parse
+    return compile(source, filename, mode, flags,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<unknown>", line 1
+    market_filter('TSLA','QQQ',200) de reports/run_price_robustness.py
+                                    ^^
+SyntaxError: invalid syntax
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/tomda/Documents/Projet-recherche-Stock-Market/tests/test_price_audit.py", line 115, in test_preregistered_calls_are_standalone_python_expressions
+    self.fail(f"Appel figé inexécutable : {entry['call']} ({exc.msg})")
+AssertionError: Appel figé inexécutable : market_filter('TSLA','QQQ',200) de reports/run_price_robustness.py (invalid syntax)
+
+======================================================================
+FAIL: test_preregistered_statistical_rule_has_an_explicit_significance_level (tests.test_price_audit.ConfirmedPriceBugs.test_preregistered_statistical_rule_has_an_explicit_significance_level)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/tomda/Documents/Projet-recherche-Stock-Market/tests/test_price_audit.py", line 131, in test_preregistered_statistical_rule_has_an_explicit_significance_level
+    self.assertIsNotNone(re.search(r"(?:0[.,]\d+|\d+\s*%)", registration["statistics"]),
+AssertionError: unexpectedly None : Le seuil de décision statistique doit être fixé avant la validation
+
+======================================================================
+FAIL: test_risk_success_requires_positive_alpha_as_in_protocol (tests.test_price_audit.ConfirmedPriceBugs.test_risk_success_requires_positive_alpha_as_in_protocol)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/tomda/Documents/Projet-recherche-Stock-Market/tests/test_price_audit.py", line 122, in test_risk_success_requires_positive_alpha_as_in_protocol
+    self.assertIn("alpha", risk["success"].lower(),
+AssertionError: 'alpha' not found in 'sharpe supérieur et drawdown moins profond que le buy and hold tsla. capital final non exigé, à publier quand même.' : Le critère gagner mieux du protocole impose Sharpe supérieur ET alpha positif
+
+======================================================================
+FAIL: test_rsi_without_losses_is_one_hundred (tests.test_price_audit.ConfirmedPriceBugs.test_rsi_without_losses_is_one_hundred)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/tomda/Documents/Projet-recherche-Stock-Market/tests/test_price_audit.py", line 84, in test_rsi_without_losses_is_one_hundred
+    self.assertEqual(price.rsi(close, 2).iloc[-1], 100.0)
+AssertionError: np.float64(nan) != 100.0
+
+----------------------------------------------------------------------
+Ran 13 tests in 2.157s
+
+FAILED (failures=8)

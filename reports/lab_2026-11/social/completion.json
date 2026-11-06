@@ -1,0 +1,8 @@
+{
+  "trials": 45,
+  "best_strategy": "news_finbert_exit_5",
+  "best_final_capital": 327218.04449319164,
+  "best_corrected_p": 0.771,
+  "selected_strategies": 0,
+  "command": "venv/bin/python reports/run_social_lab.py"
+}

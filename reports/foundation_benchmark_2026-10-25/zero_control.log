@@ -1,0 +1,132 @@
+Loading weights:   0%|          | 0/170 [00:00<?, ?it/s]Loading weights:   1%|          | 1/170 [00:00<00:32,  5.22it/s]Loading weights:   2%|▏         | 4/170 [00:00<00:16, 10.07it/s]Loading weights: 100%|██████████| 170/170 [00:00<00:00, 386.68it/s]
+/home/tomda/Documents/Projet-recherche-Stock-Market/.venv-forecast/lib/python3.12/site-packages/torch/nn/modules/linear.py:125: UserWarning: Attempting to use hipBLASLt on an unsupported architecture! Overriding blas backend to hipblas (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:310.)
+  return F.linear(input, self.weight, self.bias)
+chronos_synth_zero_jev: 32/18000, 0.9 s écoulées
+chronos_synth_zero_jev: 1312/18000, 19.5 s écoulées
+chronos_synth_zero_jev: 2592/18000, 38.5 s écoulées
+chronos_synth_zero_jev: 3872/18000, 57.4 s écoulées
+chronos_synth_zero_jev: 5152/18000, 76.3 s écoulées
+chronos_synth_zero_jev: 6432/18000, 95.4 s écoulées
+chronos_synth_zero_jev: 7712/18000, 114.5 s écoulées
+chronos_synth_zero_jev: 8992/18000, 133.5 s écoulées
+chronos_synth_zero_jev: 10272/18000, 152.5 s écoulées
+chronos_synth_zero_jev: 11552/18000, 171.4 s écoulées
+chronos_synth_zero_jev: 12832/18000, 190.2 s écoulées
+chronos_synth_zero_jev: 14112/18000, 209.0 s écoulées
+chronos_synth_zero_jev: 15392/18000, 227.7 s écoulées
+chronos_synth_zero_jev: 16672/18000, 246.5 s écoulées
+chronos_synth_zero_jev: 17952/18000, 265.3 s écoulées
+chronos_synth_zero_jev: 18000/18000, 266.0 s écoulées
+[
+  {
+    "model": "chronos_synth",
+    "variant": "univariate",
+    "rows": 18000,
+    "device": "cuda",
+    "seconds": 37.14608213201427,
+    "median_batch_seconds": 0.07095779500014032,
+    "batch_size": 32
+  },
+  {
+    "model": "chronos_synth",
+    "variant": "market",
+    "rows": 18000,
+    "device": "cuda",
+    "seconds": 40.312556122005844,
+    "median_batch_seconds": 0.08062880699981179,
+    "batch_size": 32
+  },
+  {
+    "model": "chronos_synth",
+    "variant": "finbert",
+    "rows": 18000,
+    "device": "cuda",
+    "seconds": 69.26361500900566,
+    "median_batch_seconds": 0.1220979139998235,
+    "batch_size": 32
+  },
+  {
+    "model": "chronos_synth",
+    "variant": "jev",
+    "rows": 18000,
+    "device": "cuda",
+    "seconds": 241.1294359319918,
+    "median_batch_seconds": 0.5070104180003909,
+    "batch_size": 32
+  },
+  {
+    "model": "chronos_synth",
+    "variant": "zero_jev",
+    "rows": 18000,
+    "device": "cuda",
+    "seconds": 265.8030079329883,
+    "median_batch_seconds": 0.5014502610001728,
+    "batch_size": 32
+  }
+]
+Loading weights from local directory
+/home/tomda/Documents/Projet-recherche-Stock-Market/.venv-forecast/lib/python3.12/site-packages/torch/nn/modules/linear.py:125: UserWarning: Attempting to use hipBLASLt on an unsupported architecture! Overriding blas backend to hipblas (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:310.)
+  return F.linear(input, self.weight, self.bias)
+timesfm3_zero_jev: 32/18000, 1.1 s écoulées
+timesfm3_zero_jev: 1312/18000, 38.6 s écoulées
+timesfm3_zero_jev: 2592/18000, 76.3 s écoulées
+timesfm3_zero_jev: 3872/18000, 114.2 s écoulées
+timesfm3_zero_jev: 5152/18000, 151.8 s écoulées
+timesfm3_zero_jev: 6432/18000, 189.5 s écoulées
+timesfm3_zero_jev: 7712/18000, 230.3 s écoulées
+timesfm3_zero_jev: 8992/18000, 297.0 s écoulées
+timesfm3_zero_jev: 10272/18000, 349.3 s écoulées
+timesfm3_zero_jev: 11552/18000, 366.6 s écoulées
+timesfm3_zero_jev: 12832/18000, 384.0 s écoulées
+timesfm3_zero_jev: 14112/18000, 401.4 s écoulées
+timesfm3_zero_jev: 15392/18000, 418.7 s écoulées
+timesfm3_zero_jev: 16672/18000, 436.0 s écoulées
+timesfm3_zero_jev: 17952/18000, 453.2 s écoulées
+timesfm3_zero_jev: 18000/18000, 453.8 s écoulées
+[
+  {
+    "model": "timesfm3",
+    "variant": "univariate",
+    "rows": 18000,
+    "device": "cuda",
+    "seconds": 55.4311921070057,
+    "median_batch_seconds": 0.0971797250003874,
+    "batch_size": 32
+  },
+  {
+    "model": "timesfm3",
+    "variant": "market",
+    "rows": 18000,
+    "device": "cuda",
+    "seconds": 78.71591722199537,
+    "median_batch_seconds": 0.11533703999975842,
+    "batch_size": 32
+  },
+  {
+    "model": "timesfm3",
+    "variant": "finbert",
+    "rows": 18000,
+    "device": "cuda",
+    "seconds": 114.02971057899867,
+    "median_batch_seconds": 0.15591510000012931,
+    "batch_size": 32
+  },
+  {
+    "model": "timesfm3",
+    "variant": "jev",
+    "rows": 18000,
+    "device": "cuda",
+    "seconds": 520.979459353005,
+    "median_batch_seconds": 0.9634222730001056,
+    "batch_size": 32
+  },
+  {
+    "model": "timesfm3",
+    "variant": "zero_jev",
+    "rows": 18000,
+    "device": "cuda",
+    "seconds": 453.5881362699911,
+    "median_batch_seconds": 0.7658298820006166,
+    "batch_size": 32
+  }
+]

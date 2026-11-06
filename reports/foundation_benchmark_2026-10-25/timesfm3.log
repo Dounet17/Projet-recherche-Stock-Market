@@ -1,0 +1,105 @@
+Loading weights from local directory
+/home/tomda/Documents/Projet-recherche-Stock-Market/.venv-forecast/lib/python3.12/site-packages/torch/nn/modules/linear.py:125: UserWarning: Attempting to use hipBLASLt on an unsupported architecture! Overriding blas backend to hipblas (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:310.)
+  return F.linear(input, self.weight, self.bias)
+timesfm3_univariate: 32/18000, 0.4 s écoulées
+timesfm3_univariate: 1312/18000, 4.3 s écoulées
+timesfm3_univariate: 2592/18000, 8.5 s écoulées
+timesfm3_univariate: 3872/18000, 12.5 s écoulées
+timesfm3_univariate: 5152/18000, 16.4 s écoulées
+timesfm3_univariate: 6432/18000, 20.4 s écoulées
+timesfm3_univariate: 7712/18000, 24.3 s écoulées
+timesfm3_univariate: 8992/18000, 28.2 s écoulées
+timesfm3_univariate: 10272/18000, 32.0 s écoulées
+timesfm3_univariate: 11552/18000, 35.9 s écoulées
+timesfm3_univariate: 12832/18000, 39.8 s écoulées
+timesfm3_univariate: 14112/18000, 43.7 s écoulées
+timesfm3_univariate: 15392/18000, 47.6 s écoulées
+timesfm3_univariate: 16672/18000, 51.6 s écoulées
+timesfm3_univariate: 17952/18000, 55.5 s écoulées
+timesfm3_univariate: 18000/18000, 55.7 s écoulées
+timesfm3_market: 32/18000, 0.1 s écoulées
+timesfm3_market: 1312/18000, 4.7 s écoulées
+timesfm3_market: 2592/18000, 9.2 s écoulées
+timesfm3_market: 3872/18000, 13.7 s écoulées
+timesfm3_market: 5152/18000, 18.5 s écoulées
+timesfm3_market: 6432/18000, 23.6 s écoulées
+timesfm3_market: 7712/18000, 32.9 s écoulées
+timesfm3_market: 8992/18000, 43.3 s écoulées
+timesfm3_market: 10272/18000, 51.6 s écoulées
+timesfm3_market: 11552/18000, 56.2 s écoulées
+timesfm3_market: 12832/18000, 60.7 s écoulées
+timesfm3_market: 14112/18000, 65.2 s écoulées
+timesfm3_market: 15392/18000, 69.8 s écoulées
+timesfm3_market: 16672/18000, 74.3 s écoulées
+timesfm3_market: 17952/18000, 78.7 s écoulées
+timesfm3_market: 18000/18000, 79.0 s écoulées
+timesfm3_finbert: 32/18000, 0.2 s écoulées
+timesfm3_finbert: 1312/18000, 6.3 s écoulées
+timesfm3_finbert: 2592/18000, 12.7 s écoulées
+timesfm3_finbert: 3872/18000, 18.9 s écoulées
+timesfm3_finbert: 5152/18000, 25.5 s écoulées
+timesfm3_finbert: 6432/18000, 31.8 s écoulées
+timesfm3_finbert: 7712/18000, 37.9 s écoulées
+timesfm3_finbert: 8992/18000, 44.0 s écoulées
+timesfm3_finbert: 10272/18000, 50.2 s écoulées
+timesfm3_finbert: 11552/18000, 56.3 s écoulées
+timesfm3_finbert: 12832/18000, 62.4 s écoulées
+timesfm3_finbert: 14112/18000, 68.6 s écoulées
+timesfm3_finbert: 15392/18000, 75.4 s écoulées
+timesfm3_finbert: 16672/18000, 106.2 s écoulées
+timesfm3_finbert: 17952/18000, 113.9 s écoulées
+timesfm3_finbert: 18000/18000, 114.3 s écoulées
+timesfm3_jev: 32/18000, 0.3 s écoulées
+timesfm3_jev: 1312/18000, 14.1 s écoulées
+timesfm3_jev: 2592/18000, 27.9 s écoulées
+timesfm3_jev: 3872/18000, 42.1 s écoulées
+timesfm3_jev: 5152/18000, 57.0 s écoulées
+timesfm3_jev: 6432/18000, 71.9 s écoulées
+timesfm3_jev: 7712/18000, 101.2 s écoulées
+timesfm3_jev: 8992/18000, 173.6 s écoulées
+timesfm3_jev: 10272/18000, 245.6 s écoulées
+timesfm3_jev: 11552/18000, 318.0 s écoulées
+timesfm3_jev: 12832/18000, 368.5 s écoulées
+timesfm3_jev: 14112/18000, 407.3 s écoulées
+timesfm3_jev: 15392/18000, 444.8 s écoulées
+timesfm3_jev: 16672/18000, 482.3 s écoulées
+timesfm3_jev: 17952/18000, 519.7 s écoulées
+timesfm3_jev: 18000/18000, 521.2 s écoulées
+[
+  {
+    "model": "timesfm3",
+    "variant": "univariate",
+    "rows": 18000,
+    "device": "cuda",
+    "seconds": 55.4311921070057,
+    "median_batch_seconds": 0.0971797250003874,
+    "batch_size": 32
+  },
+  {
+    "model": "timesfm3",
+    "variant": "market",
+    "rows": 18000,
+    "device": "cuda",
+    "seconds": 78.71591722199537,
+    "median_batch_seconds": 0.11533703999975842,
+    "batch_size": 32
+  },
+  {
+    "model": "timesfm3",
+    "variant": "finbert",
+    "rows": 18000,
+    "device": "cuda",
+    "seconds": 114.02971057899867,
+    "median_batch_seconds": 0.15591510000012931,
+    "batch_size": 32
+  },
+  {
+    "model": "timesfm3",
+    "variant": "jev",
+    "rows": 18000,
+    "device": "cuda",
+    "seconds": 520.979459353005,
+    "median_batch_seconds": 0.9634222730001056,
+    "batch_size": 32
+  }
+]

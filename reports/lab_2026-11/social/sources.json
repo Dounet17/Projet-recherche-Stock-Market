@@ -1,0 +1,32 @@
+{
+  "posts": {
+    "rows_before_cutoff": 60089,
+    "sha256_filtered": "33a5098ca8018d8e6075e3e08536427a7b687e7c9ec78f05c8df2b09a9fce356",
+    "finbert_scored_rows": 2894,
+    "jev_scored_rows": 2894
+  },
+  "earnings": {
+    "rows_before_cutoff": 42,
+    "sha256_filtered": "4b9342105c8546bff7f6e3210f3b4738b6422b5a2b1d19c1208f99e4366b8553"
+  },
+  "news": {
+    "rows_before_cutoff": 28432,
+    "sha256_filtered": "4776196c201128249dc8743515046214978d7ac4bf367e71d8d4c3c43236c636",
+    "revision_fraction": 0.5901800787844682
+  },
+  "code_sha256": {
+    "src/lab.py": "dd58810cce959881c3c823175448c87dffe37a37f6298b087bacbe039c297352",
+    "src/social_lab.py": "03d84abd159d43fab6d478d3717c5fdf57255b94e028a595c4fdb12867a6c2e3",
+    "reports/run_social_lab.py": "3e305a9b57827875645c9c0308baae191f49098b90ddead406bcc7e0cf5efba4"
+  },
+  "versions": {
+    "numpy": "2.5.4",
+    "pandas": "3.0.6",
+    "pyarrow": "26.0.0",
+    "torch": "2.14.1+cpu",
+    "transformers": "5.19.0"
+  },
+  "finbert_snapshots_local": [
+    "0bc2ac10dda6929bcb1f77ccc43c7ec5c424f031"
+  ]
+}
