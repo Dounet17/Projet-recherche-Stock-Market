@@ -67,16 +67,12 @@ sectors["defense_list"] = sectors.index.isin(defense)
 sectors.assign(symbol=securities.symbol, sic=sic, security_type=securities.security_type, exited=securities.exit_return_base.notna()).to_parquet(DATA / "sectors.parquet")
 
 print("Table du buy and hold...", flush=True)
-# Défauts relevés à l'audit : à corriger dans le nettoyage, et non pas ici, lors de sa prochaine exécution.
-excluded = set(pd.read_csv(ROOT / "reports" / "lab_2026-11" / "reference_exclusions.csv").security_id)
 table = buy_hold_table(market)
-table = table[~table.security_id.isin(excluded)].reset_index(drop=True)
 table.to_parquet(DATA / "buy_hold_by_cohort.parquet", index=False)
 print(f"{len(table):,} lignes, {table.start.nunique()} dates d'achat, de {table.start.min().date()} à {table.start.max().date()}", flush=True)
 # Toutes les actions cotées, sans filtre de prix ni de liquidité : surtout de très petites valeurs.
 listed_market = load_universe(min_price=0.0, min_dollar_volume=0.0)
 listed = buy_hold_table(listed_market)
-listed = listed[~listed.security_id.isin(excluded)].reset_index(drop=True)
 listed.to_parquet(DATA / "buy_hold_all_listed.parquet", index=False)
 del listed_market
 spy = benchmark_multiple(market.benchmarks, "SPY")

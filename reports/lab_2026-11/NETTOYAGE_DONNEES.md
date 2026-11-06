@@ -21,7 +21,7 @@ Règles : `src/universe_clean.py`. Chiffres : `qc_clean.json`, `validate_cuts.js
 |---|---|---|
 | Séries ou titres | 19 875 symboles | 18 745 titres |
 | Lignes | 22 727 467 | 20 934 736 |
-| Actions utilisables (`common` et `adr`, au moins 20 séances) | non distinguées | 8 123 |
+| Actions utilisables (`common` et `adr`, au moins 20 séances) | non distinguées | 8 119 |
 
 Le point de départ de 19 875 symboles inclut les 2 457 symboles ajoutés par ce travail aux 17 418 d'origine.
 
@@ -57,7 +57,7 @@ Une séance à volume **brut** nul a toujours un prix plat : c'est un cours reco
 
 Les -30 % et -55 % reprennent les ordres de grandeur de Shumway (1997) et Shumway et Warther (1999), cités de mémoire : **à vérifier avant de les citer dans l'article**.
 
-Sur les 2 850 actions disparues, le rendement de sortie moyen vaut -18 % (central), -9,4 % (optimiste) et -37,2 % (pessimiste). Cet écart est large : une stratégie exposée aux petites valeurs doit publier ses résultats sous les trois hypothèses.
+Sur les 2 845 actions disparues, le rendement de sortie moyen vaut -18 % (central), -9,4 % (optimiste) et -37,3 % (pessimiste). Cet écart est large : une stratégie exposée aux petites valeurs doit publier ses résultats sous les trois hypothèses.
 
 Contrôle : TWTR sort à +0,9 % (prix de rachat 54,20 $), SIVB, BBBY, SBNY et FRC à -100 %. Sur les fusions en numéraire, le rendement médian de sortie est de 0,0 %, ce qui est cohérent : le cours rejoint le prix d'offre avant l'opération.
 
@@ -89,9 +89,9 @@ Autres corrections sur les prix :
 
 ### 6. Fonds
 
-Colonne `security_type` : 6 780 actions ordinaires, 4 490 fonds, 3 552 non identifiés, 1 410 sociétés étrangères, 1 277 dérivés et unités, 902 actions préférentielles et dette, 310 SPAC, 24 symboles de test. Les fonds (dont TQQQ) sont exclus des actions, à partir du nom, du code d'activité SEC et des formulaires déposés.
+Colonne `security_type` : 6 777 actions ordinaires, 4 490 fonds, 3 552 non identifiés, 1 409 sociétés étrangères, 1 277 dérivés et unités, 903 actions préférentielles et dette, 309 SPAC, 24 symboles de test, 4 doublons de cotation. Les fonds (dont TQQQ) sont exclus des actions, à partir du nom, du code d'activité SEC et des formulaires déposés.
 
-La difficulté vient des noms, qui datent de 2026 : FB est aujourd'hui un fonds, LAZR aussi. Un nom n'est donc retenu que pour le dernier titre d'un symbole, et un dépôt de comptes pendant toute la cotation l'emporte sur un nom de fonds. Cette règle se trompe parfois : 6 corrections relues à la main sont dans `security_overrides.csv` (EDC et UCC étaient liés à des sociétés homonymes).
+La difficulté vient des noms, qui datent de 2026 : FB est aujourd'hui un fonds, LAZR aussi. Un nom n'est donc retenu que pour le dernier titre d'un symbole, et un dépôt de comptes pendant toute la cotation l'emporte sur un nom de fonds. Cette règle se trompe parfois : 13 corrections relues à la main sont dans `security_overrides.csv` (EDC et UCC étaient liés à des sociétés homonymes).
 
 `known_securities.csv` qualifie à la main 158 symboles très échangés (XIV, TVIX, WBD, etc.). **Cette table a été écrite de mémoire par l'assistant, sans source externe, et doit être relue.** Seuls ses CIK ont été contrôlés dans les données SEC, ce qui a écarté un CIK faux (PF).
 
@@ -117,9 +117,19 @@ Fiabilité du lien : lorsque deux méthodes indépendantes répondent, elles don
 
 `fundamentals_quarterly_dev.parquet` : 254 472 trimestres de 10 368 sociétés, dont 32 200 quatrièmes trimestres reconstitués (exercice moins 9 mois, remis à l'échelle en cas de fractionnement). Contrôle sur TSLA : 1,07 et 2,27 pour les T4 2022 et 2023, égaux aux chiffres publiés selon ma mémoire. Une première version donnait -2,14 à cause du fractionnement de 2022. 437 trimestres ont `eps_suspect` (plus de 500 $ par action en valeur absolue). `filed` donne la date de publication, à respecter pour éviter toute fuite.
 
+## Correction du 06/11/2026 : rattachement déterministe
+
+**Défaut.** `symbol_history` renvoyait un ensemble Python, dont l'ordre change à chaque exécution, et le premier CIK trouvé l'emportait. D'une exécution à l'autre, un ancien symbole pouvait prendre la place du symbole actuel : RRX héritait d'une autre société et ETD a basculé en fonds lors d'un essai. Ce défaut existait depuis le premier nettoyage.
+
+**Correction.** Le symbole du titre passe en premier, les autres par ordre alphabétique. Deux exécutions avec `PYTHONHASHSEED=1` et `2` donnent des `securities_dev` (18 745 titres) et `fundamentals_quarterly_dev` (254 472 trimestres) identiques. **`prices_dev` n'a pas été comparé entre ces deux exécutions.** La commande `-I` ignore cette variable : le contrôle se lance avec `-P -s`.
+
+**Corrections de l'audit, dans `security_overrides.csv`.** CETXP est une action préférentielle. TDAY, SPAQ, LCA et NHIC répètent GCI, FSR, ASAP et EVLV, et reçoivent le type `duplicate`. AMJ est un produit de JPMorgan lié à tort à Procter & Gamble. XPRO était lié à Fiserv.
+
+**Effet sur les résultats.** Règles action par action et témoin : moins de 3 USD. Test A : de 18 553 à 18 160 USD. Test B : de 14 773 à 14 372 USD. Les taux de couverture de la section 7 n'ont pas été recalculés, et peuvent bouger légèrement.
+
 ## Limites à garder en tête
 
-1. **Causes de disparition mal connues avant 2020.** Les opérations Alpaca sur les fusions commencent vraiment en 2020. Avant, seul un 8-K indique une acquisition, sans le prix : 843 actions sont en `merger_terms_unknown` à 0 %.
+1. **Causes de disparition mal connues avant 2020.** Les opérations Alpaca sur les fusions commencent vraiment en 2020. Avant, seul un 8-K indique une acquisition, sans le prix : 842 actions sont en `merger_terms_unknown` à 0 %.
 2. **Titres « unknown ».** 3 404 titres d'au moins 20 séances n'ont ni nom fiable ni lien SEC, dont 2 693 disparus. Ils pèsent 0,6 % du volume en dollars, mais les exclure retire surtout des sociétés disparues : un biais du survivant léger subsiste. Certains sont sans doute des fonds.
 3. **Métadonnées de 2026.** Noms, CIK et listes de symboles sont lus aujourd'hui. Ils servent à identifier les titres et ne doivent jamais servir de signal. Le statut « vivant » est calculé uniquement à partir des prix.
 4. **Appartenance à un indice non reconstituée.** Ce dataset ne dit pas quelles sociétés étaient dans le S&P 500 ou le Dow Jones à une date donnée.

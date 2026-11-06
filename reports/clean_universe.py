@@ -187,7 +187,11 @@ def overlaps(cik, begin, end, slack_days=200):
 
 
 def symbol_history(row):
-    """Le symbole, ses doublons, ses anciens noms et sa version sans suffixe de faillite."""
+    """Le symbole, ses doublons, ses anciens noms et sa version sans suffixe de faillite.
+
+    Le symbole du titre vient d'abord, puis les autres par ordre alphabétique : le premier CIK trouvé
+    l'emporte, et l'ordre d'un ensemble Python change à chaque exécution.
+    """
     seen, stack = set(), [row.symbol] + row.alias_symbols
     while stack:
         symbol = stack.pop()
@@ -196,7 +200,7 @@ def symbol_history(row):
             stack.extend(predecessors.get(symbol, ()))
             if len(symbol) == 5 and symbol.endswith("Q"):
                 stack.append(symbol[:-1])
-    return seen
+    return [row.symbol] + sorted(seen - {row.symbol})
 
 
 def link(row):
@@ -263,7 +267,7 @@ unresolved = securities.security_type.eq("unknown") & securities.symbol.isin(man
 securities.loc[unresolved, "security_type"] = securities.loc[unresolved, "symbol"].map(manual_type)
 securities["type_source"] = np.where(unresolved, "manual", "auto")
 # Pas d'option comment="#" ici : les identifiants contiennent ce caractère (LAZR#0).
-overrides = pd.read_csv(ROOT / "reports" / "lab_2026-11" / "security_overrides.csv", skiprows=2, dtype=str).fillna("")
+overrides = pd.read_csv(ROOT / "reports" / "lab_2026-11" / "security_overrides.csv", skiprows=3, dtype=str).fillna("")
 for row in overrides.itertuples():
     mask = securities.security_id == row.security_id
     assert mask.sum() == 1, f"Correction sans titre : {row.security_id}"

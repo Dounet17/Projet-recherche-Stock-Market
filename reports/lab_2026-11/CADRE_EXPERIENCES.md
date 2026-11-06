@@ -88,11 +88,11 @@ Témoin, 2018-2024, 10 000 USD : poids égaux sur les 500 titres les plus liquid
 
 | | Capital final |
 |---|---|
-| Hypothèse centrale | 19 979 |
-| Hypothèse optimiste | 19 991 |
-| Hypothèse pessimiste | 19 415 |
-| Frais doublés | 19 685 |
+| Hypothèse centrale | 19 982 |
+| Hypothèse optimiste | 19 993 |
+| Hypothèse pessimiste | 19 418 |
+| Frais doublés | 19 688 |
 | SPY conservé | 24 531 |
-| Hasard, médiane de 10 tirages | 10 740 |
+| Hasard, médiane de 10 tirages | 10 537 |
 
 Ce témoin ne démontre rien sur une stratégie : il vérifie la chaîne et donne un repère.

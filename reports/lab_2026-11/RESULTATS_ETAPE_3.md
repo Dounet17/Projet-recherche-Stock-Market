@@ -1,6 +1,6 @@
 # Étape 3 : moyenne mobile sur 200 séances, action par action
 
-Rapport du 06/11/2026, période de développement seulement : ce n'est pas une validation. Règle figée avant le premier lancement, une seule variante journalisée (`step3_sma200_by_stock`, 4e essai du journal `ledger_universe.csv`).
+Rapport du 06/11/2026, chiffres mis à jour sur la version corrigée et déterministe du nettoyage, période de développement seulement : ce n'est pas une validation. Règle figée avant le premier lancement, une seule variante journalisée (`step3_sma200_by_stock`, journal `ledger_universe.csv`).
 
 ```bash
 venv/bin/python reports/run_step3_sma200.py   # environ 1 minute, réécrit la même ligne du journal
@@ -25,9 +25,9 @@ Achats : premier jour de bourse de chaque mois, de janvier 2018 à fin 2024, jus
 
 Vocabulaire : le Sharpe mesure le gain par unité de risque ; le drawdown, la pire chute depuis un sommet ; le bêta, la sensibilité au marché ; l'alpha, ce qui reste une fois cette sensibilité retirée.
 
-| Toutes achetables (2 909 titres) | Règle | Règle, liquidités en BIL | Buy and hold des mêmes titres | SPY |
+| Toutes achetables (2 908 titres) | Règle | Règle, liquidités en BIL | Buy and hold des mêmes titres | SPY |
 |---|---:|---:|---:|---:|
-| Capital final | 12 488 | 13 470 | 16 490 | 24 531 |
+| Capital final | 12 487 | 13 471 | 16 490 | 24 531 |
 | Par an | 3,2 % | | 7,4 % | 13,7 % |
 | Volatilité | 9,5 % | | 18,3 % | 18,4 % |
 | Sharpe, sans retirer le taux sans risque | 0,38 | | 0,48 | 0,79 |
@@ -38,9 +38,9 @@ Vocabulaire : le Sharpe mesure le gain par unité de risque ; le drawdown, la pi
 
 | Univers | Actions | Règle | Buy and hold | La règle gagne sur | Avec BIL |
 |---|---:|---:|---:|---:|---:|
-| 500 plus liquides | 493 | 14 772 | 20 374 | 25,8 % | 31,6 % |
-| 1 000 plus liquides | 986 | 13 941 | 18 775 | 28,4 % | 34,5 % |
-| Toutes achetables | 2 909 | 12 488 | 16 490 | 31,9 % | 40,3 % |
+| 500 plus liquides | 493 | 14 772 | 20 376 | 25,8 % | 31,4 % |
+| 1 000 plus liquides | 986 | 13 941 | 18 773 | 28,5 % | 34,5 % |
+| Toutes achetables | 2 908 | 12 487 | 16 490 | 31,9 % | 40,2 % |
 
 Sensibilités, toutes achetables, capital moyen : hypothèse optimiste 12 490 contre 16 500, pessimiste 12 180 contre 16 080, frais doublés 11 370 contre 16 430. La règle gagne alors sur 32,8 % et 26,5 % des titres.
 
@@ -50,7 +50,7 @@ Sensibilités, toutes achetables, capital moyen : hypothèse optimiste 12 490 co
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
 | 1 an | 72 | 3,4 % | 9,3 % | -2,0 % | 4,8 % | 36,4 % | 4 % à 75 % | 29 % |
 | 3 ans | 48 | 4,7 % | 8,9 % | 0,1 % | 4,9 % | 37,1 % | 20 % à 47 % | 4 % |
-| 5 ans | 24 | 3,6 % | 7,5 % | -0,2 % | 3,9 % | 33,9 % | 26 % à 38 % | 0 % |
+| 5 ans | 24 | 3,6 % | 7,5 % | -0,2 % | 3,9 % | 33,8 % | 26 % à 38 % | 0 % |
 
 ### Quand et où la règle aide
 
@@ -73,7 +73,7 @@ Sensibilités, toutes achetables, capital moyen : hypothèse optimiste 12 490 co
 2. **C'est une assurance, pas une source de gain.** Elle divise par deux la volatilité et par plus de deux la chute du portefeuille, mais aussi le gain. Une fois retirée la baisse d'exposition, il ne reste presque rien : alpha de -0,2 % par an (intervalle à 95 % de -3,5 % à +3,2 %) avec des liquidités à 0 %, et de -0,4 % (de -3,7 % à +3,1 %) avec BIL, au-delà du taux sans risque.
 3. **Le Sharpe du portefeuille n'est pas nettement différent.** Avec BIL et au-delà du taux sans risque, 0,27 contre 0,36 (écart de -0,48 à +0,28). On ne peut pas conclure qu'elle fait mieux ou moins bien par unité de risque.
 4. **L'écart de capital n'est pas statistiquement net.** Écart annuel contre son buy and hold de -4,0 % (intervalle de -12,4 % à +4,9 %), p unilatérale de 0,82. Une hypothèse « elle gagne » n'est pas soutenue, ce qui ne prouve pas qu'elle perd toujours.
-5. **Contre SPY, elle ne soutient aucun avantage.** p unilatérale de 0,99 ; p corrigée sur les 4 essais du journal de 0,996.
+5. **Contre SPY, elle ne soutient aucun avantage.** p unilatérale de 0,99 ; p corrigée sur les 6 essais du journal de 0,999.
 6. **Une explication possible, non mesurée ici.** Les rebonds rapides se feraient en grande partie quand la règle est sortie. Les résultats par date d'achat vont dans ce sens, sans le démontrer.
 
 ## Contrôles
@@ -86,7 +86,7 @@ Sensibilités, toutes achetables, capital moyen : hypothèse optimiste 12 490 co
 
 ## Limites
 
-- **Pas exactement le même univers que la référence.** Il faut 180 valeurs de signal : 30 884 lignes de la table de référence sont exclues, surtout des titres récents. C'est pourquoi le buy and hold vaut ici 16 490 et non 16 360.
+- **Pas exactement le même univers que la référence.** Il faut 180 valeurs de signal : 30 884 lignes de la table de référence sont exclues, surtout des titres récents. C'est pourquoi le buy and hold vaut ici 16 490 et non 16 356.
 - **Signal et neutralisation.** La neutralisation réécrit les niveaux après un cours suspect, ce qui change 11 358 décisions sur 231 titres (155 comparés). Effet isolé sur le capital moyen : +1,99 USD.
 - **Fuite du nettoyage.** Les 75 cours masqués à cause du lendemain subsistent. Leur effet propre n'est pas mesuré ici.
 - **Fin de série.** 378 lignes (18 titres) finissent en position sur un titre sans ouverture finale ; la vente se fait au dernier cours connu, comme dans le moteur.

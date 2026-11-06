@@ -1,6 +1,6 @@
 # Étape 4 : Bollinger et RSI, action par action
 
-Rapport du 06/11/2026, période de développement seulement : ce n'est pas une validation. Définitions reprises de `price_lab`, figées avant le premier lancement sur ce dataset, une variante journalisée par règle. Elles avaient déjà été vues sur les 10 actifs du laboratoire : ce ne sont donc pas des idées neuves, mais elles n'ont pas été choisies pour ce résultat.
+Rapport du 06/11/2026, chiffres mis à jour sur la version corrigée et déterministe du nettoyage, période de développement seulement : ce n'est pas une validation. Définitions reprises de `price_lab`, figées avant le premier lancement sur ce dataset, une variante journalisée par règle. Elles avaient déjà été vues sur les 10 actifs du laboratoire : ce ne sont donc pas des idées neuves, mais elles n'ont pas été choisies pour ce résultat.
 
 ```bash
 venv/bin/python reports/run_step4_mean_reversion.py   # environ 2 minutes, réécrit les mêmes lignes du journal
@@ -20,14 +20,14 @@ Mêmes actions et mêmes dates que la moyenne mobile : les trois règles se comp
 
 ## Résultats
 
-### 10 000 USD à parts égales, achat le 02/01/2018, jusqu'à fin 2024, toutes achetables (2 909 titres)
+### 10 000 USD à parts égales, achat le 02/01/2018, jusqu'à fin 2024, toutes achetables (2 908 titres)
 
 | | Moyenne mobile 200 | Bollinger | RSI 2 | Buy and hold | SPY |
 |---|---:|---:|---:|---:|---:|
-| **Capital final** | **12 488** | **9 659** | **9 684** | **16 490** | **24 531** |
-| Avec liquidités en BIL | 13 472 | 10 925 | 11 140 | | |
-| Hypothèse pessimiste | 12 180 | 9 590 | 9 630 | 16 080 | |
-| Frais doublés | 11 370 | 8 690 | 8 530 | 16 430 | |
+| **Capital final** | **12 487** | **9 660** | **9 685** | **16 490** | **24 531** |
+| Avec liquidités en BIL | 13 471 | 10 927 | 11 140 | | |
+| Hypothèse pessimiste | 12 179 | 9 595 | 9 632 | 16 080 | |
+| Frais doublés | 11 371 | 8 692 | 8 530 | 16 434 | |
 | Volatilité | 9,5 % | 8,4 % | 2,8 % | 18,3 % | 18,4 % |
 | Pire chute du portefeuille | -15,4 % | -32,8 % | -9,0 % | -36,6 % | -32,0 % |
 | Part investie, en dollars | 51 % | 20 % | 9 % | 87 % | 100 % |
@@ -36,16 +36,16 @@ Mêmes actions et mêmes dates que la moyenne mobile : les trois règles se comp
 | Alpha annuel au-delà du taux sans risque, avec BIL | -0,4 % | -2,9 % | -1,3 % | | |
 | Intervalle à 95 % de cet alpha | -3,7 à +3,1 | -7,9 à +1,4 | -2,5 à -0,1 | | |
 | La règle gagne sur (liquidités à 0 %) | 31,9 % | 29,2 % | 33,2 % | | |
-| La règle gagne sur (liquidités en BIL) | 40,3 % | 36,7 % | 40,6 % | | |
+| La règle gagne sur (liquidités en BIL) | 40,2 % | 36,8 % | 40,6 % | | |
 | p corrigée contre SPY, 6 essais | 0,999 | 0,999 | 0,999 | | |
 
 ### Selon l'univers, même achat
 
 | | Moyenne mobile 200 | Bollinger | RSI 2 | Buy and hold |
 |---|---:|---:|---:|---:|
-| 500 plus liquides | 14 772 | 11 487 | 10 804 | 20 374 |
-| 1 000 plus liquides | 13 941 | 10 768 | 10 472 | 18 775 |
-| Toutes achetables | 12 488 | 9 659 | 9 684 | 16 490 |
+| 500 plus liquides | 14 772 | 11 508 | 10 806 | 20 376 |
+| 1 000 plus liquides | 13 941 | 10 770 | 10 475 | 18 773 |
+| Toutes achetables | 12 487 | 9 660 | 9 685 | 16 490 |
 
 ### Toutes les dates d'achat, en moyenne, toutes achetables
 
@@ -53,7 +53,7 @@ Mêmes actions et mêmes dates que la moyenne mobile : les trois règles se comp
 |---|---:|---:|---:|---:|---:|
 | 1 an | 72 | 3,4 %, 36,4 % | -1,0 %, 44,5 % | -0,3 %, 44,1 % | 9,3 % |
 | 3 ans | 48 | 4,7 %, 37,1 % | -0,9 %, 34,3 % | 0,4 %, 37,8 % | 8,9 % |
-| 5 ans | 24 | 3,6 %, 33,9 % | -1,5 %, 28,5 % | 0,1 %, 34,9 % | 7,5 % |
+| 5 ans | 24 | 3,6 %, 33,8 % | -1,5 %, 28,5 % | 0,1 %, 34,9 % | 7,5 % |
 
 La part d'actions gagnantes sur 1 an varie énormément selon la date : de 11 % à 77 % pour Bollinger, de 5 % à 78 % pour le RSI. Le meilleur moment se situe avant une baisse du marché (milieu 2021, avril 2019), le pire juste après le creux du Covid (avril 2020).
 

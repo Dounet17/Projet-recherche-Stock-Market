@@ -1,6 +1,6 @@
 # Référence du buy and hold, 2016-2024
 
-Rapport du 06/11/2026. Aucune stratégie n'est testée ici et le journal des essais n'est pas touché. Seules les données jusqu'à fin 2024 sont lues.
+Rapport du 06/11/2026. Chiffres mis à jour le 06/11/2026 sur la version corrigée et déterministe du nettoyage (voir `NETTOYAGE_DONNEES.md`). Aucune stratégie n'est testée ici et le journal des essais n'est pas touché. Seules les données jusqu'à fin 2024 sont lues.
 
 ```bash
 venv/bin/python reports/build_reference.py   # moins de 2 minutes, 5 Go de RAM
@@ -9,7 +9,7 @@ venv/bin/python tests/test_reference.py
 
 | Fichier | Contenu |
 |---|---|
-| `data/reference/buy_hold_by_cohort.parquet` | 967 395 lignes : titre achetable, date d'achat, horizon, multiple sous les trois hypothèses de sortie |
+| `data/reference/buy_hold_by_cohort.parquet` | 967 106 lignes : titre achetable, date d'achat, horizon, multiple sous les trois hypothèses de sortie |
 | `data/reference/buy_hold_all_listed.parquet` | Même chose sans filtre de prix ni de liquidité |
 | `data/reference/sectors.parquet`, `sector_cohorts.parquet` | Secteur de chaque titre, statistiques par secteur et par date |
 | `data/french/` | Données de Fama et French, coupées à fin 2024 |
@@ -29,23 +29,23 @@ venv/bin/python tests/test_reference.py
 
 | Univers | Actions | Moyenne | Médiane | En perte | Perte de 90 % ou plus | Disparues | Battent SPY |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| 500 plus liquides | 499 | 20 420 | 16 120 | 22,8 % | 1,6 % | 12,0 % | 23,4 % |
-| 1 000 plus liquides | 998 | 18 740 | 14 710 | 28,1 % | 2,6 % | 17,3 % | 19,6 % |
-| Toutes achetables | 3 031 | 16 360 | 12 360 | 37,6 % | 6,0 % | 27,6 % | 16,2 % |
-| Toutes cotées | 4 623 | 14 770 | 10 900 | 45,6 % | 13,9 % | 32,6 % | 14,2 % |
+| 500 plus liquides | 499 | 20 426 | 16 122 | 22,8 % | 1,6 % | 11,8 % | 23,4 % |
+| 1 000 plus liquides | 998 | 18 733 | 14 698 | 28,1 % | 2,6 % | 17,2 % | 19,6 % |
+| Toutes achetables | 3 030 | 16 356 | 12 358 | 37,6 % | 6,0 % | 27,6 % | 16,2 % |
+| Toutes cotées | 4 623 | 14 767 | 10 872 | 45,6 % | 13,9 % | 32,5 % | 14,2 % |
 
-**SPY : 24 530. QQQ : 34 700.**
+**SPY : 24 531. QQQ : 34 704.**
 
 ### Sur 10 000 USD, achat le 01/02/2016, jusqu'à fin 2024
 
 | Univers | Actions | Moyenne | Médiane | En perte | Disparues | Battent SPY |
 |---|---:|---:|---:|---:|---:|---:|
-| 500 plus liquides | 500 | 32 260 | 21 220 | 17,4 % | 17,4 % | 26,0 % |
-| 1 000 plus liquides | 1 000 | 28 980 | 19 800 | 21,5 % | 24,2 % | 22,9 % |
-| Toutes achetables | 2 879 | 25 240 | 16 840 | 26,5 % | 33,5 % | 19,1 % |
-| Toutes cotées | 4 582 | 23 460 | 15 130 | 33,8 % | 40,1 % | 16,7 % |
+| 500 plus liquides | 500 | 32 352 | 21 302 | 17,4 % | 17,2 % | 26,2 % |
+| 1 000 plus liquides | 1 000 | 28 973 | 19 764 | 21,5 % | 24,1 % | 22,9 % |
+| Toutes achetables | 2 878 | 25 238 | 16 840 | 26,5 % | 33,5 % | 19,1 % |
+| Toutes cotées | 4 582 | 23 459 | 15 124 | 33,8 % | 40,1 % | 16,7 % |
 
-**SPY : 35 350. QQQ : 53 480.**
+**SPY : 35 354. QQQ : 53 481.**
 
 ### Sur 5 ans, moyenne des 47 dates d'achat possibles, par an
 
@@ -90,17 +90,17 @@ Marché américain pondéré par la taille depuis 1926 (French, sans frais), fen
 
 1. **La moyenne sous-estime la difficulté, et SPY la dépasse.** Une action prise au hasard parmi les achetables fait en général bien moins que la moyenne, car quelques très grands gagnants la tirent vers le haut (NVDA multiplie par 28,5 depuis 2018). Environ 84 % des actions achetables font moins que SPY sur ce parcours.
 2. **SPY bat la moyenne à poids égaux, ce qui change la question.** Il pèse les grandes sociétés, qui ont dominé la période. Ne pas battre SPY peut donc simplement vouloir dire ne pas avoir assez de très grandes valeurs.
-3. **L'hypothèse de sortie compte peu ici en moyenne** (16 360 contre 15 950 en pessimiste pour les achetables depuis 2018), parce que beaucoup de disparitions sont des rachats.
+3. **L'hypothèse de sortie compte peu ici en moyenne** (16 356 contre 15 949 en pessimiste pour les achetables depuis 2018), parce que beaucoup de disparitions sont des rachats.
 
 ### Les tests A et B relus avec cette référence
 
 | 10 000 USD depuis 2018 | Stratégie | Buy and hold moyen, univers proche | SPY |
 |---|---:|---:|---:|
-| Test A, momentum | 18 553 | 16 360 (toutes achetables) | 24 530 |
-| Test B, P/E bas | 14 773 | 18 740 (1 000 plus liquides) | 24 530 |
-| Témoin, 500 plus liquides | 19 979 | 20 420 (500 plus liquides) | 24 530 |
+| Test A, momentum | 18 160 | 16 356 (toutes achetables) | 24 531 |
+| Test B, P/E bas | 14 372 | 18 733 (1 000 plus liquides) | 24 531 |
+| Témoin, 500 plus liquides | 19 982 | 20 426 (500 plus liquides) | 24 531 |
 
-Le momentum dépasse ainsi la moyenne de son univers, mais avec une chute de 59 %. Ce n'est **pas une preuve** : une seule histoire, sans test statistique, avec une liste figée en 2018 alors que la stratégie achète aussi les nouvelles cotations. Le P/E bas reste en dessous de sa référence. Sa référence inclut les sociétés étrangères, pas lui.
+Le momentum dépasse ainsi la moyenne de son univers, mais avec une chute de 60 %. Ce n'est **pas une preuve** : une seule histoire, sans test statistique, avec une liste figée en 2018 alors que la stratégie achète aussi les nouvelles cotations. Le P/E bas reste en dessous de sa référence. Sa référence inclut les sociétés étrangères, pas lui.
 
 ## Contrôles
 
@@ -114,7 +114,7 @@ Le momentum dépasse ainsi la moyenne de son univers, mais avec une chute de 59 
 
 - **Fenêtre.** 2016-2024 seulement, sans crise longue comme 2008, et période plutôt favorable.
 - **Corrélation entre titres.** Des milliers d'actions vivent le même marché : ce ne sont pas des milliers de preuves indépendantes. Les dates d'achat se chevauchent aussi.
-- **Exclusions.** CETXP (action préférentielle) et quatre doublons de cotation (`reference_exclusions.csv`) sont retirés de cette table seulement. **Le nettoyage reste à corriger** ; les tests A et B ne sont pas refaits. D'autres cas existent peut-être, car le contrôle n'a examiné que les paires de même CIK.
+- **Doublons et classements.** CETXP (action préférentielle), AMJ et quatre doublons de cotation relevés à l'audit sont corrigés dans le nettoyage. D'autres cas existent peut-être, car le contrôle n'a examiné que les paires de même CIK.
 - **Fuite du nettoyage.** 75 cours masqués à cause du lendemain empêchent quelques achats dans « toutes cotées » (5 cas). Effet très faible.
 - **Filtre rétrospectif.** Les titres de moins de 20 séances et les 3 404 titres non identifiés sont absents, y compris de « toutes cotées ». Ils sont surtout disparus : la moyenne est donc plutôt flattée.
 - **Secteurs.** Codes SIC d'aujourd'hui, inconnus pour 2,3 % des titres (3,7 % des disparus), hors de tout usage comme signal. Fichiers de définition de French datés de 2020.

@@ -258,7 +258,7 @@ class RealUniverse(unittest.TestCase):
 
     def test_default_columns_and_tradability(self):
         data = self.market.data
-        self.assertEqual(data.close.shape[1], 8123)
+        self.assertEqual(data.close.shape[1], 8119)
         self.assertFalse((data.tradable & data.close.isna()).to_numpy().any())
         self.assertFalse(data.cost_bps.isna().to_numpy().any())
         self.assertLessEqual(data.dates.max(), pd.Timestamp(DEV_END))

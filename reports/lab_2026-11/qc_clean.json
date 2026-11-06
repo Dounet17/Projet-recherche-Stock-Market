@@ -26,14 +26,14 @@
   "sec_instance_prefixes": 15136,
   "sec_link_agreement_ticker_vs_prefix": {
     "pairs": 3900,
-    "same_company": 0.9682
+    "same_company": 0.9695
   },
   "sec_link_agreement_name_vs_prefix": {
     "pairs": 3589,
     "same_company": 0.9568
   },
   "manual_security_rows": 158,
-  "security_overrides": 6,
+  "security_overrides": 13,
   "relisted_same_company": 48,
   "splits_linked_to_companies": 2048,
   "eps_suspect_quarters": 437,
@@ -44,14 +44,15 @@
   "securities_after": 18745,
   "last_date": "2024-12-31 05:00:00+00:00",
   "security_types": {
-    "common": 6780,
+    "common": 6777,
     "fund": 4490,
     "unknown": 3552,
-    "adr": 1410,
+    "adr": 1409,
     "derivative": 1277,
-    "preferred": 902,
-    "spac": 310,
-    "test": 24
+    "preferred": 903,
+    "spac": 309,
+    "test": 24,
+    "duplicate": 4
   },
   "alive_at_end": 10891,
   "exit_reasons_all": {
@@ -69,11 +70,11 @@
     "failed_bank": 2
   },
   "exit_reasons_equities": {
-    "unknown": 1949,
-    "merger_terms_unknown": 857,
-    "cash_merger": 807,
+    "unknown": 1948,
+    "merger_terms_unknown": 856,
+    "cash_merger": 806,
     "unknown_distress": 691,
-    "renamed": 678,
+    "renamed": 676,
     "bankruptcy": 318,
     "stock_merger": 317,
     "stock_and_cash_merger": 78,
@@ -84,19 +85,19 @@
   },
   "sec_coverage": {
     "all_operating": {
-      "n": 11527,
-      "linked": 0.6945,
-      "with_eps": 0.5563
+      "n": 11523,
+      "linked": 0.6943,
+      "with_eps": 0.5561
     },
     "alive": {
-      "n": 5984,
-      "linked": 0.8762,
-      "with_eps": 0.703
+      "n": 5985,
+      "linked": 0.876,
+      "with_eps": 0.7031
     },
     "disappeared": {
-      "n": 5543,
-      "linked": 0.4983,
-      "with_eps": 0.3978
+      "n": 5538,
+      "linked": 0.4978,
+      "with_eps": 0.3973
     },
     "top_500": {
       "n": 500,
@@ -120,19 +121,19 @@
     },
     "top_3000": {
       "n": 3000,
-      "linked": 0.9737,
-      "with_eps": 0.8423
+      "linked": 0.9733,
+      "with_eps": 0.842
     },
     "top_3000_disappeared": {
-      "n": 812,
-      "linked": 0.9187,
-      "with_eps": 0.7882
+      "n": 811,
+      "linked": 0.9174,
+      "with_eps": 0.7867
     }
   },
   "sec_link_methods": {
-    "none": 9256,
-    "ticker": 5851,
-    "filing_prefix": 3460,
+    "none": 9258,
+    "ticker": 5850,
+    "filing_prefix": 3459,
     "name": 168,
     "manual": 10
   },

@@ -3,5 +3,5 @@ control_liquid_equal_weight__top=500,0.999
 step3_sma200_by_stock,0.999
 step4_bollinger_by_stock,0.9992
 step4_rsi2_by_stock,0.999
-test_a_momentum__lookback=252__top=50,0.9785
+test_a_momentum__lookback=252__top=50,0.98
 test_b_low_pe__liquid=1000__min_pe=3.0__top=50,0.999
