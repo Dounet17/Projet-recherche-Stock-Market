@@ -68,9 +68,11 @@ Le contrôle tronque des données déjà nettoyées : il ne détecte que les fui
 ## Limites
 
 - Appartenance historique aux indices non reconstituée.
-- Fondamentaux non branchés : `fundamentals_quarterly_dev.parquet` n'est pas dans `data`. À ajouter en respectant `filed`.
+- Fondamentaux : seul `data.eps_ttm` existe, avec `load_universe(fundamentals=True)` : bénéfice par action sur 12 mois, résultat comptable publié, utilisable le lendemain de `filed`. Il exige quatre trimestres consécutifs et expire 200 jours après la fin de période. La couverture est moindre pour les sociétés qui disparaîtront, ce qui avantage un test fondamental.
 - Le portefeuille au hasard pioche parmi tous les titres achetables : il paie plus de frais qu'une stratégie sur grandes valeurs, et sert donc de repère, pas de preuve.
 - Le verrou de 2025-2026 reste actif ; ce dataset n'existe pas encore pour cette période.
+
+Résultats des premiers tests : `RESULTATS_TESTS_A_B.md`.
 
 ## Vérifications
 

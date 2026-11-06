@@ -17,6 +17,8 @@ from lab import DEV_END, Panel
 COST_BUCKETS = ((100_000_000.0, 5), (10_000_000.0, 15), (1_000_000.0, 40))
 DATA_PATH = Path(__file__).resolve().parents[1] / "data" / "universe_clean"
 PRICE_FIELDS = ("open", "high", "low", "close", "volume")
+TTM_GAP_DAYS = (70, 110)      # écart entre deux fins de trimestre consécutives
+TTM_MAX_AGE_DAYS = 200        # au-delà, le dernier BPA connu est trop ancien
 
 
 @dataclass(frozen=True)
@@ -28,12 +30,14 @@ class Universe(Panel):
     traded: pd.DataFrame
     tradable: pd.DataFrame
     cost_bps: pd.DataFrame
+    eps_ttm: pd.DataFrame = None    # seulement avec load_universe(fundamentals=True)
 
     def truncate(self, last_date):
         """Coupe chaque matrice en conservant même les titres encore sans cours."""
         last_date = pd.Timestamp(last_date)
-        return Universe(**{field.name: getattr(self, field.name).loc[:last_date]
-                           for field in fields(self)})
+        cut = {field.name: getattr(self, field.name) for field in fields(self)}
+        return Universe(**{name: None if values is None else values.loc[:last_date]
+                           for name, values in cut.items()})
 
 
 @dataclass(frozen=True)
@@ -64,9 +68,51 @@ def _neutralize(prices, suspect):
             prices[name][:, column] *= scale
 
 
+def ttm_eps_column(quarters, dates, factor):
+    """BPA sur 12 mois d'un titre, par séance, dans l'échelle d'actions de cette séance.
+
+    `quarters` : period_end, filed et eps triés par period_end. `factor` : cours ajusté / cours brut
+    par séance, recopié sur les trous. Un BPA est exprimé dans l'échelle de sa publication : le
+    multiplier par le facteur de ce jour, puis diviser par celui de la séance, suit les fractionnements.
+    Les dividendes font bouger ce facteur d'environ 2 % par an : erreur faible, jamais une fuite, car
+    seul le rapport entre deux dates passées est utilisé.
+
+    Il faut quatre trimestres consécutifs. Le chiffre n'est utilisable qu'après la date `filed` du
+    plus récent : un dépôt peut arriver après la clôture. Il expire TTM_MAX_AGE_DAYS après la fin de période.
+    """
+    out = np.full(len(dates), np.nan)
+    ends, filed = quarters.period_end.to_numpy(), quarters.filed.to_numpy()
+    if len(ends) < 4:
+        return out
+    scaled = quarters.eps.to_numpy() * factor[np.minimum(np.searchsorted(dates, filed), len(dates) - 1)]
+    gaps = (ends[1:] - ends[:-1]) / np.timedelta64(1, "D")
+    for k in range(3, len(ends)):
+        if not ((gaps[k - 3:k] >= TTM_GAP_DAYS[0]) & (gaps[k - 3:k] <= TTM_GAP_DAYS[1])).all():
+            continue
+        begin = np.searchsorted(dates, filed[k - 3:k + 1].max(), side="right")
+        stop = np.searchsorted(dates, ends[k] + np.timedelta64(TTM_MAX_AGE_DAYS, "D"), side="right")
+        out[begin:stop] = scaled[k - 3:k + 1].sum() / factor[begin:stop]
+    return out
+
+
+def _ttm_eps(path, columns, ciks, dates, factor):
+    """Matrice du BPA sur 12 mois, à partir du fichier trimestriel."""
+    quarters = pd.read_parquet(path / "fundamentals_quarterly_dev.parquet", columns=["cik", "period_end", "filed", "eps", "eps_suspect"])
+    quarters = quarters[~quarters.eps_suspect].sort_values(["cik", "period_end"])
+    by_cik = dict(tuple(quarters.groupby("cik", sort=False)))
+    filled = pd.DataFrame(factor).ffill().to_numpy()
+    out = np.full(factor.shape, np.nan)
+    day_values = dates.to_numpy()
+    for j, column in enumerate(columns):
+        cik = ciks.get(column)
+        if pd.notna(cik) and int(cik) in by_cik:
+            out[:, j] = ttm_eps_column(by_cik[int(cik)], day_values, filled[:, j])
+    return out
+
+
 def load_universe(end=DEV_END, allow_holdout=False, types=("common", "adr"),
                   symbols=None, min_price=5.0, min_dollar_volume=1_000_000.0,
-                  benchmarks=("SPY", "QQQ", "BIL"), path=DATA_PATH):
+                  benchmarks=("SPY", "QQQ", "BIL"), path=DATA_PATH, fundamentals=False):
     """Charge les prix jusqu'à `end`, sans pivot et sans ouvrir la validation.
 
     `dollar_volume` est connu à la clôture ; `cost_bps` est décalé d'une séance
@@ -121,6 +167,9 @@ def load_universe(end=DEV_END, allow_holdout=False, types=("common", "adr"),
     raw_volume[rows, cols] = source.volume.to_numpy(dtype=float, na_value=np.nan)
     prices = {}
     factor = source.adj_close.to_numpy() / source.close.to_numpy()
+    share_factor = np.full(shape, np.nan)
+    share_factor[rows, cols] = factor
+    share_factor[suspect] = np.nan
     for name in ("open", "high", "low"):
         values = np.full(shape, np.nan)
         values[rows, cols] = source[name].to_numpy() * factor
@@ -162,7 +211,8 @@ def load_universe(end=DEV_END, allow_holdout=False, types=("common", "adr"),
                     dollar_volume=liquidity.reindex(columns=stock_columns),
                     traded=frame(traded).reindex(columns=stock_columns),
                     tradable=frame(tradable).reindex(columns=stock_columns),
-                    cost_bps=frame(costs).reindex(columns=stock_columns))
+                    cost_bps=frame(costs).reindex(columns=stock_columns),
+                    eps_ttm=frame(_ttm_eps(path, columns, retained.cik, dates, share_factor)).reindex(columns=stock_columns) if fundamentals else None)
     benchmark_panel = Panel(**{name: values.reindex(columns=benchmark_ids)
                               .set_axis(pd.Index(benchmarks, name="symbol"), axis=1)
                               for name, values in matrices.items()})

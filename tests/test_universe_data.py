@@ -217,6 +217,9 @@ class SyntheticUniverse(unittest.TestCase):
         truncated = full.truncate(full.dates[12])
         self.assertIsInstance(truncated, Universe)
         for field in fields(Universe):
+            if getattr(full, field.name) is None:  # eps_ttm sans fundamentals=True
+                self.assertIsNone(getattr(truncated, field.name))
+                continue
             expected = getattr(full, field.name).iloc[:13]
             pd.testing.assert_frame_equal(getattr(truncated, field.name), expected)
             self.assertEqual(list(getattr(truncated, field.name).columns), ["A#0", "B#0"])
