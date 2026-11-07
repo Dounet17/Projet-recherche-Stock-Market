@@ -55,7 +55,8 @@ def main():
     mapping = accessions_by_publication(surprises)
     texts, statuses = {}, {}
     with Pool(8) as pool:
-        for batch in pool.imap_unordered(read_batch, sorted(glob.glob(str(folder / "batch_*.jsonl.gz")))):
+        # Dans l'ordre : une relance écrit un lot plus récent, dont le statut doit remplacer l'ancien échec.
+        for batch in pool.imap(read_batch, sorted(glob.glob(str(folder / "batch_*.jsonl.gz")))):
             for record in batch:
                 statuses[record["accession"]] = record["status"]
                 if record["status"] == "ok":
