@@ -1,0 +1,93 @@
+{
+ "publications_in_table": 49310,
+ "publications_checked": 49310,
+ "complete": true,
+ "filing_status": {
+  "ok": 49525,
+  "no_text": 3
+ },
+ "figure_position": {
+  "current": 43009,
+  "historical_only": 5036,
+  "absent": 1265
+ },
+ "verified_by_year": {
+  "2018": {
+   "checked": 6061,
+   "verified": 0.833,
+   "principal": 1532
+  },
+  "2019": {
+   "checked": 5639,
+   "verified": 0.844,
+   "principal": 1431
+  },
+  "2020": {
+   "checked": 5487,
+   "verified": 0.87,
+   "principal": 1766
+  },
+  "2021": {
+   "checked": 6650,
+   "verified": 0.916,
+   "principal": 1888
+  },
+  "2022": {
+   "checked": 7586,
+   "verified": 0.9,
+   "principal": 1453
+  },
+  "2023": {
+   "checked": 8867,
+   "verified": 0.873,
+   "principal": 2916
+  },
+  "2024": {
+   "checked": 9020,
+   "verified": 0.862,
+   "principal": 6673
+  }
+ },
+ "verified_by_survival": {
+  "alive": 0.877,
+  "gone": 0.836
+ },
+ "verified_by_basis": {
+  "adjusted": 0.872,
+  "gaap": 0.848,
+  "other": 0.5,
+  "unlabeled": 0.874
+ },
+ "principal": 17659,
+ "unlabeled_verified": 25349,
+ "exhibit_basis_when_unlabeled": {
+  "adjusted": 15916,
+  "plain": 9433
+ },
+ "audit_witnesses": {
+  "WSBF#0": [
+   {
+    "period_end": "2017-12-31",
+    "eps": "0.23",
+    "figure_position": "current"
+   },
+   {
+    "period_end": "2018-09-30",
+    "eps": "0.31",
+    "figure_position": "current"
+   }
+  ],
+  "MHO#0": [
+   {
+    "period_end": "2017-12-31",
+    "eps": "0.9",
+    "figure_position": "current"
+   },
+   {
+    "period_end": "2018-03-31",
+    "eps": "0.6",
+    "figure_position": "current"
+   }
+  ]
+ }
+}
