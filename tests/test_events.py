@@ -8,7 +8,7 @@ import numpy as np
 import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
-from events import block_bootstrap_p, day_positions, forward_multiple, holm, match_announcements, newey_west_t, prior_quarter_groups, quarterly_spread, standardized_surprise, two_sided_p
+from events import block_bootstrap_p, day_positions, forward_multiple, holm, match_announcements, newey_west_t, prior_quarter_groups, quarterly_spread, standardized_surprise, two_sided_p, positions_after_time
 
 
 class Dates(unittest.TestCase):
@@ -28,6 +28,20 @@ class Dates(unittest.TestCase):
     def test_8k_from_a_previous_quarter_is_refused(self):
         announcements = pd.DataFrame({"cik": [1], "date": pd.to_datetime(["2024-04-23"])})
         self.assertTrue(pd.isna(match_announcements(self.quarter(), announcements).announced[0]))
+
+    def test_acceptance_time_sets_the_first_possible_open(self):
+        dates = pd.DatetimeIndex(["2024-01-08", "2024-01-09", "2024-01-10", "2024-01-11"])  # lundi à jeudi
+        cases = {
+            "2024-01-09 09:25:00": (0, 1),  # dernier instant pour l'ouverture du jour
+            "2024-01-09 09:25:01": (0, 2),
+            "2024-01-09 11:00:00": (0, 2),  # en séance : clôture de la veille, ouverture du lendemain
+            "2024-01-09 16:00:00": (1, 2),  # après la clôture : celle du jour est connue
+            "2024-01-09 18:30:00": (1, 2),
+            "2024-01-07 12:00:00": (-1, 0),  # dimanche : ouverture du lundi
+            "2024-01-13 08:00:00": (3, 4),  # samedi après la dernière séance : au-delà des données
+        }
+        pre, entry = positions_after_time(list(cases), dates)
+        self.assertEqual(list(zip(pre.tolist(), entry.tolist())), list(cases.values()))
 
     def test_entry_is_always_the_next_session(self):
         dates = pd.DatetimeIndex(pd.to_datetime(["2024-07-22", "2024-07-23", "2024-07-24", "2024-07-26"]))

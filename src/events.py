@@ -7,9 +7,9 @@ Vocabulaire :
   précédente, divisée par l'écart-type de ces variations passées. C'est une approximation : les prévisions
   des analystes, qui définissent la vraie surprise, ne sont pas disponibles.
 
-Précaution : le champ `accepted` de `data/sec/dev_filings.parquet` est faux d'environ 4 à 5 heures dans une
-partie des cas, malgré son suffixe Z. Seule la date `filing_date` sert ici, et l'on achète à l'ouverture
-de la séance suivante, quelle que soit l'heure du dépôt.
+Précaution : le champ `accepted` de `data/sec/dev_filings.parquet` est faux d'environ 4 à 5 heures dans 30 % des
+8-K de résultats, malgré son suffixe Z : il ne sert jamais. Soit on prend `filing_date` et l'on achète à l'ouverture
+de la séance suivante (`day_positions`), soit on prend l'heure lue dans l'en-tête SEC (`positions_after_time`).
 """
 
 import numpy as np
@@ -53,6 +53,25 @@ def day_positions(days, dates):
     trading = np.zeros(len(days), dtype=bool)
     trading[in_range] = dates[positions[in_range]] == days[in_range]
     return positions - 1, np.where(trading, positions + 1, positions)
+
+
+def positions_after_time(times, dates, last_entry_second=(9 * 60 + 25) * 60):
+    """Pour une heure d'acceptation SEC (New York, sans fuseau) : dernière clôture connue et première ouverture possible.
+
+    Une acceptation au plus tard à 9 h 25 permet d'acheter à l'ouverture du jour, avec 5 minutes pour réagir.
+    Sinon, l'ouverture de la séance suivante. La clôture du jour n'est connue qu'à partir de 16 h ; un jour de
+    fermeture anticipée est traité comme un autre, ce qui recule seulement le point de départ de la réaction.
+    """
+    times = pd.DatetimeIndex(times)
+    days = times.normalize()
+    positions = dates.searchsorted(days)
+    in_range = positions < len(dates)
+    trading = np.zeros(len(times), dtype=bool)
+    trading[in_range] = dates[positions[in_range]] == days[in_range]
+    seconds = np.asarray(times.hour * 3600 + times.minute * 60 + times.second)
+    in_time = trading & (seconds <= last_entry_second)
+    after_close = trading & (seconds >= 16 * 3600)
+    return np.where(after_close, positions, positions - 1), np.where(trading & ~in_time, positions + 1, positions)
 
 
 def _prior_year_positions(ends):

@@ -3,7 +3,9 @@
 Aucune stratégie n'est testée et le journal n'est pas touché. Conception révisée après l'audit
 (`reports/lab_2026-11/events/AUDIT_ETUDE_RESULTATS.md`), donc après avoir vu une première version des résultats.
 
-- Dates : seul `filing_date` sert, l'heure SEC n'étant pas fiable. Entrée à l'ouverture de la séance suivante.
+- Dates : `filing_date` et entrée à l'ouverture de la séance suivante, sauf pour les deux cas `after_8k_time_*`.
+- Deux cas ajoutés le 07/11/2026, règle figée avant tout calcul mais après avoir vu les autres cas : heure lue dans
+  l'en-tête SEC, entrée à l'ouverture du jour si le dépôt est accepté au plus tard à 9 h 25, sinon à la suivante.
 - Trois cas : `after_8k_retrospective`, après le 8-K avec le BPA issu d'un dépôt ultérieur, qui décrit le marché
   mais ne se négocie pas ; `after_8k_available`, le même, si le BPA est déjà dans nos données ; `after_filing`, après
   le dépôt des comptes. Dans les deux derniers, tous les termes de la SUE sont publiés avant la décision.
@@ -13,6 +15,7 @@ Aucune stratégie n'est testée et le journal n'est pas touché. Conception rév
 Depuis la racine : venv/bin/python reports/build_earnings_events.py
 """
 
+import json
 import sys
 from pathlib import Path
 
@@ -22,14 +25,14 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 import lab
-from events import RECENT_MAX_DAYS, block_bootstrap_p, day_positions, forward_multiple, holm, match_announcements, newey_west_t, prior_quarter_groups, quarterly_spread, standardized_surprise, two_sided_p
+from events import RECENT_MAX_DAYS, block_bootstrap_p, day_positions, forward_multiple, holm, match_announcements, newey_west_t, positions_after_time, prior_quarter_groups, quarterly_spread, standardized_surprise, two_sided_p
 from universe_data import load_universe
 
 DATA = ROOT / "data" / "events"
 OUT = lab.LAB_DIR / "events"
 HORIZONS = (1, 5, 20, 60)
 TIERS = {"top1000": 1000, "all": None}
-CASES = {"after_8k_retrospective": ("announcement", "sue_retrospective"), "after_8k_available": ("announcement", "sue_available"), "after_filing": ("filing", "sue_filing")}
+CASES = {"after_8k_retrospective": ("announcement", "sue_retrospective"), "after_8k_available": ("announcement", "sue_available"), "after_filing": ("filing", "sue_filing"), "after_8k_time_retrospective": ("timed", "sue_time_retrospective"), "after_8k_time_available": ("timed", "sue_time_available")}
 START, END = pd.Timestamp("2018-01-01"), pd.Timestamp("2024-12-31")
 PLACEBO_SHIFTS = (41, 63, 83)
 
@@ -60,13 +63,19 @@ factor_values[dates.get_indexer(raw.date), columns.get_indexer(raw.security_id)]
 factor = pd.DataFrame(factor_values).ffill().bfill().to_numpy()
 del raw
 
-filings = pd.read_parquet(ROOT / "data" / "sec" / "dev_filings.parquet", columns=["cik", "form", "filing_date", "items"])
+filings = pd.read_parquet(ROOT / "data" / "sec" / "dev_filings.parquet", columns=["cik", "form", "filing_date", "items", "accession"])
 eight_k = filings[(filings.form == "8-K") & filings["items"].fillna("").str.contains(r"\b2\.02\b")].copy()
 eight_k["date"] = pd.to_datetime(eight_k.filing_date)
 del filings
+# Heure réelle du 8-K, lue dans l'en-tête SEC. Plusieurs 8-K le même jour : le dernier, ce qui ne peut que retarder l'entrée.
+times = pd.concat([pd.read_parquet(path) for path in sorted((DATA / "eight_k_times").glob("batch_*.parquet"))])
+times = times[times.status == "ok"].merge(eight_k[["accession", "cik", "date"]], on="accession")
+times["accepted_time"] = pd.to_datetime(times.accepted_new_york, format="%Y%m%d%H%M%S").astype("datetime64[ns]")
+times = times.groupby(["cik", "date"], as_index=False).accepted_time.max().rename(columns={"date": "announced"})
 quarters = pd.read_parquet(ROOT / "data" / "universe_clean" / "fundamentals_quarterly_dev.parquet")
 quarters = quarters[~quarters.eps_suspect].sort_values(["cik", "period_end"]).reset_index(drop=True)
 quarters = match_announcements(quarters, eight_k)
+quarters = quarters.merge(times, on=["cik", "announced"], how="left")
 by_cik = dict(tuple(quarters.groupby("cik", sort=False)))
 
 rows = []
@@ -81,15 +90,20 @@ for security, cik in market.securities.cik.items():
     base = group.eps.to_numpy() * factor[np.minimum(dates.searchsorted(filed), len(dates) - 1), j]
     pre_filing, entry_filing = day_positions(filed, dates)
     pre_8k, entry_8k = day_positions(pd.DatetimeIndex(announced).fillna(pd.Timestamp("1900-01-01")), dates)
+    accepted_time = group.accepted_time.to_numpy().astype("datetime64[ns]")
+    pre_timed, entry_timed = positions_after_time(pd.DatetimeIndex(accepted_time).fillna(pd.Timestamp("1900-01-01")), dates)
     calendar = np.r_[dates.to_numpy().astype("datetime64[ns]"), np.datetime64("2099-01-01", "ns")]
     decision_8k = calendar[np.minimum(entry_8k, len(dates))]
     decision_filing = calendar[np.minimum(entry_filing, len(dates))]
+    decision_timed = calendar[np.minimum(entry_timed, len(dates))]
     rows.append(pd.DataFrame({
-        "security_id": security, "cik": int(cik), "period_end": ends, "filed": filed, "announced": announced, "eps": group.eps.to_numpy(), "source": group.source.to_numpy(), "column": j,
-        "pre_announcement": pre_8k, "entry_announcement": entry_8k, "pre_filing": pre_filing, "entry_filing": entry_filing,
+        "security_id": security, "cik": int(cik), "period_end": ends, "filed": filed, "announced": announced, "accepted_time": accepted_time, "eps": group.eps.to_numpy(), "source": group.source.to_numpy(), "column": j,
+        "pre_announcement": pre_8k, "entry_announcement": entry_8k, "pre_filing": pre_filing, "entry_filing": entry_filing, "pre_timed": pre_timed, "entry_timed": entry_timed,
         "sue_retrospective": standardized_surprise(ends, base, filed, decision_8k, current_known=True),
         "sue_available": standardized_surprise(ends, base, filed, decision_8k),
         "sue_filing": standardized_surprise(ends, base, filed, decision_filing),
+        "sue_time_retrospective": standardized_surprise(ends, base, filed, decision_timed, current_known=True),
+        "sue_time_available": standardized_surprise(ends, base, filed, decision_timed),
     }))
 events = pd.concat(rows, ignore_index=True)
 events["has_8k"] = events.announced.notna()
@@ -119,6 +133,8 @@ def build_case(events, kind, score):
     mask = (events.days_to_filing <= RECENT_MAX_DAYS)
     if kind == "announcement":
         mask &= events.has_8k
+    elif kind == "timed":
+        mask &= events.accepted_time.notna()
     frame = events[mask].copy()
     entry = frame[f"entry_{kind}"].to_numpy()
     pre = frame[f"pre_{kind}"].to_numpy()
@@ -127,6 +143,10 @@ def build_case(events, kind, score):
     cols = frame["column"].to_numpy()
     frame["entry_row"], frame["pre_row"] = entry, pre
     frame["entry_date"] = dates[entry]
+    if kind == "timed":
+        # Contrôle anti-fuite : l'achat suit l'acceptation d'au moins 5 minutes, et la clôture de départ la précède.
+        assert (frame.entry_date + pd.Timedelta(hours=9, minutes=30) >= frame.accepted_time + pd.Timedelta(minutes=5)).all()
+        assert (pd.DatetimeIndex(dates[pre]) + pd.Timedelta(hours=16) <= frame.accepted_time).all()
     keep = tradable[pre, cols] & np.isfinite(opens[entry, cols]) & (frame.entry_date >= START).to_numpy() & (frame.entry_date <= END).to_numpy()
     frame = frame[keep].copy()
     cols = frame["column"].to_numpy()
@@ -186,6 +206,27 @@ net_table = pd.DataFrame(nets)
 net_table.to_csv(OUT / "earnings_study_net_of_costs.csv", index=False)
 placebo_table = pd.DataFrame(placebos)
 placebo_table.to_csv(OUT / "earnings_study_date_placebo.csv", index=False)
+pd.concat([reaction.assign(case=name).reset_index() for name, reaction in reactions.items()]).to_csv(OUT / "earnings_study_reaction.csv", index=False)
+
+# Descriptif, hors correction : selon l'heure du dépôt, sur les cas à heure réelle.
+slots = []
+for name in ("after_8k_time_retrospective", "after_8k_time_available"):
+    frame = details[name]
+    seconds = frame.accepted_time.dt.hour * 3600 + frame.accepted_time.dt.minute * 60 + frame.accepted_time.dt.second
+    labels = np.select([seconds <= (9 * 60 + 25) * 60, seconds < 16 * 3600], ["jusqu'à 9 h 25", "9 h 25 à 16 h"], "après 16 h")
+    for label in ("jusqu'à 9 h 25", "9 h 25 à 16 h", "après 16 h"):
+        part = frame[labels == label]
+        # Une tranche peut manquer d'un groupe extrême : pas d'écart à calculer dans ce cas.
+        one = quarterly_spread(part, "abnormal_1") if {1, 5} <= set(part.group.dropna()) else pd.Series(dtype=float)
+        means = part.groupby("group").gap.mean()
+        slots.append({"case": name, "slot": label, "events": int(part.group.notna().sum()), "reaction_spread": means.get(5, np.nan) - means.get(1, np.nan), "quarters": len(one), "spread_1": one.mean(), "t_1": newey_west_t(one)})
+pd.DataFrame(slots).to_csv(OUT / "earnings_study_by_time_slot.csv", index=False)
+old, new = details["after_8k_retrospective"], details["after_8k_time_retrospective"]
+same = old.merge(new, on=["cik", "period_end"], suffixes=("_old", "_new"))
+moved = {"events_compared": len(same), "same_entry": float((same.entry_row_old == same.entry_row_new).mean()), "one_session_earlier": float((same.entry_row_new == same.entry_row_old - 1).mean()), "other": float(((same.entry_row_new != same.entry_row_old) & (same.entry_row_new != same.entry_row_old - 1)).mean())}
+(OUT / "earnings_study_entry_changes.json").write_text(json.dumps(moved, indent=1))
+print("\nEntrées changées :", moved, flush=True)
+print(pd.DataFrame(slots).round(4).to_string(), flush=True)
 
 sensitivity = []
 for name in CASES:

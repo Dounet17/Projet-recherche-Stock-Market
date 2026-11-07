@@ -1,0 +1,110 @@
+{
+ "estimates": {
+  "covered": 0.9866328257191201,
+  "regular": 0.9125834891798024,
+  "per_year": 58.57853971839961
+ },
+ "quality": {
+  "share_one_symbol": 0.5148915793089808,
+  "share_up_to_3_symbols": 0.6466203766356794,
+  "median_symbols": 1.0,
+  "share_with_summary": 0.43241273773956135,
+  "share_in_session": 0.44869405898335435,
+  "share_pre_market": 0.38324606239785136,
+  "share_after_close": 0.11593674852437513,
+  "share_updated_over_1h_later": 0.014074390231207254,
+  "share_updated_over_1d_later": 0.0030397351682784897,
+  "share_seconds_zero": 0.016541572542446988,
+  "sources": {
+   "": 50204,
+   "benzinga": 45857
+  }
+ },
+ "weekly_volume": [
+  {
+   "week": "2018-10-08",
+   "articles": 1913,
+   "with_symbol": 1815,
+   "year": "2018"
+  },
+  {
+   "week": "2018-11-05",
+   "articles": 3433,
+   "with_symbol": 3326,
+   "year": "2018"
+  },
+  {
+   "week": "2019-02-18",
+   "articles": 2294,
+   "with_symbol": 2117,
+   "year": "2019"
+  },
+  {
+   "week": "2019-03-04",
+   "articles": 2350,
+   "with_symbol": 2116,
+   "year": "2019"
+  },
+  {
+   "week": "2020-01-13",
+   "articles": 2642,
+   "with_symbol": 2435,
+   "year": "2020"
+  },
+  {
+   "week": "2020-01-27",
+   "articles": 3191,
+   "with_symbol": 3018,
+   "year": "2020"
+  },
+  {
+   "week": "2021-07-05",
+   "articles": 3373,
+   "with_symbol": 3232,
+   "year": "2021"
+  },
+  {
+   "week": "2021-11-22",
+   "articles": 2619,
+   "with_symbol": 2557,
+   "year": "2021"
+  },
+  {
+   "week": "2022-02-07",
+   "articles": 5134,
+   "with_symbol": 4993,
+   "year": "2022"
+  },
+  {
+   "week": "2022-02-14",
+   "articles": 5317,
+   "with_symbol": 5200,
+   "year": "2022"
+  },
+  {
+   "week": "2023-05-15",
+   "articles": 5574,
+   "with_symbol": 5364,
+   "year": "2023"
+  },
+  {
+   "week": "2023-07-03",
+   "articles": 2833,
+   "with_symbol": 2608,
+   "year": "2023"
+  },
+  {
+   "week": "2024-07-15",
+   "articles": 4751,
+   "with_symbol": 4568,
+   "year": "2024"
+  },
+  {
+   "week": "2024-10-28",
+   "articles": 6710,
+   "with_symbol": 6570,
+   "year": "2024"
+  }
+ ],
+ "estimated_total": 1360176.0599999998
+}

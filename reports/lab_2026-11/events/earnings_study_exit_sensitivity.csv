@@ -8,3 +8,9 @@ after_8k_available,pessimistic,-0.001993100740520662
 after_filing,base,-0.002555387017802047
 after_filing,optimistic,-0.002572115151211903
 after_filing,pessimistic,-0.002431544269702196
+after_8k_time_retrospective,base,0.010386580378484845
+after_8k_time_retrospective,optimistic,0.010369363243835628
+after_8k_time_retrospective,pessimistic,0.010410707370342574
+after_8k_time_available,base,0.01527172816565829
+after_8k_time_available,optimistic,0.01527172816565829
+after_8k_time_available,pessimistic,0.01493643945989686
