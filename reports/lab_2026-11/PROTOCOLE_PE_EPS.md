@@ -107,3 +107,17 @@ Statistique : `lab.compare` (écart annualisé des log-rendements quotidiens, bo
 1. **100 titres** par portefeuille, plutôt que 50 comme le test B : plus diversifié et moins sensible à quelques titres.
 2. **Rééquilibrage trimestriel** aux dates ci-dessus : environ 45 % des titres changent à chaque date.
 3. **Témoin comme référence principale**, SPY en secondaire : on teste d'abord la capacité à choisir, puis le placement passif.
+
+## Choix d'implémentation, 07/11/2026, avant tout lancement
+
+Tranchés en codant `src/pe_eps_study.py` et `reports/run_pe_eps_study.py`, sans aucun rendement lu. **Précision** si le texte figé le permettait déjà, **changement** sinon.
+
+1. Précision : classement de liquidité parmi les titres achetables du jour, ex aequo départagés par l'ordre des colonnes (comme le test B) ; même départage pour les 100 meilleurs scores.
+2. Précision : rangs en centiles de E2 par `rank(pct=True)` de pandas, ex aequo à la moyenne ; E/P = EPS / cours brut, à la même échelle que le P/E du test B.
+3. Précision : un jour de décision sans aucun titre éligible vendrait tout (ligne de zéros) ; cela n'arrive pas en 2018-2024.
+4. Précision : le témoin de E1 garde les titres à secteur inconnu, celui de E2 les écarte, comme écrit.
+5. Précision : E1 et E2 sont inscrits au journal ; les deux témoins, simples références, ne le sont pas et n'entrent donc pas dans la p de Romano-Wolf.
+6. Précision : contrôle anti-fuite `lab.check_no_lookahead` lancé sur les quatre portefeuilles avant tout backtest.
+7. Précision : descriptif « titres communs avec le P/E bas » calculé dans l'univers éligible (médiane de 53,5 sur 100), alors que la mesure de conception partait des 1 000 plus liquides (47). La part des titres plus tard disparus, descriptive, lit les sorties de cote futures et ne sert à aucune décision.
+
+**Essai à blanc** (empreintes conformes, aucun rendement lu, vérifié par un test qui interdit tout calcul de portefeuille) : 28 dates de décision ; univers éligible de 518 à 686 titres ; 100 titres pour E1 et E2 à chaque date ; 58 titres communs en médiane entre E1 et E2. 11 tests passent.
