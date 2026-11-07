@@ -137,3 +137,23 @@ Chaque jour, le capital est réparti à parts égales entre les achats de H3, de
 1. Groupe principal : `principal` (17 659 publications), comme le recommandait l'audit. `verified` reste une analyse secondaire.
 2. Fenêtre de H1 : de l'ouverture à la clôture du même jour. Les fenêtres de 30 et 60 minutes restent secondaires.
 3. Pas de vente à découvert, ni dans les tests confirmatoires ni dans les secondaires : l'analyse principale du projet s'en passe.
+
+## Précisions d'implémentation, 07/11/2026, avant tout lancement
+
+Écrites en codant `src/minute_study.py` et `reports/run_minute_study.py`, sans aucun rendement lu. Elles précisent des points que le texte laissait ouverts, sans changer une règle.
+
+1. **Attente à l'ouverture** : la barre d'entrée doit commencer dans les 6 premières minutes (9 h 30 à 9 h 35 inclus). Même règle pour l'entrée à 9 h 35 (jusqu'à 9 h 40) et pour la sortie des heures étendues.
+2. **Dépêche à 9 h 25 pile** : entrée le jour même ; une seconde plus tard, séance suivante.
+3. **Sortie à la clôture** : clôture de la dernière barre qui commence avant l'heure de clôture du calendrier, donc avant 13 h les jours écourtés.
+4. **SPY** : achat à la première barre qui commence à partir de la minute d'entrée du titre, vente à la dernière barre qui commence au plus tard à la minute de sortie du titre.
+5. **Séance témoin** : dernière séance entièrement terminée au moment de la dépêche. Son dernier prix régulier sert aussi de point de départ à la décomposition.
+6. **Prix connu à un instant** : clôture de la dernière barre déjà terminée, même ancienne, pour la décomposition.
+7. **Séances différentes** : chaque prix est multiplié par le facteur d'ajustement de sa séance ; un facteur manquant (`suspect_print`) rend la mesure vide.
+8. **Heures étendues** : barre d'entrée entre 5 et 65 minutes après la dépêche et avant l'ouverture régulière ; liquidité de la veille de l'entrée au-dessus de 100 M$.
+9. **Cours quotidiens** : horizon de k séances = ouverture de l'entrée à la clôture de la séance k ; un trou de cotation garde le dernier cours ; une sortie de cote applique le rendement de sortie (hypothèse de base, optimiste et pessimiste publiées).
+10. **H3** : rendement net du titre (frais aller et retour) moins le rendement brut de SPY sur les mêmes minutes.
+11. **Trimestre** : celui de la séance d'entrée. Newey-West avec un retard d'un trimestre.
+12. **Portefeuille** : poids égaux entre les achats d'une même séance ; SPY conservé paie 5 pb à l'achat et à la vente.
+13. **Variation extrême** : listée seulement dans la séance régulière d'entrée.
+
+**Essai à blanc** (`--dry-run`, empreintes conformes, aucune barre ni aucun rendement lus) : 43 007 événements vérifiés et cotés, dont 15 459 dans le groupe principal achetable, 12 103 positifs et 3 356 négatifs, 4 465 au-dessus de 100 M$, 7 534 dépêches avant l'ouverture.
