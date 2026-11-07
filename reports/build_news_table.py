@@ -29,7 +29,7 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
-from news_filter import CATEGORIES, LATE_RELAY, classify_headline, parse_surprise
+from news_filter import CATEGORIES, LATE_RELAY, classify_headline, one_row_per_wire, parse_surprise
 
 NEWS = ROOT / "data" / "news"
 OUT = ROOT / "reports" / "lab_2026-11" / "news"
@@ -163,11 +163,13 @@ def build_surprises(table, links, securities):
     recycled = (table.available_at - earlier) >= pd.Timedelta(days=RECYCLED_AFTER_DAYS)
     wires = table[table.category == "earnings"].assign(recycled=recycled).merge(trusted_links, on="id")
     wires["cik"] = wires.security_id.map(securities.cik)
-    wires = wires.dropna(subset=["cik"]).drop_duplicates(["id", "cik"])
+    stocks = securities.index[securities.security_type.isin(["common", "adr"])]
+    # Le titre de l'événement est celui que cite la dépêche : une société (CIK) peut avoir plusieurs symboles au fil du temps.
+    wires = one_row_per_wire(wires.dropna(subset=["cik"]), stocks).rename(columns={"security_id": "event_security"})
     wires["cik"] = wires.cik.astype(int)
     events["cik"] = events.cik.astype(int)
-    columns = ["id", "cik", "available_at", "created_at", "updated_at", "headline", "eps", "eps_estimate", "sales", "sales_estimate", "eps_ok", "sales_ok", "basis", "period", "quarter", "eps_conflict", "recycled", "correction", "update_prefix", "late_relay", "n_stocks"]
-    candidates = events[["cik", "accepted_utc", "period_end", "security_id"]].rename(columns={"security_id": "event_security"}).merge(wires[columns], on="cik")
+    columns = ["id", "cik", "available_at", "created_at", "updated_at", "headline", "eps", "eps_estimate", "sales", "sales_estimate", "eps_ok", "sales_ok", "basis", "period", "quarter", "eps_conflict", "recycled", "correction", "update_prefix", "late_relay", "n_stocks", "event_security"]
+    candidates = events[["cik", "accepted_utc", "period_end"]].merge(wires[columns], on="cik")
     candidates["accepted_utc"] = candidates.accepted_utc.astype("datetime64[ns, UTC]")
     candidates["available_at"] = candidates.available_at.astype("datetime64[ns, UTC]")
     lag = candidates.available_at - candidates.accepted_utc
@@ -202,11 +204,21 @@ def build_surprises(table, links, securities):
     first = first.assign(principal_basis=first.basis.isin(["adjusted", "gaap"]))
     funnel["basis_stated_adjusted_or_gaap"] = int(first.principal_basis.sum())
     funnel["final_one_wire_per_publication"] = len(first)
+    cited = first.event_security.map(securities.cik)
+    assert cited.eq(first.cik).all() and first.event_security.isin(stocks).all(), "Le titre cité doit être une action de la société publiante."
+    # Un titre qui ne cote pas ce jour-là n'a pas de prix à la minute : signalé, jamais remplacé par un autre.
+    day = first.available_at.dt.tz_convert("America/New_York").dt.tz_localize(None).dt.normalize()
+    listed = first.event_security.map(securities.first_trade).dt.tz_convert("America/New_York").dt.tz_localize(None).dt.normalize()
+    last = first.event_security.map(securities.last_trade).dt.tz_convert("America/New_York").dt.tz_localize(None).dt.normalize()
+    first = first.assign(security_active=(listed <= day) & (day <= last))
+    funnel["security_active_on_wire_day"] = int(first.security_active.sum())
     first.to_parquet(NEWS / "earnings_surprise.parquet", index=False)
 
     # La survie sert ici à décrire la sélection, jamais à la définir.
-    event_alive = events.security_id.map(securities.alive_at_end)
-    first_alive = first.event_security.map(securities.alive_at_end)
+    # Au niveau de la société : `events` porte un titre arbitraire par CIK. Vivante si l'un de ses titres cote encore.
+    company_alive = securities.dropna(subset=["cik"]).assign(cik=lambda f: f.cik.astype(int)).groupby("cik").alive_at_end.any()
+    event_alive = events.cik.map(company_alive)
+    first_alive = first.cik.map(company_alive)
     year = first.accepted_utc.dt.year
     all_year = events.accepted_utc.dt.year
     hours = first.wire_minus_sec_hours

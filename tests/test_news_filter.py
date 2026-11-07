@@ -4,8 +4,10 @@ import sys
 import unittest
 from pathlib import Path
 
+import pandas as pd
+
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
-from news_filter import classify_headline, parse_surprise
+from news_filter import classify_headline, one_row_per_wire, parse_surprise
 
 
 class Classification(unittest.TestCase):
@@ -152,6 +154,19 @@ class Surprise(unittest.TestCase):
 
     def test_conflict_is_flagged(self):
         self.assertTrue(parse_surprise("Acme Q1 EPS $1.00 Beats $1.20 Estimate")["verb_conflict"])
+
+
+class WireSecurity(unittest.TestCase):
+    def test_keeps_the_cited_symbol_of_the_company(self):
+        # Harsco en 2020 (HSC) : NVRI, son symbole de 2023, ne doit pas revenir pour cette dépêche.
+        wires = pd.DataFrame({"id": [1, 2], "cik": [45876, 45876], "security_id": ["HSC#0", "NVRI#0"]})
+        kept = one_row_per_wire(wires, ["HSC#0", "NVRI#0"])
+        self.assertEqual(kept.set_index("id").security_id.to_dict(), {1: "HSC#0", 2: "NVRI#0"})
+
+    def test_prefers_the_stock_over_another_listed_line(self):
+        wires = pd.DataFrame({"id": [1, 1, 1], "cik": [5, 5, 9], "security_id": ["AAP#0", "ZZZ#0", "OTHER#0"]})
+        kept = one_row_per_wire(wires, ["ZZZ#0", "OTHER#0"])
+        self.assertEqual(sorted(kept.security_id), ["OTHER#0", "ZZZ#0"])
 
 
 if __name__ == "__main__":

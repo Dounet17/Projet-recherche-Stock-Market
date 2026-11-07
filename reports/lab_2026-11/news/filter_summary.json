@@ -125,7 +125,8 @@
    "one_stock_only": 49427,
    "quarter_matches_issuer_calendar": 49310,
    "basis_stated_adjusted_or_gaap": 20319,
-   "final_one_wire_per_publication": 49310
+   "final_one_wire_per_publication": 49310,
+   "security_active_on_wire_day": 49307
   },
   "share_of_publications": 0.6105821023043871,
   "by_year": {
@@ -166,8 +167,8 @@
    }
   },
   "by_survival": {
-   "alive": 0.629,
-   "gone": 0.513
+   "alive": 0.628,
+   "gone": 0.507
   },
   "basis": {
    "unlabeled": 28989,

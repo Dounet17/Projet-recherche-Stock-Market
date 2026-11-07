@@ -90,6 +90,7 @@ Le signe vient des chiffres : « Q2 Adj. EPS $1.46 Beats $1.38 Estimate ». Seul
 | Trimestre cohérent avec le calendrier de la société | **49 310 (61 %)** |
 | Base explicite, ajustée ou comptable | **20 319** |
 
+- **Titre de l'événement, corrigé le 07/11/2026.** `event_security` était le dernier titre de la société par ordre alphabétique, sans regard à la date (NVRI au lieu de HSC en 2020, METCB au lieu de METC). C'est désormais l'action citée par la dépêche : 1 310 lignes changent sur 49 310, dont 922 tombaient hors des dates de cotation de l'ancien titre, et aucune autre colonne ne bouge. `security_active` signale les 3 titres qui ne cotent pas le jour de la dépêche (Rite Aid, Tingo, Petroquest). `list_minute_windows.py` ne demande plus de séance hors cotation. Les barres déjà téléchargées pour les anciens symboles doivent être écartées : toujours les joindre par symbole et séance depuis la table corrigée.
 - **Répartition.** De 57 à 67 % selon l'année, **63 % pour les sociétés encore cotées contre 51 % pour les disparues**. Cette sélection ne se corrige pas en filtrant les disparues.
 - **La base explicite est très inégale** : 7 667 des 20 319 lignes datent de 2024, à cause d'un changement de format des titres. Une étude sur ce seul groupe pèserait surtout sur 2024.
 - **Signe.** 35 117 au-dessus de l'estimation, 14 123 en dessous, 70 égaux.

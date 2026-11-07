@@ -165,3 +165,12 @@ def parse_surprise(text):
         else:
             result["sales_ok"] = actual > 0 and estimate > 0 and SALES_RATIO_MIN <= actual / estimate <= SALES_RATIO_MAX
     return result
+
+
+def one_row_per_wire(wires, stocks):
+    """Une ligne par dépêche et par société, sur le titre cité : une action de `stocks` plutôt qu'une autre ligne de la cote.
+
+    `wires` porte `id`, `cik` et `security_id`. Le choix ne regarde ni les dates ni la liquidité, connue seulement après coup.
+    """
+    other = ~wires.security_id.isin(stocks)
+    return wires.assign(_other=other).sort_values(["id", "_other", "security_id"]).drop_duplicates(["id", "cik"]).drop(columns="_other")
