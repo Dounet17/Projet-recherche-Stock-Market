@@ -18,7 +18,7 @@ MINUTE = 60 * 10**9
 LATENCY = 5 * MINUTE          # délai entre la dépêche et la première décision possible
 OPEN_WAIT = 6 * MINUTE        # première minute de séance, puis 5 minutes de plus ; sinon pas d'entrée
 LATE_START = 5 * MINUTE       # variante : entrée à 9 h 35
-EXTENDED_WAIT = 60 * MINUTE   # heures étendues : barre d'entrée au plus 60 minutes après le délai
+EXTENDED_WAIT = 60 * MINUTE   # heures étendues : barre d'entrée au plus 60 minutes après la dépêche (audit D3)
 SHORT_WINDOWS = (30, 60)      # fenêtres secondaires après l'ouverture, en minutes
 WIRE_POINTS = (5, 30, 60)     # décomposition : minutes après la dépêche
 EXTREME_MOVE = 0.5            # variation d'une minute à l'autre à lister avant interprétation
@@ -98,12 +98,20 @@ class Bars:
         return self.last_close(np.iinfo(np.int64).min, when - MINUTE + 1)[1]
 
     def largest_move(self, start, stop):
+        """Plus forte variation dans une barre (ouverture à clôture) ou d'une clôture à la suivante (audit D7)."""
         inside = (self.t >= start) & (self.t < stop)
-        closes = self.c[inside]
-        if len(closes) < 2:
-            return np.nan
+        opens, closes = self.o[inside], self.c[inside]
         with np.errstate(divide="ignore", invalid="ignore"):
-            return float(np.nanmax(np.abs(closes[1:] / closes[:-1] - 1))) if np.isfinite(closes).sum() > 1 else np.nan
+            moves = np.concatenate([closes / opens - 1, closes[1:] / closes[:-1] - 1])
+        moves = np.abs(moves[np.isfinite(moves)])
+        return float(moves.max()) if len(moves) else np.nan
+
+    def at(self, minute):
+        """Barre qui commence exactement à `minute` : (ouverture, clôture), sinon (nan, nan)."""
+        i = np.searchsorted(self.t, minute, side="left")
+        if i < len(self.t) and self.t[i] == minute:
+            return float(self.o[i]), float(self.c[i])
+        return np.nan, np.nan
 
 
 EMPTY = Bars([], [], [])
@@ -111,18 +119,22 @@ EMPTY = Bars([], [], [])
 
 def trade(stock, spy, start, stop, wait=OPEN_WAIT):
     """Achat à l'ouverture de la première barre de [start, start + wait), vente à la clôture de la dernière barre
-    avant `stop`. SPY sur exactement les mêmes minutes. Renvoie (rendement, rendement SPY, heure d'entrée)."""
+    avant `stop`. SPY sur exactement les mêmes minutes, sinon pas de rendement SPY (audit D2).
+    Renvoie (rendement, rendement SPY, heure d'entrée)."""
     entry_time, entry = stock.first_open(start, min(start + wait, stop))
     if entry_time is None:
         return np.nan, np.nan, None
     exit_time, leave = stock.last_close(entry_time, stop)
-    spy_time, spy_entry = spy.first_open(entry_time, entry_time + wait)
-    spy_exit = spy.last_close(spy_time, exit_time + 1)[1] if spy_time is not None else np.nan
+    spy_entry, spy_exit = spy.at(entry_time)[0], spy.at(exit_time)[1]
     return leave / entry - 1, spy_exit / spy_entry - 1, entry_time
 
 
-def measure_event(stock, spy, available, entry_session, placebo_session):
-    """Toutes les mesures à la minute d'un événement. Les séances sont des couples (ouverture, clôture) en ns UTC."""
+def measure_event(stock, spy, available, entry_session, placebo_session, consecutive=True):
+    """Toutes les mesures à la minute d'un événement. Les séances sont des couples (ouverture, clôture) en ns UTC.
+
+    `consecutive` : la séance d'entrée suit directement la séance témoin. Sinon, une séance régulière s'intercale entre
+    la dépêche et l'entrée, et il n'y a pas d'achat en heures étendues (audit D1).
+    """
     opening, closing = entry_session
     out = {}
     out["h1"], out["h1_spy"], entry_time = trade(stock, spy, opening, closing)
@@ -135,14 +147,12 @@ def measure_event(stock, spy, available, entry_session, placebo_session):
     # Heures étendues : achat au moins 5 minutes après la dépêche, revente à l'ouverture régulière.
     out["extended"] = out["extended_spy"] = np.nan
     start = available + LATENCY
-    if start < opening:
-        buy_time, buy = stock.first_open(start, min(start + EXTENDED_WAIT, opening))
+    if consecutive and start < opening:
+        buy_time, buy = stock.first_open(start, min(available + EXTENDED_WAIT + 1, opening))
         sell_time, sell = stock.first_open(opening, opening + OPEN_WAIT)
         if buy_time is not None and sell_time is not None:
-            spy_buy_time, spy_buy = spy.first_open(buy_time, buy_time + OPEN_WAIT)
-            spy_sell = spy.first_open(sell_time, sell_time + OPEN_WAIT)[1]
             out["extended"] = sell / buy - 1
-            out["extended_spy"] = spy_sell / spy_buy - 1 if spy_buy_time is not None else np.nan
+            out["extended_spy"] = spy.at(sell_time)[0] / spy.at(buy_time)[0] - 1
 
     # Décomposition : rendements cumulés depuis la clôture de la séance témoin, titre et SPY.
     base, spy_base = stock.last_close(*placebo_session)[1], spy.last_close(*placebo_session)[1]
@@ -152,11 +162,13 @@ def measure_event(stock, spy, available, entry_session, placebo_session):
         out[f"cum_{name}"] = stock.known_at(when) / base - 1
         out[f"cum_{name}_spy"] = spy.known_at(when) / spy_base - 1
     first_time, first = stock.first_open(opening, opening + OPEN_WAIT)
-    spy_first = spy.first_open(first_time, first_time + OPEN_WAIT)[1] if first_time is not None else np.nan
+    spy_first = spy.at(first_time)[0] if first_time is not None else np.nan
     out["cum_open"], out["cum_open_spy"] = first / base - 1, spy_first / spy_base - 1
-    out["cum_close"] = stock.last_close(opening, closing)[1] / base - 1
-    out["cum_close_spy"] = spy.last_close(opening, closing)[1] / spy_base - 1
-    out["largest_minute_move"] = stock.largest_move(opening, closing)
+    last_time, last = stock.last_close(opening, closing)
+    out["cum_close"] = last / base - 1
+    out["cum_close_spy"] = (spy.at(last_time)[1] if last_time is not None else np.nan) / spy_base - 1
+    # Toutes les barres utilisées, de la séance témoin à la clôture d'entrée (audit D7).
+    out["largest_minute_move"] = stock.largest_move(placebo_session[0], closing)
     return out
 
 
@@ -175,7 +187,8 @@ def daily_window(opens, closes, entry, cols, sessions, exit_values, last_rows):
     start = opens[entry[inside], cols[inside]]
     multiple[inside] = marks[end[inside], cols[inside]] / start
     leaves = np.zeros(len(entry), dtype=bool)
-    leaves[inside] = np.isfinite(exit_values[cols[inside]]) & (last_rows[cols[inside]] < end[inside])
+    # Sortie de cote le dernier jour de la fenêtre comprise, comme dans `lab` (audit D4).
+    leaves[inside] = np.isfinite(exit_values[cols[inside]]) & (last_rows[cols[inside]] <= end[inside])
     multiple[leaves] = closes[last_rows[cols[leaves]], cols[leaves]] / opens[entry[leaves], cols[leaves]] * (1 + exit_values[cols[leaves]])
     return multiple - 1
 
@@ -201,13 +214,15 @@ def summarize(series):
     x = pd.Series(series, dtype=float).dropna()
     n = len(x)
     if n < 3:
-        return {"quarters": n, "mean": np.nan, "t": np.nan, "p": np.nan, "ci_low": np.nan, "ci_high": np.nan}
+        return {"quarters": n, "mean": np.nan, "t": np.nan, "p": np.nan, "ci_low": np.nan, "ci_high": np.nan, "t_plain": np.nan, "p_plain": np.nan}
     from scipy import stats
     t_value = newey_west_t(x.to_numpy())
+    plain_t = float(x.mean() / (x.std(ddof=1) / np.sqrt(n)))
     se = abs(x.mean() / t_value) if np.isfinite(t_value) and t_value != 0 else np.nan
     critical = stats.t.ppf(0.975, n - 1)
     return {"quarters": n, "mean": float(x.mean()), "t": t_value, "p": two_sided_p(t_value, n),
-            "ci_low": float(x.mean() - critical * se), "ci_high": float(x.mean() + critical * se)}
+            "ci_low": float(x.mean() - critical * se), "ci_high": float(x.mean() + critical * se),
+            "t_plain": plain_t, "p_plain": two_sided_p(plain_t, n)}
 
 
 def two_way_cluster(y, x, first, second):

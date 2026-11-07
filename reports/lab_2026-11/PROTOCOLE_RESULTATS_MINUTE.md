@@ -140,7 +140,7 @@ Chaque jour, le capital est réparti à parts égales entre les achats de H3, de
 
 ## Précisions d'implémentation, 07/11/2026, avant tout lancement
 
-Écrites en codant `src/minute_study.py` et `reports/run_minute_study.py`, sans aucun rendement lu. Elles précisent des points que le texte laissait ouverts, sans changer une règle.
+Écrites en codant `src/minute_study.py` et `reports/run_minute_study.py`, sans aucun rendement lu. **Requalification après l'audit de Codex** (`minute_study/AUDIT_CODEX.md`) : contrairement à ce qui était écrit ici, les points 4, 8, 11 et 13 changeaient une règle du gel (SPY plus forcément sur les mêmes minutes, délai étendu porté à 65 minutes, ajout de Newey-West, contrôle des variations extrêmes réduit), et le point 3 accepte une dernière transaction ancienne comme prix de vente. Rien n'indique un choix fait après lecture des rendements, mais ce ne sont pas de simples précisions.
 
 1. **Attente à l'ouverture** : la barre d'entrée doit commencer dans les 6 premières minutes (9 h 30 à 9 h 35 inclus). Même règle pour l'entrée à 9 h 35 (jusqu'à 9 h 40) et pour la sortie des heures étendues.
 2. **Dépêche à 9 h 25 pile** : entrée le jour même ; une seconde plus tard, séance suivante.
@@ -157,3 +157,15 @@ Chaque jour, le capital est réparti à parts égales entre les achats de H3, de
 13. **Variation extrême** : listée seulement dans la séance régulière d'entrée.
 
 **Essai à blanc** (`--dry-run`, empreintes conformes, aucune barre ni aucun rendement lus) : 43 007 événements vérifiés et cotés, dont 15 459 dans le groupe principal achetable, 12 103 positifs et 3 356 négatifs, 4 465 au-dessus de 100 M$, 7 534 dépêches avant l'ouverture.
+
+## Corrections après l'audit, 07/11/2026, après lecture des résultats
+
+Audit indépendant de Codex : `minute_study/AUDIT_CODEX.md`. Corrections faites **après avoir vu la première version des résultats**, donc annoncées comme telles. Les deux versions sont publiées (`minute_study/summary_v1.json` et `summary.json`) ; aucune n'est retenue pour son résultat.
+
+1. **D1** : plus d'achat en heures étendues quand une séance régulière s'intercale entre la dépêche et l'entrée (13 achats faits en séance, avec une liquidité postérieure).
+2. **D2** : SPY exactement sur les mêmes minutes que le titre, sinon pas de rendement SPY, comme le prévoyait le gel. Annule la précision 4.
+3. **D3** : barre d'achat en heures étendues au plus 60 minutes après la dépêche, comme le prévoyait le gel. Annule le 65 de la précision 8.
+4. **D4** : une sortie de cote le dernier jour de la fenêtre est comptée, comme dans `lab`.
+5. **D5** : décomposition calculée sur les mêmes événements à chaque point.
+6. **D6** : le t ordinaire sur les 28 trimestres, prévu par le gel, est publié et corrigé par Holm à côté de Newey-West.
+7. **D7** : variations extrêmes cherchées dans toutes les barres utilisées, y compris à l'intérieur d'une barre. Annule la précision 13.

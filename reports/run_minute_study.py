@@ -145,7 +145,7 @@ def run_chunk(rows):
         placebo = (int(SESSIONS.open_ns.iloc[row["placebo_idx"]]), int(SESSIONS.close_ns.iloc[row["placebo_idx"]]))
         stock = series(row["symbol"], row["event_security"], row["placebo_idx"], row["entry_idx"], cache)
         spy = series("SPY", SPY_ID, row["placebo_idx"], row["entry_idx"], cache)
-        measures = ms.measure_event(stock, spy, row["available_ns"], entry, placebo)
+        measures = ms.measure_event(stock, spy, row["available_ns"], entry, placebo, consecutive=row["entry_idx"] == row["placebo_idx"] + 1)
         assert measures["entry_delay_s"] != measures["entry_delay_s"] or measures["entry_delay_s"] >= 0
         results.append({"id": row["id"], **measures})
         if len(cache) > 6:
@@ -216,6 +216,12 @@ def analyze(table, sessions, market):
     confirm = {"H1": spread_test(main, "ab_h1"), "H2": spread_test(main, "ab_d5_base"), "H3": mean_test(main[main.positive], "net_ab_h1")}
     for name, p in zip(confirm, holm([c["p"] for c in confirm.values()])):
         confirm[name]["p_holm"] = float(p)
+    for name, p in zip(confirm, holm([c["p_plain"] for c in confirm.values()])):
+        confirm[name]["p_holm_plain"] = float(p)
+    # Moyennes par événement, à ne pas confondre avec les moyennes par trimestre des tests (audit D6).
+    report["per_event_means"] = {"ab_h1": main.groupby("positive").ab_h1.mean().rename(index=str).to_dict(),
+                                 "net_ab_h1_positive": float(main[main.positive].net_ab_h1.mean()),
+                                 "net_h1_positive": float(main[main.positive].net_h1.mean())}
     report["confirmatory"] = confirm
     secondary = {
         "S1_open_30m": spread_test(main, "ab_open_30m"), "S2_open_60m": spread_test(main, "ab_open_60m"),
@@ -258,10 +264,12 @@ def analyze(table, sessions, market):
     points = [*(f"wire_{m}m" for m in ms.WIRE_POINTS), "open", "open_30m_mark", "close"]
     decomposition = {}
     for label, frame, names in (("all", main, points[3:]), ("liquid", liquid, points)):
+        frame = frame.dropna(subset=[f"ab_cum_{p}" for p in names])   # mêmes événements à chaque point (audit D5)
         means = frame.groupby("positive")[[f"ab_cum_{p}" for p in names]].mean()
         spread = means.loc[True] - means.loc[False]
         decomposition[label] = {p: {"positive": float(means.loc[True, f"ab_cum_{p}"]), "negative": float(means.loc[False, f"ab_cum_{p}"]),
-                                    "share_of_close_spread": float(spread[f"ab_cum_{p}"] / spread["ab_cum_close"])} for p in names}
+                                    "share_of_close_spread": float(spread[f"ab_cum_{p}"] / spread["ab_cum_close"])} for p in names} | {
+            "events_positive": int(frame.positive.sum()), "events_negative": int((~frame.positive).sum())}
     report["decomposition"] = decomposition
     tiers = pd.cut(main.liquidity, [0, 1e7, 1e8, np.inf], labels=["1-10M", "10-100M", ">=100M"])
     report["descriptive"] = {value: {"year": describe(main, value, main.entry_date.dt.year), "basis": describe(main, value, main.basis),

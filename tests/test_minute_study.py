@@ -72,7 +72,7 @@ class Trades(unittest.TestCase):
     OPEN, CLOSE = ns("2024-03-08 09:30"), ns("2024-03-08 16:00")
 
     def spy(self):
-        return bars([("2024-03-08 09:30", 500, 501), ("2024-03-08 09:31", 501, 502), ("2024-03-08 15:59", 505, 510)])
+        return bars([("2024-03-08 09:30", 500, 501), ("2024-03-08 09:31", 501, 502), ("2024-03-08 15:58", 503, 502), ("2024-03-08 15:59", 505, 510)])
 
     def test_open_to_close_and_spy_on_the_same_minutes(self):
         stock = bars([("2024-03-08 09:30", 10, 10.5), ("2024-03-08 12:00", 10.5, 11), ("2024-03-08 15:59", 11, 12)])
@@ -86,8 +86,14 @@ class Trades(unittest.TestCase):
         r, spy, entry = ms.trade(stock, self.spy(), self.OPEN, self.CLOSE)
         self.assertAlmostEqual(r, 0.1)
         self.assertEqual(entry, ns("2024-03-08 09:31"))
-        # SPY : entrée à la barre de 9 h 31, sortie à la dernière barre commencée avant ou à 15 h 58.
+        # SPY : exactement les minutes du titre, achat à 9 h 31 et vente à la barre de 15 h 58.
         self.assertAlmostEqual(spy, 502 / 501 - 1)
+
+    def test_spy_without_the_same_minute_gives_no_reference(self):
+        stock = bars([("2024-03-08 09:30", 10, 10), ("2024-03-08 15:57", 10, 11)])
+        r, spy, _ = ms.trade(stock, self.spy(), self.OPEN, self.CLOSE)
+        self.assertAlmostEqual(r, 0.1)
+        self.assertTrue(np.isnan(spy))
 
     def test_no_bar_in_the_first_six_minutes_means_no_trade(self):
         stock = bars([("2024-03-08 09:36", 10, 10), ("2024-03-08 15:59", 10, 11)])
@@ -173,7 +179,26 @@ class Event(unittest.TestCase):
         self.assertTrue(np.isnan(out["extended"]))
 
     def test_largest_minute_move(self):
-        self.assertAlmostEqual(self.out["largest_minute_move"], 113 / 111 - 1, places=6)
+        # Toutes les barres de la séance témoin à la clôture : saut de 100 à 105 après la dépêche.
+        self.assertAlmostEqual(self.out["largest_minute_move"], 0.05, places=6)
+
+    def test_largest_move_inside_a_single_bar(self):
+        self.assertAlmostEqual(bars([("2024-03-08 09:30", 10, 100)]).largest_move(ns("2024-03-08 09:30"), ns("2024-03-08 16:00")), 9.0)
+
+    def test_no_extended_trade_when_a_session_lies_in_between(self):
+        out = ms.measure_event(self.stock, self.spy, ns("2024-03-07 16:10"), (ns("2024-03-08 09:30"), ns("2024-03-08 16:00")),
+                               (ns("2024-03-07 09:30"), ns("2024-03-07 16:00")), consecutive=False)
+        self.assertTrue(np.isnan(out["extended"]))
+        self.assertAlmostEqual(out["h1"], 113 / 108 - 1)
+
+    def test_extended_buy_at_most_60_minutes_after_the_wire(self):
+        sessions = ((ns("2024-03-08 09:30"), ns("2024-03-08 16:00")), (ns("2024-03-07 09:30"), ns("2024-03-07 16:00")))
+        def run(minute):
+            stock = bars([("2024-03-07 09:30", 99, 100), (minute, 101, 101), ("2024-03-08 09:30", 108, 108)])
+            spy = bars([("2024-03-07 09:30", 400, 400), (minute, 400, 400), ("2024-03-08 09:30", 404, 404)])
+            return ms.measure_event(stock, spy, ns("2024-03-07 16:10"), *sessions)["extended"]
+        self.assertTrue(np.isnan(run("2024-03-07 17:11")))           # 61 minutes après la dépêche
+        self.assertAlmostEqual(run("2024-03-07 17:10"), 108 / 101 - 1)  # 60 minutes : admis
 
 
 class Daily(unittest.TestCase):
@@ -186,6 +211,11 @@ class Daily(unittest.TestCase):
         self.assertAlmostEqual(r[0], 11.5 / 10 - 1)                 # trou : dernier cours connu
         self.assertAlmostEqual(r[1], 21.5 / 20 * 0.5 - 1)            # disparu à la ligne 1, sortie de -50 %
         self.assertTrue(np.isnan(ms.daily_window(opens, closes, np.array([2]), np.array([0]), 3, exits, last_rows)[0]))
+
+    def test_exit_on_the_last_day_of_the_window_counts(self):
+        opens = np.array([[20.0], [21.0], [22.0]]); closes = np.array([[20.5], [21.5], [np.nan]])
+        r = ms.daily_window(opens, closes, np.array([0]), np.array([0]), 2, np.array([-0.3]), np.array([1]))
+        self.assertAlmostEqual(r[0], 21.5 / 20 * 0.7 - 1)
 
     def test_one_session_is_open_to_close(self):
         opens = np.array([[10.0]]); closes = np.array([[11.0]])
