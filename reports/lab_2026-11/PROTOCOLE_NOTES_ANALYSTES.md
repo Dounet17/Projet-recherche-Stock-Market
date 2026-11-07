@@ -150,3 +150,27 @@ Tranchés en codant `src/analyst_study.py` et `reports/run_analyst_study.py`, sa
 9. Précision : regroupement à deux dimensions : les rares notes sans CIK forment un seul groupe.
 
 **Essai à blanc** (empreintes conformes, aucun rendement lu) : 22 795 relèvements et 25 921 abaissements après regroupement par séance ; échantillon principal achetable hors résultats de **18 427 relèvements et 19 194 abaissements**, dont 15 573 au-dessus de 100 M$ ; 18 483 relèvements achetables pour le portefeuille A3 ; 48 112 objectifs relevés et 35 713 abaissés hors résultats.
+
+## Corrections avant lancement, après la relecture du code par Codex, 07/11/2026
+
+Relecture : `analyst_study/AUDIT_CODE_CODEX.md`. **Aucun rendement de cette étude n'avait été calculé**, ni par le code ni par la relecture. Ces corrections restent donc antérieures à toute lecture des résultats.
+
+**Requalification.** Les choix 4 (regroupement séparé par famille, alors que le texte figé parlait de « plusieurs notes » sans distinguer) et 8 (placebo et avant-note sous la seule hypothèse de base) étaient des **changements**. Le choix 8 est annulé : les trois hypothèses sont désormais publiées.
+
+| Défaut | Correction | Nature |
+|---|---|---|
+| D1 | A3 regroupe les notes par **séance de décision**, depuis les notes brutes : une note future ne peut plus annuler un achat passé | Correction d'une fuite |
+| D2 | A3 n'écarte une note que si une publication de la même société est tombée dans les **2 séances terminées avant la décision** ; jamais une date future, ni une publication du jour même. A1 et A2 gardent l'exclusion symétrique du gel, qui est **rétrospective** et décrit le marché sans être achetable | **Changement** pour A3 |
+| D3 | « 20 séances avant la note » : les 20 séances terminées avant la note | Correction |
+| D4 | Un titre sorti de cote quitte le plan à la première décision qui suit sa dernière cotation, et le reste est rééquilibré. Une radiation est publique quand elle a lieu | **Changement** |
+| D5 | Résultat principal : t ordinaire, sa p et **son** IC ; Newey-West rangé dans une sensibilité nommée. Arrêt si un test confirmatoire n'a pas ses 28 trimestres | Correction |
+| D6 | Référence : buy and hold à poids égaux de toutes les actions achetables le 02/01/2018, gardées jusqu'à fin 2024, sous les trois hypothèses (`data/reference/buy_hold_by_cohort.parquet`, empreinte `df7456f7…bb500d` ajoutée au contrôle du code). Univers plus large que les seules sociétés suivies par des analystes | Précision |
+| D7 | A2 net publié sous les trois hypothèses de sortie | Correction |
+| D8 | Titres qui commencent par Moody's, Fitch, S&P, Standard & Poor's, DBRS ou Kroll (après « UPDATE » ou « Hearing » éventuels) exclus : ce sont des notes de dette. Une note **sur** Moody's ou Abercrombie & Fitch reste | **Changement de règle** |
+| D9 | Notes de sociétés sans aucune date de résultats gardées, mais comptées et publiées par sens et année (5 620 dans l'échantillon principal) | Précision |
+| D10 | Décision de A3 à la première clôture qui vient au moins 5 minutes après la note | **Changement** |
+| D11 | A2 par tranche de liquidité ajouté ; placebo de signe limité à A1 et dit tel quel ; le regroupement date et société est publié comme une moyenne **par événement** | Correction |
+
+**Conventions héritées, désormais écrites.** Médiane de liquidité exigeant 10 observations sur 20 ; titre effectivement échangé la veille ; coût aller et retour de A2 fixé par la liquidité d'avant l'entrée ; tenue de A3 de 20 périodes d'ouverture à ouverture, tronquée à la dernière ouverture de 2024 ; plafond de 10 % appliqué aux rééquilibrages, les poids dérivant entre eux ; ordre impossible non reporté ; ouvertures aberrantes retirées par le nettoyage ; p de A3 calculée sur des log-rendements quotidiens.
+
+**Essai à blanc corrigé** (aucun rendement lu, vérifié par un test qui interdit tout calcul de rendement) : 87 titres d'agences de notation refusés ; échantillon principal de **18 413 relèvements et 19 163 abaissements** ; A3 : 22 052 relèvements regroupés par décision, 20 652 achetables, 2 599 écartés après une publication déjà faite, **18 053 achats**. 27 tests passent.

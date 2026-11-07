@@ -214,7 +214,7 @@ def summarize(series):
     x = pd.Series(series, dtype=float).dropna()
     n = len(x)
     if n < 3:
-        return {"quarters": n, "mean": np.nan, "t": np.nan, "p": np.nan, "ci_low": np.nan, "ci_high": np.nan, "t_plain": np.nan, "p_plain": np.nan}
+        return {"quarters": n, "mean": np.nan, "t": np.nan, "p": np.nan, "ci_low": np.nan, "ci_high": np.nan, "t_plain": np.nan, "p_plain": np.nan, "ci_low_plain": np.nan, "ci_high_plain": np.nan}
     from scipy import stats
     t_value = newey_west_t(x.to_numpy())
     plain_t = float(x.mean() / (x.std(ddof=1) / np.sqrt(n)))
@@ -222,7 +222,8 @@ def summarize(series):
     critical = stats.t.ppf(0.975, n - 1)
     return {"quarters": n, "mean": float(x.mean()), "t": t_value, "p": two_sided_p(t_value, n),
             "ci_low": float(x.mean() - critical * se), "ci_high": float(x.mean() + critical * se),
-            "t_plain": plain_t, "p_plain": two_sided_p(plain_t, n)}
+            "t_plain": plain_t, "p_plain": two_sided_p(plain_t, n),
+            "ci_low_plain": float(x.mean() - critical * x.std(ddof=1) / np.sqrt(n)), "ci_high_plain": float(x.mean() + critical * x.std(ddof=1) / np.sqrt(n))}
 
 
 def two_way_cluster(y, x, first, second):

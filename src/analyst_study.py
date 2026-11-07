@@ -9,11 +9,15 @@ import re
 import numpy as np
 import pandas as pd
 
+from minute_study import LATENCY
+
 RATING_UP = re.compile(r"\bupgrades?\b", re.IGNORECASE)
 RATING_DOWN = re.compile(r"\bdowngrades?\b", re.IGNORECASE)
 TARGET_PREFIX = re.compile(r"^(?:UPDATE:\s*)?[\w&.,' -]{2,40}\s(?:maintains|reiterates)\b", re.IGNORECASE)
 TARGET_UP = re.compile(r"\b(?:raises|boosts|increases|lifts)\b.*\bprice target\b", re.IGNORECASE)
 TARGET_DOWN = re.compile(r"\b(?:lowers|cuts|reduces|trims)\b.*\bprice target\b", re.IGNORECASE)
+# Changement de règle du 07/11/2026 (relecture D8) : une agence de notation qui ouvre le titre note la dette, pas l'action.
+CREDIT_AGENCY = re.compile(r"^(?:(?:UPDATE|Hearing)\s*:?\s*)?(?:Moody'?s|Fitch|S&P|Standard\s*&\s*Poor'?s|DBRS|Kroll)\b", re.IGNORECASE)
 KINDS = ("upgrade", "downgrade", "target_up", "target_down")
 HOLD = 20
 CAP = 0.10
@@ -24,6 +28,8 @@ EXTREME_HIGH, EXTREME_LOW = 2.0, -0.9
 
 def classify(headline):
     """Type d'une note d'après son titre, ou None. Règles du protocole, sans tenir compte de la casse."""
+    if CREDIT_AGENCY.search(headline):
+        return None
     up, down = bool(RATING_UP.search(headline)), bool(RATING_DOWN.search(headline))
     if up and not down:
         return "upgrade"
@@ -48,8 +54,9 @@ def select_notes(articles, links, security_types):
 
 
 def decision_sessions(available_ns, closes_ns):
-    """Première séance dont la clôture suit la note : le moteur quotidien décide à cette clôture (portefeuille A3)."""
-    return np.searchsorted(closes_ns, np.asarray(available_ns), side="right")
+    """Première séance dont la clôture vient au moins 5 minutes après la note : le moteur quotidien décide à cette
+    clôture (portefeuille A3). Changement du 07/11/2026 (relecture D10) : le délai de 5 minutes s'applique aussi ici."""
+    return np.searchsorted(closes_ns, np.asarray(available_ns) + LATENCY, side="left")
 
 
 def collapse(notes, family_kinds, key="entry_idx"):
@@ -74,6 +81,27 @@ def near_earnings(ciks, entry_positions, earnings_positions):
         i = np.searchsorted(q, p - EARNINGS_BEFORE, side="left")
         out[k] = i < len(q) and q[i] <= p + EARNINGS_AFTER
     return out
+
+
+def past_earnings(ciks, decision_positions, earnings_positions):
+    """Vrai si une publication de la même société est tombée dans les 2 séances terminées avant la séance de décision.
+
+    Filtre du portefeuille A3 (changement du 07/11/2026, relecture D2) : seules des publications déjà faites comptent,
+    jamais une date future. Une publication du jour même n'est pas prise, faute d'heure sûre.
+    """
+    out = np.zeros(len(decision_positions), dtype=bool)
+    for k, (cik, p) in enumerate(zip(ciks, decision_positions)):
+        if pd.isna(cik) or int(cik) not in earnings_positions:
+            continue
+        q = earnings_positions[int(cik)]
+        i = np.searchsorted(q, p - EARNINGS_BEFORE, side="left")
+        out[k] = i < len(q) and q[i] <= p - 1
+    return out
+
+
+def calendar_covered(ciks, earnings_positions):
+    """Vrai si la société a au moins une date de résultats : sinon l'exclusion des résultats est invérifiable."""
+    return np.array([not pd.isna(c) and int(c) in earnings_positions for c in ciks], dtype=bool)
 
 
 def earnings_inside(ciks, entry_positions, earnings_positions, hold=HOLD):
@@ -103,16 +131,24 @@ def holding_intervals(decision_rows, securities, hold=HOLD):
     return sorted(intervals, key=lambda x: (x[1], x[0]))
 
 
-def portfolio_weights(decision_rows, securities, dates, hold=HOLD, cap=CAP):
+def portfolio_weights(decision_rows, securities, dates, hold=HOLD, cap=CAP, last_rows=None):
     """Poids du portefeuille A3, une ligne seulement les jours où l'ensemble des positions change.
 
     Une décision à la clôture de la ligne d ouvre une position exécutée à l'ouverture d + 1, retirée par la décision
     de la ligne d + hold : elle est tenue `hold` séances. Poids égaux entre positions ouvertes, au plus `cap`
     chacune, le reste en liquidités. Les autres lignes restent vides : aucun ordre, les poids dérivent avec les prix.
+
+    `last_rows` : titre -> dernière ligne cotée. Un titre sorti de cote quitte le plan à la première décision qui suit
+    sa dernière cotation, et le reste est rééquilibré (changement du 07/11/2026, relecture D4).
     """
     columns = pd.Index(sorted(set(securities)))
+    last_rows = last_rows or {}
     changes = {}
     for security, start, end in holding_intervals(decision_rows, securities, hold):
+        if security in last_rows:
+            if start > last_rows[security]:
+                continue
+            end = min(end, last_rows[security] + 1)
         changes.setdefault(start, []).append((security, True))
         changes.setdefault(end, []).append((security, False))
     weights = np.full((len(dates), len(columns)), np.nan)
