@@ -19,7 +19,10 @@ YEAR = 252
 SAME_QUARTER_DAYS = 20            # deux fins de période plus proches que cela sont deux versions d'un même trimestre
 GAP_DAYS = (70, 110)              # écart entre deux trimestres consécutifs, comme `universe_data`
 MAX_AGE_DAYS = 200                # expiration après la fin du dernier trimestre, comme `universe_data`
-SPLIT_BAND = (1 / 1.2, 1.2)       # un saut du facteur d'ajustement hors de cette bande est un fractionnement
+SPLIT_BAND = (1 / 1.2, 1.2)       # saut du facteur d'ajustement assez grand pour être examiné
+ACTION_WINDOW = 5                 # séances : un saut aussi proche d'une opération connue lui est attribué
+SIMPLE_TOLERANCE = 0.01           # écart relatif toléré à un ratio de fractionnement simple
+SHARE_ACTIONS = ("forward_splits", "reverse_splits", "stock_dividends")
 
 
 @dataclass(frozen=True)
@@ -35,21 +38,60 @@ class StudyData(Universe):
 
 # ---------------------------------------------------------------- EPS causal (relecture D1 à D3)
 
-def share_multiplier(factor):
-    """Nombre d'actions d'aujourd'hui pour une action du début de la série, d'après les seuls fractionnements.
+def is_simple_split(ratio):
+    """Vrai pour un ratio de fractionnement simple, à 1 % près : entier de 2 à 100, son inverse, ou 3/2, 4/3, 5/4 et
+    leurs inverses. Un dividende exceptionnel (KDP, 6,21) ou une scission (XPO, 1,64) n'en sont pas."""
+    if not np.isfinite(ratio) or ratio <= 0:
+        return False
+    candidates = [n for n in range(2, 101)] + [3 / 2, 4 / 3, 5 / 4]
+    candidates += [1 / c for c in candidates]
+    return any(abs(ratio / c - 1) <= SIMPLE_TOLERANCE for c in candidates)
 
-    `factor` : cours ajusté / cours brut, par séance et par titre. Un fractionnement fait sauter ce facteur d'un
-    coup (2 pour un fractionnement en deux) ; un dividende le fait glisser de quelques pour cent. Seuls les sauts
-    hors de `SPLIT_BAND` sont gardés : les dividendes ne touchent plus l'EPS. Seul le rapport entre deux dates
-    passées sert, si bien qu'une normalisation future du facteur se simplifie.
+
+def action_ratios(actions, securities, dates, columns):
+    """Matrice dates x titres du ratio d'actions de chaque opération à sa date d'effet, 1 ailleurs.
+
+    `actions` : opérations du fichier Alpaca (fractionnements, regroupements, dividendes en actions), rattachées au
+    titre qui portait ce symbole et cotait à cette date. Une date sans séance compte à la séance suivante.
+    """
+    out = pd.DataFrame(1.0, index=dates, columns=columns)
+    part = actions[actions.kind.isin(SHARE_ACTIONS)].copy()
+    part["ratio"] = np.where(part.kind == "stock_dividends", part.rate, part.new_rate / part.old_rate)
+    part["ex"] = pd.to_datetime(part.ex_date)
+    part = part[np.isfinite(part.ratio) & (part.ratio > 0)]
+    listed = securities.reindex(columns)
+    for security, row in listed.iterrows():
+        if pd.isna(row.symbol):
+            continue
+        mine = part[(part.symbol == row.symbol) & (part.ex >= row.first_trade) & (part.ex <= row.last_trade + pd.Timedelta(days=5))]
+        for ex, ratio in zip(mine.ex, mine.ratio):
+            k = np.searchsorted(dates.to_numpy(), np.datetime64(ex, "ns").astype(dates.to_numpy().dtype))
+            if k < len(dates):
+                out.iat[k, out.columns.get_loc(security)] *= ratio
+    return out
+
+
+def share_multiplier(factor, actions=None):
+    """Nombre d'actions d'aujourd'hui pour une action du début de la série (relectures D3).
+
+    Source principale : `actions`, matrice des ratios d'opérations sur le nombre d'actions (`action_ratios`).
+    Repli : un saut du facteur cours ajusté / cours brut hors de `SPLIT_BAND`, sans aucune opération connue à
+    `ACTION_WINDOW` séances, et dont le ratio est un fractionnement simple (`is_simple_split`). Les dividendes en
+    espèces, ordinaires ou exceptionnels, et les scissions ne changent pas le nombre d'actions. Seul le rapport entre
+    deux dates passées sert : une normalisation future du facteur se simplifie.
     """
     filled = pd.DataFrame(factor).ffill().to_numpy(dtype=float)
     ratio = np.ones_like(filled)
     with np.errstate(divide="ignore", invalid="ignore"):
         ratio[1:] = filled[1:] / filled[:-1]
-    jump = np.where((ratio < SPLIT_BAND[0]) | (ratio > SPLIT_BAND[1]), ratio, 1.0)
-    jump[~np.isfinite(jump)] = 1.0
-    return np.cumprod(jump, axis=0)
+    ratio[~np.isfinite(ratio)] = 1.0
+    known = np.ones_like(filled) if actions is None else np.asarray(actions, dtype=float)
+    has_action = pd.DataFrame(known != 1.0).rolling(2 * ACTION_WINDOW + 1, center=True, min_periods=1).max().to_numpy().astype(bool)
+    big = (ratio < SPLIT_BAND[0]) | (ratio > SPLIT_BAND[1])
+    simple = np.zeros_like(big)
+    rows, cols = np.nonzero(big & ~has_action)
+    simple[rows, cols] = [is_simple_split(r) for r in ratio[rows, cols]]
+    return np.cumprod(known * np.where(simple, ratio, 1.0), axis=0)
 
 
 def causal_ttm_column(quarters, dates, multiplier):
@@ -67,11 +109,12 @@ def causal_ttm_column(quarters, dates, multiplier):
     segments = []
     for f in np.unique(filed):
         n = np.searchsorted(filed, f, side="right")          # dépôts connus à f : un préfixe, triés par dépôt
-        order = np.lexsort((filed[:n], ends[:n]))            # par fin de période, puis par dépôt
-        e = ends[:n][order]
+        by_end = np.argsort(ends[:n], kind="stable")          # trimestres formés par fin de période
+        e = ends[:n][by_end]
         group = np.r_[0, np.cumsum(np.diff(e) / np.timedelta64(1, "D") > SAME_QUARTER_DAYS)]
-        last_of_group = np.r_[group[1:] != group[:-1], True]  # version la plus récente de chaque trimestre
-        picked = order[last_of_group]
+        order = by_end[np.lexsort((filed[:n][by_end], group))]      # dans chaque trimestre, par date de dépôt
+        last_of_group = np.r_[group[1:] != group[:-1], True]
+        picked = order[last_of_group]                         # version au dépôt le plus récent (seconde relecture)
         begin = np.searchsorted(dates, f, side="right")
         value = np.nan
         if len(picked) >= 4:
@@ -91,12 +134,12 @@ def causal_ttm_column(quarters, dates, multiplier):
     return out
 
 
-def causal_eps_matrix(quarters, ciks, dates, factor):
+def causal_eps_matrix(quarters, ciks, dates, factor, actions=None):
     """Matrice dates x titres de l'EPS sur 12 mois causal. `ciks` : titre -> CIK ; `factor` : matrice cours ajusté /
     cours brut alignée sur `dates` et sur l'ordre de `ciks`."""
     quarters = quarters[~quarters.eps_suspect] if "eps_suspect" in quarters else quarters
     by_cik = dict(tuple(quarters.groupby("cik", sort=False)))
-    multiplier = share_multiplier(factor)
+    multiplier = share_multiplier(factor, actions)
     values = np.asarray(dates.to_numpy() if hasattr(dates, "to_numpy") else dates).astype(quarters.filed.dtype)
     out = np.full((len(values), len(ciks)), np.nan)
     for j, cik in enumerate(ciks.to_numpy()):

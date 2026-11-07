@@ -142,3 +142,14 @@ Relecture : `pe_eps_study/AUDIT_CODE_CODEX.md`. **Aucun rendement de ces straté
 **Constat sans rendement.** Parmi les 1 000 titres les plus liquides, 175 à 342 EPS par date (médiane 282) diffèrent de plus de 1 % entre cette construction et celle de `universe_data`, surtout à cause des dividendes et des versions de trimestres. Le test B et les autres essais qui utilisent `data.eps_ttm` en héritent ; ils ne sont pas relancés ici.
 
 **Essai à blanc corrigé** (aucun rendement lu) : 28 décisions ; univers éligible de 520 à 686 titres, médiane 645 ; 100 titres pour E1 et E2 ; 57 titres communs en médiane entre E1 et E2. 22 tests passent, dont la causalité des EPS sur les vraies données et un lancement complet sur un marché inventé. Construction de l'EPS en 24 secondes.
+
+## Corrections après la seconde relecture, 08/11/2026, toujours avant tout rendement
+
+Relecture : `pe_eps_study/AUDIT_CODE_CODEX_2.md`. D1 et D4 à D8 y sont jugés corrigés ; le seuil de la correction D3 confondait les opérations.
+
+1. **D3, changement** : le nombre d'actions suit d'abord les **opérations réelles** de `data/universe/corporate_actions_dev.parquet` (empreinte `e5a2238b…bd672a35`, ajoutée au contrôle du code) : fractionnements et regroupements (`new_rate / old_rate`) et dividendes en actions (`rate`), à leur date d'effet, rattachés au titre qui portait ce symbole et cotait à cette date. **Repli** : un saut du facteur d'ajustement hors de [1/1,2 ; 1,2], sans opération connue à 5 séances près, ne compte que si son ratio est un fractionnement simple à 1 % près (entier de 2 à 100, son inverse, 3/2, 4/3, 5/4 et leurs inverses). Les dividendes en espèces, même exceptionnels, et les scissions ne changent plus l'EPS. Vérifié : KDP sans faux fractionnement en juillet 2018, NTRB 7 pour 6, TR 3 % en actions, AAPL 4 pour 1.
+2. **Correction** : dans chaque trimestre, la version gardée est celle **au dépôt le plus récent**, même si sa fin de période est plus tôt d'un jour (contre-exemple de la relecture testé).
+3. **Limite constatée, sans nouvelle règle** : une fusion inversée mélange deux sociétés dans l'EPS sur 12 mois. KDP au 01/03/2019 additionne deux trimestres de DPS et deux de KDP (2,48) ; ni cette valeur, ni le 1,74 de l'ancien faux fractionnement n'ont de sens économique. Ces cas restent dans l'étude et sont signalés comme limite.
+4. **Mesure de couverture, sans rendement** : sur 1 588 grands sauts du facteur des actions ordinaires depuis mi-2016, 1 174 ont une opération du fichier à 5 jours près ; les autres sont surtout des scissions, des dividendes exceptionnels et des regroupements de petites valeurs absents du fichier.
+
+**Essai à blanc** : 28 décisions ; univers éligible de 520 à 685 titres, médiane 645 ; 100 titres pour E1 et E2 ; 57 titres communs entre E1 et E2 ; 27,5 titres communs avec le vrai test B. 27 tests passent.

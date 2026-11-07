@@ -34,6 +34,7 @@ EXPECTED = {
     "data/universe_clean/fundamentals_quarterly_dev.parquet": "99ac5e83f4dbdf6e29f3a9691a16d0475f11fa07c1e8ff1d898a074a1c187e2d",
     "data/reference/sectors.parquet": "ce9cf466b59b6f12893b199a9450feb82e63673356d6e0d575cb288d5302f85e",
     "data/calendar.parquet": "87d0bbb94b61e3f5d48d45bf5065ba921f45c5506bf2b03ebf683bf80cc76f03",
+    "data/universe/corporate_actions_dev.parquet": "e5a2238bfaf59f7ce2f420d4add4b4b77ebeb86b92981c04f95a3c23bd672a35",
 }
 OUT = ROOT / "reports" / "lab_2026-11" / "pe_eps_study"
 TRIALS = {"E1": "pe_eps_growth_top100_quarterly", "E2": "pe_eps_growth_sector_ep_top100_quarterly"}
@@ -56,6 +57,16 @@ def strategies(sectors):
             "control_E1": from_2018(pe.control_strategy), "control_E2": from_2018(partial(pe.control_strategy, sectors=sectors))}
 
 
+def share_actions(dates, columns, securities):
+    """Ratios des fractionnements, regroupements et dividendes en actions, par titre et date d'effet."""
+    actions = pd.read_parquet(ROOT / "data" / "universe" / "corporate_actions_dev.parquet", columns=["kind", "symbol", "ex_date", "new_rate", "old_rate", "rate"])
+    actions = actions[pd.to_datetime(actions.ex_date) <= ms.LAST_DAY]
+    listed = securities[["symbol", "first_trade", "last_trade"]].copy()
+    for column in ("first_trade", "last_trade"):
+        listed[column] = listed[column].dt.tz_convert("America/New_York").dt.tz_localize(None).dt.normalize()
+    return pe.action_ratios(actions, listed, dates, columns)
+
+
 def study_market():
     """Univers des actions ordinaires avec l'EPS causal de cette étude, et l'EPS de `universe_data` pour comparaison."""
     market = load_universe(types=("common",))
@@ -68,8 +79,9 @@ def study_market():
     quarters = pd.read_parquet(DATA_PATH / "fundamentals_quarterly_dev.parquet", columns=["cik", "period_end", "filed", "eps", "eps_suspect"])
     quarters = quarters[quarters.filed <= ms.LAST_DAY]
     ciks = market.securities.cik.reindex(columns)
-    causal = pe.causal_eps_matrix(quarters, ciks, dates, factor.to_numpy())
-    multiplier = pd.DataFrame(pe.share_multiplier(factor.to_numpy()), index=dates, columns=columns)
+    actions = share_actions(dates, columns, market.securities)
+    causal = pe.causal_eps_matrix(quarters, ciks, dates, factor.to_numpy(), actions.to_numpy())
+    multiplier = pd.DataFrame(pe.share_multiplier(factor.to_numpy(), actions.to_numpy()), index=dates, columns=columns)
     original = pd.DataFrame(_ttm_eps(DATA_PATH, columns, ciks, dates, factor.to_numpy()), index=dates, columns=columns)
     fields = {f.name: getattr(market.data, f.name) for f in dataclasses.fields(market.data) if f.name != "eps_ttm"}
     data = pe.StudyData(**fields, eps_ttm=causal, share_multiplier=multiplier)

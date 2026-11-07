@@ -205,6 +205,72 @@ class CausalEps(unittest.TestCase):
         self.assertFalse(np.isnan(full.loc["2019-12-02", "WAT#0"]))   # WAT n'est plus effacé par les dépôts de 2020
 
 
+class ShareActions(unittest.TestCase):
+    """Seconde relecture D3 : opérations réelles sur le nombre d'actions, repli limité aux fractionnements simples."""
+
+    def test_simple_split_ratios(self):
+        for r in (2.0, 0.5, 1 / 12, 1 / 15, 1.25, 0.8, 1.5, 4.0):
+            self.assertTrue(pe.is_simple_split(r), r)
+        for r in (6.212189, 1.643, 2.188, 1.275, 1.202, 7 / 6, 1.0346):
+            self.assertFalse(pe.is_simple_split(r), r)              # KDP, XPO, IVR... et 7/6 laissé au fichier
+
+    def test_action_ratios_match_the_listed_security(self):
+        dates = pd.bdate_range("2022-08-01", "2022-08-31")
+        actions = pd.DataFrame({"kind": ["forward_splits", "stock_dividends", "forward_splits", "cash_mergers"], "symbol": ["NTRB", "TR", "OLD", "NTRB"],
+                                "ex_date": ["2022-08-12", "2022-08-13", "2022-08-10", "2022-08-20"], "new_rate": [7.0, np.nan, 2.0, np.nan],
+                                "old_rate": [6.0, np.nan, 1.0, np.nan], "rate": [np.nan, 1.03, np.nan, 5.0]})
+        listed = pd.DataFrame({"symbol": ["NTRB", "TR", "OLD"], "first_trade": pd.to_datetime(["2020-01-02", "2020-01-02", "2023-01-02"]),
+                               "last_trade": pd.to_datetime(["2024-12-31", "2024-12-31", "2024-12-31"])}, index=["NTRB#0", "TR#0", "OLD#1"])
+        out = pe.action_ratios(actions, listed, dates, listed.index)
+        self.assertAlmostEqual(out.loc["2022-08-12", "NTRB#0"], 7 / 6)
+        self.assertAlmostEqual(out.loc["2022-08-15", "TR#0"], 1.03)      # samedi 13/08 -> lundi 15/08
+        self.assertEqual(out["OLD#1"].tolist(), [1.0] * len(dates))         # symbole repris plus tard par un autre titre
+        self.assertEqual(float(out.to_numpy().prod()), 7 / 6 * 1.03)        # rachat en espèces ignoré
+
+    def test_actions_first_and_no_double_count(self):
+        n = 40
+        factor = np.full((n, 3), 1.0)
+        factor[:20, 0] = 6 / 7 * 0.999          # 7 pour 6 vu dans le facteur, avec un petit dividende
+        factor[:20, 1] = 1 / 6.212189           # dividende exceptionnel : saut de 6,21 sans opération
+        factor[:20, 2] = 12.0                   # regroupement 1 pour 12 absent du fichier
+        actions = np.ones((n, 3))
+        actions[20, 0] = 7 / 6
+        m = pe.share_multiplier(factor, actions)
+        self.assertAlmostEqual(m[-1, 0], 7 / 6)                 # ratio exact du fichier, pas celui du facteur
+        self.assertAlmostEqual(m[-1, 1], 1.0)                   # le dividende ne change pas le nombre d'actions
+        self.assertAlmostEqual(m[-1, 2], 1 / 12)                # repli : fractionnement simple sans opération connue
+        self.assertEqual(m[19, 0], 1.0)
+
+    def test_latest_filed_version_even_with_an_earlier_period_end(self):
+        """Contre-exemple de la seconde relecture : révision déposée plus tard avec une fin ramenée d'un jour."""
+        rows = [("2019-03-31", "2019-05-03", 1.0), ("2019-06-29", "2019-07-31", 1.0), ("2019-09-28", "2019-10-30", 1.0),
+                ("2019-12-31", "2020-02-25", 1.0), ("2019-03-30", "2020-03-01", 2.0)]
+        dates = pd.bdate_range("2020-01-02", "2020-06-30")
+        out = pd.Series(pe.causal_ttm_column(quarters_frame(rows), dates.to_numpy().astype("datetime64[us]"), np.ones(len(dates))), index=dates)
+        self.assertEqual(out["2020-02-28"], 4.0)
+        self.assertEqual(out["2020-03-02"], 5.0)
+
+    @unittest.skipUnless((ROOT / "data" / "universe" / "corporate_actions_dev.parquet").exists(), "données absentes")
+    def test_real_cases(self):
+        """KDP sans faux fractionnement en juillet 2018, NTRB 7 pour 6, TR 3 % en actions, AAPL 4 pour 1."""
+        sys.path.insert(0, str(ROOT / "reports"))
+        import run_pe_eps_study as run
+        securities = pd.read_parquet(ROOT / "data" / "universe_clean" / "securities_dev.parquet").set_index("security_id")
+        ids = pd.Index(["KDP#0", "NTRB#0", "TR#0", "AAPL#0"])
+        dates = pd.bdate_range("2018-01-02", "2024-12-31")
+        actions = run.share_actions(dates, ids, securities.loc[ids])
+        prices = pd.read_parquet(ROOT / "data" / "universe_clean" / "prices_dev.parquet", columns=["security_id", "ts_utc", "close", "adj_close", "suspect_print"],
+                                 filters=[("security_id", "in", list(ids)), ("ts_utc", "<", pd.Timestamp("2025-01-01", tz="UTC"))])
+        prices["day"] = prices.ts_utc.dt.tz_convert("America/New_York").dt.tz_localize(None).dt.normalize()
+        prices["factor"] = (prices.adj_close / prices.close).where(~prices.suspect_print)
+        factor = prices.pivot_table(index="day", columns="security_id", values="factor").reindex(index=dates, columns=ids)
+        m = pd.DataFrame(pe.share_multiplier(factor.to_numpy(), actions.to_numpy()), index=dates, columns=ids)
+        self.assertAlmostEqual(m.loc["2018-07-20", "KDP#0"] / m.loc["2018-07-02", "KDP#0"], 1.0)
+        self.assertAlmostEqual(m.loc["2022-08-16", "NTRB#0"] / m.loc["2022-08-08", "NTRB#0"], 7 / 6)
+        self.assertAlmostEqual(m.loc["2024-03-08", "TR#0"] / m.loc["2024-03-01", "TR#0"], 1.03)
+        self.assertAlmostEqual(m.loc["2020-09-02", "AAPL#0"] / m.loc["2020-08-27", "AAPL#0"], 4.0)
+
+
 class LauncherRules(unittest.TestCase):
     def test_no_order_before_2018(self):
         sys.path.insert(0, str(ROOT / "reports"))
