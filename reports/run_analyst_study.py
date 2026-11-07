@@ -40,6 +40,7 @@ EXPECTED = {
     "data/events/earnings_events.parquet": "f2da57a43b9bdda8ab455121480968259d385b4d516450cbb5808aae6c2cca12",
     "data/calendar.parquet": "87d0bbb94b61e3f5d48d45bf5065ba921f45c5506bf2b03ebf683bf80cc76f03",
     "data/reference/buy_hold_by_cohort.parquet": "df7456f7ccd3ad18e432e8281c54400e14b7d090fd06aa127fcd63f07dbb500d",
+    "data/sec/dev_filings.parquet": "82b6fc6ef58782654e197ef69baa379d55eb633871b3ba2f30287df606015e86",
 }
 OUT = ROOT / "reports" / "lab_2026-11" / "analyst_study"
 OUT_DATA = ROOT / "data" / "events" / "analyst_study"
@@ -86,7 +87,10 @@ def load_notes():
     events["pos"] = np.searchsorted(sessions.date.to_numpy(), events.day.to_numpy().astype(sessions.date.dtype))
     positions = {int(c): np.sort(g.pos.to_numpy()) for c, g in events.groupby("cik")}
     notes["near_earnings"] = an.near_earnings(notes.cik.to_numpy(), notes.entry_idx.to_numpy(), positions)
-    notes["past_earnings"] = an.past_earnings(notes.cik.to_numpy(), notes.decision_idx.to_numpy(), positions)
+    # A3 : chaque 8-K de résultats à sa propre date de dépôt, jamais un rattachement trimestriel fait après coup.
+    filings = pd.read_parquet(ROOT / "data" / "sec" / "dev_filings.parquet", columns=["cik", "form", "filing_date", "items"])
+    filings = filings[pd.to_datetime(filings.filing_date) <= ms.LAST_DAY]
+    notes["past_earnings"] = an.past_earnings(notes.cik.to_numpy(), notes.decision_idx.to_numpy(), an.filing_positions(filings, sessions.date.to_numpy()))
     notes["calendar_covered"] = an.calendar_covered(notes.cik.to_numpy(), positions)
     notes["earnings_in_window"] = an.earnings_inside(notes.cik.to_numpy(), notes.entry_idx.to_numpy(), positions)
     return notes, sessions, funnel
@@ -205,11 +209,9 @@ def reference_buy_and_hold():
 def portfolio(a3, market):
     """A3 : relèvements achetables à la décision, moteur quotidien, comparaison à SPY."""
     buys = a3[a3.tradable_a3 & ~a3.past_earnings & (a3.decision_row >= 0)]
-    closes = market.data.close.to_numpy()
-    last = closes.shape[0] - 1 - np.isfinite(closes)[::-1].argmax(axis=0)
-    gone = market.exits["base"].reindex(market.data.close.columns).notna().to_numpy()
-    last_rows = {s: int(last[i]) for i, s in enumerate(market.data.close.columns) if gone[i]}
-    weights = an.portfolio_weights(buys.decision_row.to_numpy(), buys.security_id.to_numpy(), market.data.close.index, last_rows=last_rows)
+    held = sorted(set(buys.security_id))
+    stale = an.stale_rows(market.data.close[held].to_numpy(), held)
+    weights = an.portfolio_weights(buys.decision_row.to_numpy(), buys.security_id.to_numpy(), market.data.close.index, stale=stale)
     result, benchmark, extra = run_variant(weights, market, lab.DEV_START, lab.DEV_END, n_random=20, seed=0)
     comparison = lab.compare(result.returns, benchmark.returns)
     bil_open = market.benchmarks.open["BIL"]

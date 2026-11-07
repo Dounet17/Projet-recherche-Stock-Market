@@ -183,19 +183,53 @@ class PortfolioClock(unittest.TestCase):
 
 
 class Delisting(unittest.TestCase):
-    def test_a_delisted_stock_leaves_the_plan_and_the_rest_is_rebalanced(self):
+    """Seconde relecture D4 : retrait sur une règle observable, sans date de radiation future."""
+
+    def test_stale_rows_use_only_the_past(self):
+        closes = np.full((30, 1), 10.0)
+        closes[8:14, 0] = np.nan                          # 6 séances sans cotation, reprise à 14
+        full = an.stale_rows(closes, ["A"])["A"].tolist()
+        self.assertEqual(full, [12, 13])                  # 5 séances muettes à 12 et 13
+        for r in range(30):                               # même réponse avec les seules données connues à r
+            self.assertEqual([x for x in an.stale_rows(closes[: r + 1], ["A"])["A"].tolist()], [x for x in full if x <= r])
+
+    def test_a_quiet_stock_leaves_the_plan_and_the_rest_is_rebalanced(self):
         dates = pd.bdate_range("2024-01-01", periods=40)
-        w = an.portfolio_weights([2, 2, 12], ["A", "B", "B"], dates, hold=20, cap=1.0, last_rows={"A": 7, "B": 39})
+        closes = np.full((40, 2), 10.0)
+        closes[8:, 0] = np.nan                            # A ne cote plus après la ligne 7
+        stale = an.stale_rows(closes, ["A", "B"])
+        w = an.portfolio_weights([2, 2, 12], ["A", "B", "B"], dates, hold=20, cap=1.0, stale=stale)
         filled = w.dropna(how="all")
-        self.assertEqual(filled.index.tolist(), [dates[2], dates[8], dates[32]])
+        self.assertEqual(filled.index.tolist(), [dates[2], dates[12], dates[32]])
         self.assertEqual(filled.loc[dates[2]].tolist(), [0.5, 0.5])
-        self.assertEqual(filled.loc[dates[8]].tolist(), [0.0, 1.0])     # A sorti à la ligne 7 : B seul ensuite
+        self.assertEqual(filled.loc[dates[12]].tolist(), [0.0, 1.0])     # 5 séances muettes (8 à 12) : A sort
         self.assertEqual(filled.loc[dates[32]].tolist(), [0.0, 0.0])
 
-    def test_no_buy_after_the_last_listing(self):
-        dates = pd.bdate_range("2024-01-01", periods=30)
-        w = an.portfolio_weights([10], ["A"], dates, hold=5, last_rows={"A": 8})
-        self.assertTrue(w.dropna(how="all").empty)
+    def test_a_later_resumption_does_not_change_past_orders(self):
+        dates = pd.bdate_range("2024-01-01", periods=40)
+        gone, back = np.full((40, 1), 10.0), np.full((40, 1), 10.0)
+        gone[8:, 0] = np.nan
+        back[8:20, 0] = np.nan                            # reprise à 20, inconnue à la ligne 12
+        orders = [an.portfolio_weights([2], ["A"], dates, hold=20, cap=1.0, stale=an.stale_rows(x, ["A"])) for x in (gone, back)]
+        np.testing.assert_array_equal(orders[0].iloc[:20].to_numpy(), orders[1].iloc[:20].to_numpy())
+
+
+class Filings(unittest.TestCase):
+    def test_each_filing_counts_at_its_own_date(self):
+        """AMD, février 2018 : un 8-K du 30/01 doit exclure la décision du 01/02, même si un 8-K du 27/02 suit."""
+        sessions = pd.bdate_range("2018-01-22", periods=40).to_numpy().astype("datetime64[us]")
+        filings = pd.DataFrame({"cik": [2488, 2488, 2488], "form": ["8-K", "8-K", "10-Q"], "items": ["2.02,9.01", "2.02", None],
+                                "filing_date": ["2018-01-30", "2018-02-27", "2018-02-27"]})
+        decision = np.array([np.searchsorted(sessions, np.datetime64("2018-02-01"))])
+        past = an.filing_positions(filings, sessions)
+        early = an.filing_positions(filings.iloc[:1], sessions)
+        self.assertTrue(an.past_earnings([2488], decision, past)[0])
+        self.assertEqual(an.past_earnings([2488], decision, past).tolist(), an.past_earnings([2488], decision, early).tolist())
+
+    def test_other_items_and_weekends(self):
+        sessions = pd.bdate_range("2018-01-01", periods=10).to_numpy().astype("datetime64[us]")
+        filings = pd.DataFrame({"cik": [1, 1], "form": ["8-K", "8-K"], "items": ["5.02", "2.02"], "filing_date": ["2018-01-02", "2018-01-06"]})
+        self.assertEqual(an.filing_positions(filings, sessions)[1].tolist(), [5])   # samedi 06/01 -> lundi 08/01
 
 
 def fake_market(dates, opens, exits=None):

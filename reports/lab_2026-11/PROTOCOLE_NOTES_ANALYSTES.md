@@ -174,3 +174,13 @@ Relecture : `analyst_study/AUDIT_CODE_CODEX.md`. **Aucun rendement de cette étu
 **Conventions héritées, désormais écrites.** Médiane de liquidité exigeant 10 observations sur 20 ; titre effectivement échangé la veille ; coût aller et retour de A2 fixé par la liquidité d'avant l'entrée ; tenue de A3 de 20 périodes d'ouverture à ouverture, tronquée à la dernière ouverture de 2024 ; plafond de 10 % appliqué aux rééquilibrages, les poids dérivant entre eux ; ordre impossible non reporté ; ouvertures aberrantes retirées par le nettoyage ; p de A3 calculée sur des log-rendements quotidiens.
 
 **Essai à blanc corrigé** (aucun rendement lu, vérifié par un test qui interdit tout calcul de rendement) : 87 titres d'agences de notation refusés ; échantillon principal de **18 413 relèvements et 19 163 abaissements** ; A3 : 22 052 relèvements regroupés par décision, 20 652 achetables, 2 599 écartés après une publication déjà faite, **18 053 achats**. 27 tests passent.
+
+## Corrections après la seconde relecture, 07/11/2026, toujours avant tout rendement
+
+Relecture : `analyst_study/AUDIT_CODE_CODEX_2.md`. D1, D3, D5, D7, D8 et D10 y sont jugés corrigés ; deux défauts de disponibilité historique restaient.
+
+1. **D2, changement** : A3 ne lit plus `earnings_events` (qui rattache à chaque trimestre le **dernier** 8-K avant le dépôt des comptes, parfois postérieur à la décision). Il lit directement les 8-K de résultats (point 2.02) de `data/sec/dev_filings.parquet` (empreinte `82b6fc6e…015e86`, ajoutée au contrôle du code), chacun à sa propre date de dépôt, ramenée à la séance suivante un jour sans séance. Un dépôt futur ne change plus aucune date passée (cas AMD et DIOD de février 2018 testés). A1 et A2 gardent `earnings_events`, en exclusion rétrospective déclarée.
+2. **D4, changement** : la date de dernière cotation, connue seulement après coup, n'est plus utilisée. Un titre tenu par A3 quitte le plan à la première séance où il n'a eu **aucune cotation pendant 5 séances**, celle-ci comprise, et le reste est rééquilibré. Une suspension et une disparition sont traitées de la même façon tant qu'on ne peut pas les distinguer ; une reprise future ne change aucun ordre passé (testé).
+3. **Requalifications** demandées par la relecture : D6 est un **changement de portée** de la référence (toutes les actions achetables, pas les seules sociétés suivies par des analystes) ; D11 mêle des corrections de livrables, une précision d'estimateur et une restriction du placebo de signe à A1.
+
+**Essai à blanc** : A3 compte 2 999 notes écartées après un 8-K de résultats des 2 séances précédentes et **17 653 achats** ; échantillon principal inchangé (18 413 relèvements, 19 163 abaissements). 30 tests passent.

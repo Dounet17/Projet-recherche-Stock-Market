@@ -24,6 +24,7 @@ CAP = 0.10
 EARNINGS_BEFORE, EARNINGS_AFTER = 2, 1   # séances avant et après l'entrée où une publication exclut la note
 PLACEBO_SHIFT = 60
 EXTREME_HIGH, EXTREME_LOW = 2.0, -0.9
+STALE_SESSIONS = 5     # sans aucune cotation pendant 5 séances, un titre quitte le plan de A3 (seconde relecture D4)
 
 
 def classify(headline):
@@ -99,6 +100,29 @@ def past_earnings(ciks, decision_positions, earnings_positions):
     return out
 
 
+def filing_positions(filings, session_dates):
+    """CIK -> indices de séance triés des 8-K de résultats (point 2.02), chacun à sa propre date de dépôt.
+
+    Chaque dépôt est connu à sa date, quel que soit le trimestre auquel il sera rattaché plus tard : ajouter un dépôt
+    futur ne change aucune date passée (seconde relecture D2). Un dépôt un jour sans séance compte à la suivante.
+    """
+    part = filings[(filings.form == "8-K") & filings["items"].fillna("").str.contains(r"\b2\.02\b")].dropna(subset=["cik", "filing_date"])
+    days = pd.to_datetime(part.filing_date).to_numpy().astype(np.asarray(session_dates).dtype)
+    frame = pd.DataFrame({"cik": part.cik.astype(int).to_numpy(), "pos": np.searchsorted(np.asarray(session_dates), days)})
+    return {int(c): np.sort(g.pos.to_numpy()) for c, g in frame.groupby("cik")}
+
+
+def stale_rows(closes, columns, sessions=STALE_SESSIONS):
+    """Titre -> lignes où il n'a eu aucune cotation pendant les `sessions` dernières séances, celle-ci comprise.
+
+    Règle observable à chaque clôture, sans date de radiation future : une suspension et une disparition sont traitées
+    de la même façon tant qu'elles se ressemblent.
+    """
+    traded = pd.DataFrame(np.isfinite(np.asarray(closes, dtype=float)), columns=columns)
+    quiet = traded.rolling(sessions, min_periods=sessions).sum().eq(0)
+    return {column: np.flatnonzero(quiet[column].to_numpy()) for column in columns}
+
+
 def calendar_covered(ciks, earnings_positions):
     """Vrai si la société a au moins une date de résultats : sinon l'exclusion des résultats est invérifiable."""
     return np.array([not pd.isna(c) and int(c) in earnings_positions for c in ciks], dtype=bool)
@@ -131,24 +155,26 @@ def holding_intervals(decision_rows, securities, hold=HOLD):
     return sorted(intervals, key=lambda x: (x[1], x[0]))
 
 
-def portfolio_weights(decision_rows, securities, dates, hold=HOLD, cap=CAP, last_rows=None):
+def portfolio_weights(decision_rows, securities, dates, hold=HOLD, cap=CAP, stale=None):
     """Poids du portefeuille A3, une ligne seulement les jours où l'ensemble des positions change.
 
     Une décision à la clôture de la ligne d ouvre une position exécutée à l'ouverture d + 1, retirée par la décision
     de la ligne d + hold : elle est tenue `hold` séances. Poids égaux entre positions ouvertes, au plus `cap`
     chacune, le reste en liquidités. Les autres lignes restent vides : aucun ordre, les poids dérivent avec les prix.
 
-    `last_rows` : titre -> dernière ligne cotée. Un titre sorti de cote quitte le plan à la première décision qui suit
-    sa dernière cotation, et le reste est rééquilibré (changement du 07/11/2026, relecture D4).
+    `stale` : titre -> lignes sans cotation depuis `STALE_SESSIONS` séances (`stale_rows`). Le titre quitte le plan à
+    la première de ces lignes pendant sa tenue, et le reste est rééquilibré (changements du 07/11/2026, relectures D4).
     """
     columns = pd.Index(sorted(set(securities)))
-    last_rows = last_rows or {}
+    stale = stale or {}
     changes = {}
     for security, start, end in holding_intervals(decision_rows, securities, hold):
-        if security in last_rows:
-            if start > last_rows[security]:
-                continue
-            end = min(end, last_rows[security] + 1)
+        quiet = stale.get(security, np.array([], dtype=int))
+        i = np.searchsorted(quiet, start, side="left")
+        if i < len(quiet) and quiet[i] < end:
+            end = int(quiet[i])
+        if end <= start:
+            continue
         changes.setdefault(start, []).append((security, True))
         changes.setdefault(end, []).append((security, False))
     weights = np.full((len(dates), len(columns)), np.nan)
