@@ -10,3 +10,6 @@ reports/**/chunks/
 reports/lab_2026-11/trials/
 reports/**/*.parquet
 web/site_data.js
+
+# Journaux d'exécution locaux
+*.log
