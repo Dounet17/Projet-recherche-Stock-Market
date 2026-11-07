@@ -52,6 +52,16 @@ class Classification(unittest.TestCase):
             "Bluerock Residential Growth REIT Narrows FY18 Adj. FFO Guidance From $0.65-$0.70 As Of Feb. 14, 2018 To $0.66-$0.70",
         ])
 
+    def test_faults_found_by_the_audit(self):
+        self.check("market_commentary", ["NLS Pharmaceutics Shares Move Higher; FDA Acceptance Of Filing", "UiPath Shares Wobble After Q3 Results", "Penske Automotive Group Falls After Q2 Earnings Miss", "Trading Halt: Acme Corp Halted News Pending"])
+        self.check("company_news", ["Quoin Pharmaceuticals Initiates Pediatric Clinical Study", "Worksport Unveils Upgraded SOLIS Technology To Expand Market Reach", "Here's Why Cargill Suspended Palm Oil Deal With Supplier", "Tesla Launches New Model Y: Here's What You Need To Know"])
+        self.check("guidance", ["Hasbro Reiterates FY23 Adj. EPS Outlook", "Home Depot Reaffirms FY19 Adj. EPS $10.03 vs $10.09 Estimate"])
+
+    def test_faults_found_by_the_second_audit(self):
+        self.check("earnings", ["Affirm Holdings Q4 EPS $(0.48) Misses $(0.29) Estimate, Sales $261.80M Beat $225.97M Estimate", "Outlook Therapeutics Q3 EPS $(0.10) Beats $(0.12) Estimate", "EastGroup Properties Q2 FFO Excluding Gain on Involuntary Conversion $1.50 Beats $1.45 Estimate"])
+        self.check("guidance", ["Acme Affirms FY24 Sales Outlook"])
+        self.check("market_commentary", ["AmTrust Shares Near Afternoon Highs, Up 1.4%", "Applied DNA Shares React Higher After Contract", "Photronics Shares Trade Lower After Weak Outlook", "Crude Oil Rises Over 1%; Tapestry Posts Upbeat Earnings"])
+
     def test_a_dividend_is_a_company_fact(self):
         self.check("company_news", ["Assured Guaranty Raises Qtr. Dividend From $0.22 To $0.25/Share", "Lincoln Electric Boosts Quarterly Cash Dividend By 5.6% From $0.71 To $0.75 Per Share"])
 
@@ -104,6 +114,41 @@ class Surprise(unittest.TestCase):
     def test_prior_year_is_not_an_estimate(self):
         found = parse_surprise("Royal Caribbean Q1 Sales $2B, Net Loss $1.445B vs Net Income $249.7M In Same Qtr. Last Year")
         self.assertIsNone(found["sales"])
+
+    def test_decimal_comma(self):
+        found = parse_surprise("Cigna Q2 EPS $4.69 Beats $4,35 Est")
+        self.assertEqual((found["eps"], found["eps_estimate"]), (4.69, 4.35))
+        self.assertTrue(found["eps_ok"])
+
+    def test_forecast_verbs_give_no_result(self):
+        self.assertIsNone(parse_surprise("Home Depot Reaffirms FY19 Adj. EPS $10.03 vs $10.09 Estimate")["eps"])
+
+    def test_implausible_figures_are_refused_not_corrected(self):
+        self.assertFalse(parse_surprise("Biogen Q1 EPS $6.99B Beats $5.00 Estimate")["eps_ok"])
+        self.assertFalse(parse_surprise("Inter Parfums Q2 Sales $160.60M Beat $160.60 Estimate")["sales_ok"])
+        self.assertFalse(parse_surprise("Acme Q1 EPS $150.00 Beats $149.00 Estimate")["eps_ok"])
+
+    def test_period_and_basis(self):
+        found = parse_surprise("IAMGOLD Reports FY17 Adj. EPS $0.06 vs $0.08 Est.")
+        self.assertEqual((found["period"], found["basis"]), ("annual", "adjusted"))
+        found = parse_surprise("Acme Q3 2023 GAAP EPS $0.10 Beats $0.05 Estimate")
+        self.assertEqual((found["period"], found["basis"]), ("quarter", "gaap"))
+        self.assertEqual(parse_surprise("Acme Q3 EPS $0.10 Beats $0.05 Estimate")["basis"], "unlabeled")
+
+    def test_basis_belongs_to_the_pair(self):
+        self.assertEqual(parse_surprise("GATX Q3 GAAP EPS $8.83, Adj. EPS $0.68 vs $0.73 Est.")["basis"], "adjusted")
+        self.assertEqual(parse_surprise("PepsiCo Q2 Adj. EPS $2.28 Beats $2.03 Estimate")["basis"], "adjusted")
+        self.assertEqual(parse_surprise("Core & Main Q2 2024 GAAP EPS $0.61 Beats $0.50 Estimate")["basis"], "gaap")
+        self.assertEqual(parse_surprise("Core-Mark Q2 EPS $0.61 Beats $0.50 Estimate")["basis"], "unlabeled")
+        self.assertEqual(parse_surprise("Essex Q1 Core FFO $3.00, EPS $1.20 Beats $1.10 Estimate")["basis"], "unlabeled")
+
+    def test_only_a_conflict_on_the_eps_pair_counts_for_the_eps(self):
+        found = parse_surprise("Acme Q1 EPS $1.20 Beats $1.00 Estimate, Sales $90M Beat $100M Estimate")
+        self.assertTrue(found["verb_conflict"])
+        self.assertFalse(found["eps_conflict"])
+
+    def test_foreign_currency_is_not_read_as_dollars(self):
+        self.assertIsNone(parse_surprise("Acme Q3 EPS C$0.10 Beats C$0.05 Estimate")["eps"])
 
     def test_conflict_is_flagged(self):
         self.assertTrue(parse_surprise("Acme Q1 EPS $1.00 Beats $1.20 Estimate")["verb_conflict"])

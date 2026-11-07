@@ -2,110 +2,191 @@
  "articles": 1399118,
  "unique_headlines": 1281297,
  "categories": {
-  "market_commentary": 131566,
-  "evergreen": 127380,
-  "earnings": 149269,
-  "guidance": 57566,
-  "analyst": 310042,
-  "company_news": 623295
+  "market_commentary": 139660,
+  "evergreen": 126159,
+  "earnings": 147838,
+  "guidance": 57393,
+  "analyst": 307899,
+  "company_news": 620169
  },
  "categories_by_year": {
   "2018": {
-   "market_commentary": 0.096,
+   "market_commentary": 0.103,
    "evergreen": 0.02,
-   "earnings": 0.149,
-   "guidance": 0.068,
-   "analyst": 0.178,
-   "company_news": 0.489
+   "earnings": 0.147,
+   "guidance": 0.067,
+   "analyst": 0.173,
+   "company_news": 0.49
   },
   "2019": {
-   "market_commentary": 0.06,
-   "evergreen": 0.018,
-   "earnings": 0.137,
-   "guidance": 0.055,
-   "analyst": 0.213,
-   "company_news": 0.517
+   "market_commentary": 0.069,
+   "evergreen": 0.017,
+   "earnings": 0.134,
+   "guidance": 0.054,
+   "analyst": 0.206,
+   "company_news": 0.521
   },
   "2020": {
-   "market_commentary": 0.084,
-   "evergreen": 0.036,
+   "market_commentary": 0.092,
+   "evergreen": 0.037,
    "earnings": 0.115,
-   "guidance": 0.034,
-   "analyst": 0.263,
-   "company_news": 0.468
+   "guidance": 0.033,
+   "analyst": 0.26,
+   "company_news": 0.465
   },
   "2021": {
-   "market_commentary": 0.14,
-   "evergreen": 0.081,
+   "market_commentary": 0.15,
+   "evergreen": 0.08,
    "earnings": 0.102,
-   "guidance": 0.037,
-   "analyst": 0.168,
-   "company_news": 0.472
+   "guidance": 0.036,
+   "analyst": 0.166,
+   "company_news": 0.467
   },
   "2022": {
-   "market_commentary": 0.092,
-   "evergreen": 0.154,
+   "market_commentary": 0.093,
+   "evergreen": 0.152,
    "earnings": 0.104,
-   "guidance": 0.034,
-   "analyst": 0.196,
+   "guidance": 0.035,
+   "analyst": 0.197,
    "company_news": 0.42
   },
   "2023": {
-   "market_commentary": 0.091,
-   "evergreen": 0.141,
-   "earnings": 0.091,
-   "guidance": 0.035,
-   "analyst": 0.242,
-   "company_news": 0.4
+   "market_commentary": 0.092,
+   "evergreen": 0.139,
+   "earnings": 0.09,
+   "guidance": 0.036,
+   "analyst": 0.245,
+   "company_news": 0.399
   },
   "2024": {
-   "market_commentary": 0.082,
+   "market_commentary": 0.091,
    "evergreen": 0.093,
    "earnings": 0.089,
-   "guidance": 0.043,
-   "analyst": 0.269,
-   "company_news": 0.424
+   "guidance": 0.044,
+   "analyst": 0.267,
+   "company_news": 0.417
   }
  },
  "links": {
   "citations": 2679535,
   "unknown_symbol": 158026,
   "outside_listing_dates": 13548,
-  "linked": 2507961,
-  "ambiguous_resolved_by_liquidity": 3558
+  "linked_direct": 2354686,
+  "linked_alias_with_name": 58058,
+  "alias_refused_no_name": 95209,
+  "ambiguous_companies_dropped": 8,
+  "same_company_classes_resolved": 0,
+  "direct_conflicts_with_alias": 2591
  },
- "with_stock": 0.8629493723903202,
- "one_stock": 0.7520130539382668,
- "usable": 962777,
- "usable_one_stock": 856273,
- "usable_unique_headlines": 930947,
+ "with_stock": 0.8570313583271747,
+ "one_stock": 0.7474215898873433,
+ "usable": 949850,
+ "usable_one_stock": 847089,
+ "usable_unique_headlines": 919738,
+ "updated": {
+  "over_1h": 0.009286564821551864,
+  "over_1d": 0.0018811851466423847
+ },
  "earnings": {
-  "articles": 149269,
-  "with_eps_estimate": 76036,
-  "with_sales_estimate": 81394,
-  "verb_conflicts": 76,
-  "eps_beats": 51736,
-  "eps_misses": 24179,
-  "eps_equal": 121
+  "articles": 147838,
+  "with_eps_estimate": 76033,
+  "with_sales_estimate": 81382,
+  "eps_ok": 75972,
+  "sales_ok": 80855,
+  "verb_conflicts": 73,
+  "corrections": 1154,
+  "late_relays": 2279,
+  "periods": {
+   "quarter": 75786,
+   "annual": 172,
+   "unknown": 75
+  },
+  "readable_share_by_year": {
+   "2018": 0.612,
+   "2019": 0.582,
+   "2020": 0.494,
+   "2021": 0.463,
+   "2022": 0.425,
+   "2023": 0.535,
+   "2024": 0.535
+  }
  },
- "earnings_coverage": {
-  "events": 80759,
-  "with_wire": 0.7560643395782514,
-  "with_eps_estimate": 0.6274223306380713,
+ "earnings_surprise": {
+  "funnel": {
+   "publications": 80759,
+   "with_any_earnings_wire": 70477,
+   "with_eps_and_estimate": 50100,
+   "eps_passes_checks": 50071,
+   "quarterly_marker": 49985,
+   "not_a_correction": 49954,
+   "not_a_late_relay": 49504,
+   "verb_agrees": 49496,
+   "headline_not_recycled": 49492,
+   "one_stock_only": 49427,
+   "quarter_matches_issuer_calendar": 49310,
+   "basis_stated_adjusted_or_gaap": 20319,
+   "final_one_wire_per_publication": 49310
+  },
+  "share_of_publications": 0.6105821023043871,
   "by_year": {
-   "2018": 0.749,
-   "2019": 0.719,
-   "2020": 0.711,
-   "2021": 0.736,
-   "2022": 0.716,
-   "2023": 0.801,
-   "2024": 0.829
+   "2018": {
+    "publications": 9995,
+    "kept": 6061,
+    "share": 0.606
+   },
+   "2019": {
+    "publications": 9870,
+    "kept": 5639,
+    "share": 0.571
+   },
+   "2020": {
+    "publications": 9684,
+    "kept": 5487,
+    "share": 0.567
+   },
+   "2021": {
+    "publications": 10955,
+    "kept": 6650,
+    "share": 0.607
+   },
+   "2022": {
+    "publications": 13112,
+    "kept": 7586,
+    "share": 0.579
+   },
+   "2023": {
+    "publications": 13736,
+    "kept": 8867,
+    "share": 0.646
+   },
+   "2024": {
+    "publications": 13407,
+    "kept": 9020,
+    "share": 0.673
+   }
   },
+  "by_survival": {
+   "alive": 0.629,
+   "gone": 0.513
+  },
+  "basis": {
+   "unlabeled": 28989,
+   "adjusted": 17623,
+   "gaap": 2696,
+   "other": 2
+  },
+  "sign": {
+   "above": 35117,
+   "below": 14123,
+   "equal": 70
+  },
+  "late_relay": 0,
+  "update_prefix": 152,
   "wire_minus_sec_hours": {
-   "median": -0.007222222222222222,
-   "p10": -1.342722222222222,
-   "p90": 0.7245000000000013
+   "median": -0.008333333333333333,
+   "p10": -1.3497222222222223,
+   "p90": 0.7063888888888888
   },
-  "wire_before_sec": 0.5171227828821304
+  "wire_before_sec": 0.5192050294058
  }
 }

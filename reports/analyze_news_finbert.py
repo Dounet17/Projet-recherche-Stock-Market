@@ -22,9 +22,10 @@ LABELS = ["p_positive", "p_negative", "p_neutral"]
 def check(frame, good, bad):
     """Compare le score sur deux groupes de verdict opposé ; `good` et `bad` sont des masques."""
     part = frame[good | bad]
+    lexical = part.headline.str.contains(r"(?i)\b(?:beats?|upgrades?|raises|boosts)\b").astype(int)
     high, low = part[good.loc[part.index]], part[bad.loc[part.index]]
     return {
-        "good": len(high), "bad": len(low), "auc": float(roc_auc_score(good.loc[part.index], part.score)),
+        "good": len(high), "bad": len(low), "auc": float(roc_auc_score(good.loc[part.index], part.score)), "auc_positive_words_only": float(roc_auc_score(good.loc[part.index], lexical)),
         "good_read_positive": float((high.label == "p_positive").mean()), "good_read_negative": float((high.label == "p_negative").mean()),
         "bad_read_positive": float((low.label == "p_positive").mean()), "bad_read_negative": float((low.label == "p_negative").mean()),
     }
@@ -43,7 +44,8 @@ def main():
     table.to_parquet(NEWS / "news_scored.parquet", index=False)
 
     text = table.headline
-    beat, miss = table.eps > table.eps_estimate, table.eps < table.eps_estimate
+    trusted = table.eps_ok & table.period.eq("quarter")
+    beat, miss = trusted & (table.eps > table.eps_estimate), trusted & (table.eps < table.eps_estimate)
     upgrade = table.category.eq("analyst") & text.str.contains(r"(?i)\bupgrades?\b") & ~text.str.contains(r"(?i)\bdowngrades?\b")
     downgrade = table.category.eq("analyst") & text.str.contains(r"(?i)\bdowngrades?\b") & ~text.str.contains(r"(?i)\bupgrades?\b")
     raises = table.category.eq("guidance") & text.str.contains(r"(?i)\b(?:raises|boosts)\b.*\b(?:guidance|outlook)\b") & ~text.str.contains(r"(?i)\b(?:cuts|lowers)\b")

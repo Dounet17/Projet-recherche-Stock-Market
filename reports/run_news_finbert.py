@@ -7,6 +7,7 @@ Depuis la racine :
 HSA_OVERRIDE_GFX_VERSION=10.3.0 .venv-forecast/bin/python reports/run_news_finbert.py
 """
 
+import json
 import sys
 import time
 from pathlib import Path
@@ -18,6 +19,7 @@ from transformers import AutoModelForSequenceClassification, AutoTokenizer
 ROOT = Path(__file__).resolve().parents[1]
 MODEL = "ProsusAI/finbert"
 REVISION = "4556d13015211d73dccd3fdd39d39232506f3e43"  # 23/05/2023
+WEIGHTS_SHA256 = "e15a7b5738df7f17553399b6d94c6e2ff69c89245d066e8e5d183f5803a554e3"
 OUT = ROOT / "data" / "news" / "finbert"
 BATCH = 512
 PART = 100_000
@@ -32,6 +34,13 @@ def main():
     headlines = articles.loc[keep, "headline"].drop_duplicates()
     done = set()
     parts = sorted(OUT.glob("part_*.parquet"))
+    manifest = OUT / "manifest.json"
+    settings = {"model": MODEL, "revision": REVISION, "weights_sha256": WEIGHTS_SHA256, "max_length": MAX_LENGTH, "text": "headline"}
+    if manifest.exists() and json.loads(manifest.read_text()) != settings:
+        sys.exit("Ces parties viennent d'autres réglages : refus de les mélanger.")
+    if parts and not manifest.exists():
+        sys.exit("Parties sans manifeste : provenance inconnue, refus de les réutiliser.")
+    manifest.write_text(json.dumps(settings, indent=1))
     for path in parts:
         done |= set(pd.read_parquet(path, columns=["headline"]).headline)
     # Du plus court au plus long : des lots de longueur voisine vont plus vite.
@@ -48,7 +57,8 @@ def main():
     print("appareil", device, "étiquettes", labels, flush=True)
 
     begun = time.monotonic()
-    number = len(parts)
+    # Premier numéro libre : un numéro existant ne doit jamais être écrasé, même si une partie manque.
+    number = 1 + max((int(path.stem.split("_")[1]) for path in parts), default=-1)
     for start in range(0, len(todo), PART):
         chunk = todo[start:start + PART]
         probabilities = []
