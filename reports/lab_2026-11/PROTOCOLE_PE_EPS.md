@@ -121,3 +121,24 @@ Tranchés en codant `src/pe_eps_study.py` et `reports/run_pe_eps_study.py`, sans
 7. Précision : descriptif « titres communs avec le P/E bas » calculé dans l'univers éligible (médiane de 53,5 sur 100), alors que la mesure de conception partait des 1 000 plus liquides (47). La part des titres plus tard disparus, descriptive, lit les sorties de cote futures et ne sert à aucune décision.
 
 **Essai à blanc** (empreintes conformes, aucun rendement lu, vérifié par un test qui interdit tout calcul de portefeuille) : 28 dates de décision ; univers éligible de 518 à 686 titres ; 100 titres pour E1 et E2 à chaque date ; 58 titres communs en médiane entre E1 et E2. 11 tests passent.
+
+## Corrections avant lancement, après la relecture du code par Codex, 08/11/2026
+
+Relecture : `pe_eps_study/AUDIT_CODE_CODEX.md`. **Aucun rendement de ces stratégies n'avait été calculé.** `universe_data` n'est pas modifié, pour ne pas changer les résultats déjà publiés : cette étude construit son propre EPS.
+
+| Défaut | Correction | Nature |
+|---|---|---|
+| D1, bloquant | EPS construit **à chaque dépôt avec les seuls dépôts déjà connus** (`pe.causal_eps_matrix`) : versions d'un même trimestre (fins à moins de 20 jours) regroupées en gardant la plus récente connue, quatre trimestres consécutifs (écarts de 70 à 110 jours), valeur dès la séance qui suit le dépôt, expiration 200 jours après la fin du dernier trimestre. Un dépôt futur ne change plus aucune valeur passée (WAT, COHU, ATRO, PATK testés sur les vraies données) | Correction d'une fuite de la source |
+| D2, grave | Croissance calculée avec l'EPS d'il y a un an **remis à l'échelle d'actions d'aujourd'hui** | **Changement** de la formule littérale du gel, dans le sens de sa définition économique |
+| D3, grave | Échelle d'actions suivie par un multiplicateur de **fractionnements seuls** : sauts du facteur d'ajustement hors de [1/1,2 ; 1,2] ; les dividendes ne touchent plus l'EPS. Le jour d'un fractionnement, un éventuel dividende du même jour reste dans le saut (écart de l'ordre de 0,01 %) | **Changement** de construction |
+| D4, grave | Aucun ordre avant le 01/03/2018 : le portefeuille part en liquidités jusqu'à la première des 28 décisions ; descriptifs limités à ces 28 dates | Précision (fidélité aux 28 dates) |
+| D5, grave | Titres détenus = couples titre et décision à poids strictement positif, vides retirés (pandas 3) | Correction |
+| D6, grave | Bêta, alpha contre SPY, secteurs et disparitions publiés pour les quatre portefeuilles ; S3 porte sur le témoin de E1, nommé `S3_control_E1_vs_SPY` | Correction |
+| D7, mineur | Deux mesures distinctes : « 100 plus bas P/E de l'univers éligible, sans plancher » (médiane 51,5) et **titres communs avec les vraies sélections du test B** aux mêmes dates (médiane 27,5 sur 100), calculées sans aucun rendement. La mesure de conception (47) en est une troisième | Changement de définition descriptive |
+| D8, mineur | Le choix 1 était faux : le test B départage la liquidité par rang moyen, cette étude par ordre des colonnes | Précision corrigée |
+
+**Conventions héritées, désormais écrites.** Médiane de liquidité avec 10 observations sur 20 ; échange valide exigé le jour de décision ; filtres `too_short` et types issus du nettoyage complet ; expiration de l'EPS à 200 jours après la fin du dernier trimestre, pas après le dépôt ; SIC actuel, non historique.
+
+**Constat sans rendement.** Parmi les 1 000 titres les plus liquides, 175 à 342 EPS par date (médiane 282) diffèrent de plus de 1 % entre cette construction et celle de `universe_data`, surtout à cause des dividendes et des versions de trimestres. Le test B et les autres essais qui utilisent `data.eps_ttm` en héritent ; ils ne sont pas relancés ici.
+
+**Essai à blanc corrigé** (aucun rendement lu) : 28 décisions ; univers éligible de 520 à 686 titres, médiane 645 ; 100 titres pour E1 et E2 ; 57 titres communs en médiane entre E1 et E2. 22 tests passent, dont la causalité des EPS sur les vraies données et un lancement complet sur un marché inventé. Construction de l'EPS en 24 secondes.
