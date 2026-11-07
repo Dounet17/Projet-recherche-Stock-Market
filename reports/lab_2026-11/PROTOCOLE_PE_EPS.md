@@ -153,3 +153,14 @@ Relecture : `pe_eps_study/AUDIT_CODE_CODEX_2.md`. D1 et D4 à D8 y sont jugés c
 4. **Mesure de couverture, sans rendement** : sur 1 588 grands sauts du facteur des actions ordinaires depuis mi-2016, 1 174 ont une opération du fichier à 5 jours près ; les autres sont surtout des scissions, des dividendes exceptionnels et des regroupements de petites valeurs absents du fichier.
 
 **Essai à blanc** : 28 décisions ; univers éligible de 520 à 685 titres, médiane 645 ; 100 titres pour E1 et E2 ; 57 titres communs entre E1 et E2 ; 27,5 titres communs avec le vrai test B. 27 tests passent.
+
+## Correction après la troisième relecture, 08/11/2026, toujours avant tout rendement
+
+Relecture : `pe_eps_study/AUDIT_CODE_CODEX_3.md`. Le choix de version y est jugé corrigé, ainsi que KDP, NTRB, TR (2024) et HEI ; mais le **repli** sur les sauts du facteur d'ajustement, décrit à la section précédente, prenait encore des scissions pour des fractionnements (EHC, Enhabit, 2022 : saut proche de 5/4, qui changeait E2 au 01/03/2024 ; MMM et GE en 2024 ; le dividende exceptionnel d'ACI en 2022).
+
+1. **Changement** : le repli est **supprimé**. Le nombre d'actions ne suit plus que les opérations documentées du fichier (fractionnements, regroupements, dividendes en actions). Vérifié sur les cours bruts pour RTX : le saut de 0,5 du 03/04/2020 venait de la distribution de Carrier et d'Otis lors de la fusion avec Raytheon, pas d'un regroupement. Effet de la suppression sur les sélections, mesuré sans rendement : 2 décisions changées pour E1, 3 pour E2 (dont EHC remplacé par LBRT au 01/03/2024), 2 pour chaque témoin (RTX).
+2. **Correction** : une même opération publiée deux fois ne compte qu'une fois (SNEX 3 pour 2 en 2023, FBYD en 2024).
+3. La réserve de causalité de la fenêtre centrée disparaît avec le repli.
+4. **Limite** : une opération absente du fichier reste ignorée (par exemple la distribution de 3 % en actions de TR en mars 2020, sans effet sur les sélections selon la relecture). L'affirmation de la section précédente selon laquelle les scissions et dividendes exceptionnels ne changeaient plus l'EPS était fausse avec le repli ; elle est vraie sans lui.
+
+**Essai à blanc** : 28 décisions ; univers éligible de 520 à 685 titres ; 100 titres pour E1 et E2 ; 27,5 titres communs avec le vrai test B. 26 tests passent, dont les régressions KDP, EHC, RTX, NTRB, TR et AAPL sur les vraies données.

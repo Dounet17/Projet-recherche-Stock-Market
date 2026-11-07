@@ -80,8 +80,8 @@ def study_market():
     quarters = quarters[quarters.filed <= ms.LAST_DAY]
     ciks = market.securities.cik.reindex(columns)
     actions = share_actions(dates, columns, market.securities)
-    causal = pe.causal_eps_matrix(quarters, ciks, dates, factor.to_numpy(), actions.to_numpy())
-    multiplier = pd.DataFrame(pe.share_multiplier(factor.to_numpy(), actions.to_numpy()), index=dates, columns=columns)
+    causal = pe.causal_eps_matrix(quarters, ciks, dates, actions.to_numpy())
+    multiplier = pd.DataFrame(pe.share_multiplier(actions.to_numpy()), index=dates, columns=columns)
     original = pd.DataFrame(_ttm_eps(DATA_PATH, columns, ciks, dates, factor.to_numpy()), index=dates, columns=columns)
     fields = {f.name: getattr(market.data, f.name) for f in dataclasses.fields(market.data) if f.name != "eps_ttm"}
     data = pe.StudyData(**fields, eps_ttm=causal, share_multiplier=multiplier)
