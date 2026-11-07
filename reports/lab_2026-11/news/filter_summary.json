@@ -1,0 +1,111 @@
+{
+ "articles": 1399118,
+ "unique_headlines": 1281297,
+ "categories": {
+  "market_commentary": 131566,
+  "evergreen": 127380,
+  "earnings": 149269,
+  "guidance": 57566,
+  "analyst": 310042,
+  "company_news": 623295
+ },
+ "categories_by_year": {
+  "2018": {
+   "market_commentary": 0.096,
+   "evergreen": 0.02,
+   "earnings": 0.149,
+   "guidance": 0.068,
+   "analyst": 0.178,
+   "company_news": 0.489
+  },
+  "2019": {
+   "market_commentary": 0.06,
+   "evergreen": 0.018,
+   "earnings": 0.137,
+   "guidance": 0.055,
+   "analyst": 0.213,
+   "company_news": 0.517
+  },
+  "2020": {
+   "market_commentary": 0.084,
+   "evergreen": 0.036,
+   "earnings": 0.115,
+   "guidance": 0.034,
+   "analyst": 0.263,
+   "company_news": 0.468
+  },
+  "2021": {
+   "market_commentary": 0.14,
+   "evergreen": 0.081,
+   "earnings": 0.102,
+   "guidance": 0.037,
+   "analyst": 0.168,
+   "company_news": 0.472
+  },
+  "2022": {
+   "market_commentary": 0.092,
+   "evergreen": 0.154,
+   "earnings": 0.104,
+   "guidance": 0.034,
+   "analyst": 0.196,
+   "company_news": 0.42
+  },
+  "2023": {
+   "market_commentary": 0.091,
+   "evergreen": 0.141,
+   "earnings": 0.091,
+   "guidance": 0.035,
+   "analyst": 0.242,
+   "company_news": 0.4
+  },
+  "2024": {
+   "market_commentary": 0.082,
+   "evergreen": 0.093,
+   "earnings": 0.089,
+   "guidance": 0.043,
+   "analyst": 0.269,
+   "company_news": 0.424
+  }
+ },
+ "links": {
+  "citations": 2679535,
+  "unknown_symbol": 158026,
+  "outside_listing_dates": 13548,
+  "linked": 2507961,
+  "ambiguous_resolved_by_liquidity": 3558
+ },
+ "with_stock": 0.8629493723903202,
+ "one_stock": 0.7520130539382668,
+ "usable": 962777,
+ "usable_one_stock": 856273,
+ "usable_unique_headlines": 930947,
+ "earnings": {
+  "articles": 149269,
+  "with_eps_estimate": 76036,
+  "with_sales_estimate": 81394,
+  "verb_conflicts": 76,
+  "eps_beats": 51736,
+  "eps_misses": 24179,
+  "eps_equal": 121
+ },
+ "earnings_coverage": {
+  "events": 80759,
+  "with_wire": 0.7560643395782514,
+  "with_eps_estimate": 0.6274223306380713,
+  "by_year": {
+   "2018": 0.749,
+   "2019": 0.719,
+   "2020": 0.711,
+   "2021": 0.736,
+   "2022": 0.716,
+   "2023": 0.801,
+   "2024": 0.829
+  },
+  "wire_minus_sec_hours": {
+   "median": -0.007222222222222222,
+   "p10": -1.342722222222222,
+   "p90": 0.7245000000000013
+  },
+  "wire_before_sec": 0.5171227828821304
+ }
+}

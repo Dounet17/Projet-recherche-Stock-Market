@@ -1,0 +1,93 @@
+{
+ "revision": "4556d13015211d73dccd3fdd39d39232506f3e43",
+ "articles_scored": 962776,
+ "unique_headlines": 930946,
+ "labels_by_category": {
+  "analyst": {
+   "p_positive": 0.574,
+   "p_neutral": 0.285,
+   "p_negative": 0.141
+  },
+  "company_news": {
+   "p_neutral": 0.566,
+   "p_positive": 0.311,
+   "p_negative": 0.123
+  },
+  "earnings": {
+   "p_positive": 0.474,
+   "p_negative": 0.294,
+   "p_neutral": 0.232
+  },
+  "guidance": {
+   "p_positive": 0.493,
+   "p_neutral": 0.291,
+   "p_negative": 0.216
+  }
+ },
+ "labels_by_year": {
+  "2018": {
+   "p_neutral": 0.437,
+   "p_positive": 0.358,
+   "p_negative": 0.205
+  },
+  "2019": {
+   "p_neutral": 0.405,
+   "p_positive": 0.39,
+   "p_negative": 0.205
+  },
+  "2020": {
+   "p_positive": 0.449,
+   "p_neutral": 0.387,
+   "p_negative": 0.163
+  },
+  "2021": {
+   "p_positive": 0.444,
+   "p_neutral": 0.435,
+   "p_negative": 0.121
+  },
+  "2022": {
+   "p_neutral": 0.436,
+   "p_positive": 0.399,
+   "p_negative": 0.165
+  },
+  "2023": {
+   "p_positive": 0.447,
+   "p_neutral": 0.392,
+   "p_negative": 0.161
+  },
+  "2024": {
+   "p_positive": 0.46,
+   "p_neutral": 0.405,
+   "p_negative": 0.135
+  }
+ },
+ "checks": {
+  "eps_beat_vs_miss": {
+   "good": 50976,
+   "bad": 23592,
+   "auc": 0.7166268861295135,
+   "good_read_positive": 0.6417922159447583,
+   "good_read_negative": 0.19483678593848086,
+   "bad_read_positive": 0.35266191929467616,
+   "bad_read_negative": 0.519540522210919
+  },
+  "upgrade_vs_downgrade": {
+   "good": 25353,
+   "bad": 30403,
+   "auc": 0.9395022900270845,
+   "good_read_positive": 0.7086735297597917,
+   "good_read_negative": 0.0059559026545182026,
+   "bad_read_positive": 0.14442653685491563,
+   "bad_read_negative": 0.6066835509653653
+  },
+  "guidance_raise_vs_cut": {
+   "good": 5823,
+   "bad": 2041,
+   "auc": 0.9778121411628338,
+   "good_read_positive": 0.8438948995363215,
+   "good_read_negative": 0.017345011162630947,
+   "bad_read_positive": 0.05438510534051935,
+   "bad_read_negative": 0.9029887310142087
+  }
+ }
+}

@@ -975,7 +975,7 @@ function viewEvents() {
         h("thead", {}, h("tr", {}, ["Heure d'acceptation", "Événements", "Réaction avant l'achat", "Écart à 1 séance", "t"].map((x, i) => h("th", { class: i ? "n" : null }, x)))),
         h("tbody", {}, E.slots.filter((r) => r.case === "after_8k_time_retrospective").map((r) => h("tr", {}, [r.slot.charAt(0).toUpperCase() + r.slot.slice(1), nf.format(r.events), pts(r.reaction_spread), pts(r.spread_1), num(r.t_1)].map((x, i) => h("td", { class: i ? "n" : null }, x))))))),
         h("p", { class: "small" }, "Cas rétrospectif, toutes actions achetables, tableau descriptif. Cette heure est celle où la SEC accepte le dépôt : le communiqué peut sortir avant.")),
-      h("p", {}, "Pour les achats avant l'ouverture, notre bénéfice n'est jamais encore connu. Le verrou est donc devenu le chiffre, plus l'heure : il faudrait le lire dans le communiqué ou le texte du 8-K au moment de sa sortie. L'hypothèse de réagir avant la masse des humains demande aussi des cours à la minute. Ces deux tests restent à faire.")),
+      h("p", {}, "Pour les achats avant l'ouverture, notre bénéfice n'est jamais encore connu. Le verrou est donc devenu le chiffre, plus l'heure. Or 63 % des publications ont une dépêche qui donne le bénéfice et l'estimation des analystes, à peu près au moment du dépôt. Ce test reste à faire, comme celui de réagir avant la masse des humains, qui demande des cours à la minute.")),
   ];
 }
 
@@ -989,7 +989,7 @@ function viewData() {
     ["Prix à la minute", "Alpaca (SIP)", "2018-2024", "TSLA et quelques références", "Partiel"],
     ["Bénéfices et comptes", "SEC", "Jusqu'à fin 2024", `${nf.format(F.eps)} trimestres, ${nf.format(F.epsCompanies)} sociétés`, "Nettoyé"],
     ["Heures réelles des 8-K", "SEC", "2018-2024", "81 304 dépôts", "Téléchargé"],
-    ["News horodatées", "Alpaca (Benzinga)", "2018-2024", `${nf.format(N.total)} articles`, "Téléchargé, à trier"],
+    ["News horodatées", "Alpaca (Benzinga)", "2018-2024", `${nf.format(N.total)} articles`, "Trié et classé"],
     ["Posts de Musk", "Kaggle et Hugging Face", "2018-2024", "2 894 posts sur Tesla", "Classé"],
     ["Posts de Trump", "Archives publiques", "2018-2024", "Partie de Dounet17", "À faire"],
     ["Facteurs et secteurs", "Fama et French", "Depuis 1926", "Facteurs, 12 et 49 secteurs", "Téléchargé"],
@@ -1023,7 +1023,7 @@ function viewData() {
           valueRows(Object.keys(tierNames).map((tier) => { const a = Q.strata.find((x) => x.tier === tier && x.alive), g = Q.strata.find((x) => x.tier === tier && !x.alive); return a && g ? { label: tierNames[tier], points: [{ value: a.perYear, color: ACCENT }, { value: g.perYear, color: HOLD, shape: "diamond" }], tip: `<b>${esc(tierNames[tier])}</b><br>Encore cotées : ${a.perYear} articles par an<br>Disparues : ${g.perYear}` } : null; }).filter(Boolean), { min: 0, max: 170, fmt: (v) => nf.format(v), ticks: [0, 50, 100, 150] }),
           twin(["Liquidité", "Statut", "Au moins 1", "Au moins 12 par an", "Par an"], Q.strata.map((x) => [tierNames[x.tier] || x.tier, x.alive ? "Cotée" : "Disparue", pct(x.covered, 0), pct(x.regular, 0), x.perYear]))),
         figure("Articles par an", columns({ label: "Nombre d'articles téléchargés par année", height: 200, fmt: (v) => nf.format(v), rows: N.byYear.map((x) => ({ label: String(x.year), shortLabel: String(x.year).slice(2), values: [{ value: x.articles, color: ACCENT, tip: `<b>${x.year}</b><br>${nf.format(x.articles)} articles<br>${pct(x.summary, 0)} avec un résumé` }] })) }),
-          h("p", { class: "small" }, `En semaine, ${pct(N.preMarket, 0)} sortent avant l'ouverture, ${pct(N.inSession, 0)} en séance, ${pct(N.afterClose, 0)} après la clôture, et ${pct(N.weekend, 0)} le week-end. ${pct(N.oneSymbol, 0)} citent un seul symbole. ${pct(N.withSummary, 0)} ont un résumé, et aucun avant 2020 : une étude sur toute la période doit se limiter aux titres. Sur l'échantillon, environ 14 % sont des commentaires de marché à exclure, car ils décrivent un mouvement déjà fait.`),
+          h("p", { class: "small" }, `En semaine, ${pct(N.preMarket, 0)} sortent avant l'ouverture, ${pct(N.inSession, 0)} en séance, ${pct(N.afterClose, 0)} après la clôture, et ${pct(N.weekend, 0)} le week-end. ${pct(N.oneSymbol, 0)} citent un seul symbole. ${pct(N.withSummary, 0)} ont un résumé, et aucun avant 2020 : une étude sur toute la période doit se limiter aux titres. Le tri écarte 9 % de commentaires de marché, qui décrivent un mouvement déjà fait, et 9 % d'articles de remplissage.`),
           twin(["Année", "Articles", "Avec résumé"], N.byYear.map((x) => [x.year, nf.format(x.articles), pct(x.summary, 0)]))))),
     h("section", {}, h("h2", {}, "Limites connues"),
       h("ul", { class: "takeaways" }, [
@@ -1063,8 +1063,8 @@ function viewNext() {
     ["Heuristiques : moyennes mobiles et Bollinger", "Comparées action par action au buy and hold", "done"],
     ["Heuristiques : EPS et P/E", "Une première stratégie P/E bas existe, à compléter", "doing"],
     ["Adaptatif : machine learning", "Premier classement sur prix et liquidité, journalisé", "done"],
-    ["Événements : publications de résultats", "Étude refaite avec les vraies heures SEC. Reste à lire le bénéfice dans les communiqués", "doing"],
-    ["Adaptatif : sentiment des news", "Articles récupérés. Restent le tri, FinBERT et l'étude d'événement", "doing"],
+    ["Événements : publications de résultats", "Étude refaite avec les vraies heures SEC. 63 % des publications ont une dépêche avec la vraie surprise : à tester", "doing"],
+    ["Adaptatif : sentiment des news", "Titres triés et classés par FinBERT. Reste l'étude d'événement", "doing"],
     ["Réseaux sociaux : Musk", "Reprendre la même méthode, et tester à la minute sur TSLA", "todo"],
     ["Réseaux sociaux : Trump et Dow Jones", "Partie de Dounet17", "todo"],
     ["Stratégie hybride", "Prix et signaux retenus, seulement si un signal apporte quelque chose", "todo"],
