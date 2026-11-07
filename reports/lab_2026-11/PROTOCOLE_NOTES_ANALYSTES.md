@@ -134,3 +134,19 @@ Empreintes SHA-256 au gel (code au commit `1694801`), à vérifier par le code a
 1. Horizon principal de **20 séances** ; 5 et 60 séances restent secondaires.
 2. Notes proches d'une publication de résultats **exclues** de l'échantillon principal, étudiées à part (secondaire 4).
 3. Portefeuille de A3 : **au plus 10 % par titre**.
+
+## Choix d'implémentation, 07/11/2026, avant tout lancement
+
+Tranchés en codant `src/analyst_study.py` et `reports/run_analyst_study.py`, sans aucun rendement lu. Classés selon la leçon de l'audit précédent : **précision** si le texte figé le permettait déjà, **changement** sinon.
+
+1. **Changement** : la p de A3 est la p **unilatérale** de `lab.compare` (« la stratégie n'apporte rien », bootstrap stationnaire, comme dans tout le laboratoire), alors que A1 et A2 sont bilatérales. Holm les combine telles quelles. Une p bilatérale serait au plus le double.
+2. Précision : séance de décision de A3 = première séance dont la clôture suit strictement `available_at` ; achetable et liquidité lus à cette clôture.
+3. Précision : date d'une publication de résultats = `announced`, sinon `filed`, ramenée à la première séance à partir de cette date.
+4. Précision : notes d'une même famille sur un titre et une séance d'entrée : la plus ancienne est gardée (heure, puis identifiant) ; les changements de recommandation et les objectifs de cours sont regroupés séparément.
+5. Précision : un titre qui contient à la fois un changement de recommandation et un objectif de cours compte comme changement de recommandation.
+6. Précision : A3 est aussi inscrit au journal `ledger_universe.csv` sous le nom `analyst_upgrades_hold20`, sans que la p de Romano-Wolf du journal entre dans les tests de ce protocole.
+7. Précision : Sharpe au-delà du taux sans risque calculé sur les rendements quotidiens moins ceux de BIL (ouverture à ouverture).
+8. Précision : placebo et rendement des 20 séances avant la note calculés sous l'hypothèse de sortie de base, sur les événements de l'échantillon principal.
+9. Précision : regroupement à deux dimensions : les rares notes sans CIK forment un seul groupe.
+
+**Essai à blanc** (empreintes conformes, aucun rendement lu) : 22 795 relèvements et 25 921 abaissements après regroupement par séance ; échantillon principal achetable hors résultats de **18 427 relèvements et 19 194 abaissements**, dont 15 573 au-dessus de 100 M$ ; 18 483 relèvements achetables pour le portefeuille A3 ; 48 112 objectifs relevés et 35 713 abaissés hors résultats.
