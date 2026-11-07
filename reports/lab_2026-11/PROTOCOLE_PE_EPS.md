@@ -164,3 +164,7 @@ Relecture : `pe_eps_study/AUDIT_CODE_CODEX_3.md`. Le choix de version y est jug�
 4. **Limite** : une opération absente du fichier reste ignorée (par exemple la distribution de 3 % en actions de TR en mars 2020, sans effet sur les sélections selon la relecture). L'affirmation de la section précédente selon laquelle les scissions et dividendes exceptionnels ne changeaient plus l'EPS était fausse avec le repli ; elle est vraie sans lui.
 
 **Essai à blanc** : 28 décisions ; univers éligible de 520 à 685 titres ; 100 titres pour E1 et E2 ; 27,5 titres communs avec le vrai test B. 26 tests passent, dont les régressions KDP, EHC, RTX, NTRB, TR et AAPL sur les vraies données.
+
+## Quatrième relecture, 08/11/2026 : lançable
+
+`pe_eps_study/AUDIT_CODE_CODEX_4.md` : faux fractionnements supprimés, construction causale, aucun faux négatif qui change les sélections aux 28 décisions (OVV, FLG, BALL et TR 2020, absents du fichier, testés sans effet). **Rectification** : FBYD n'est pas dédoublonné (une ligne `forward_splits` et une `stock_dividends` pour la même distribution, 1,44 au lieu de 1,2) ; l'opération tombe le 10/12/2024, après la dernière décision, sans effet sur cette étude. Code lancé tel quel.
