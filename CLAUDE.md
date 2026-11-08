@@ -25,6 +25,8 @@ Essais des modèles préentraînés terminés le 25/10/2026 : `reports/Resultats
 
 Volatilité annuelle mesurée sur 2018-2024 (Alpaca, cours journaliers ajustés) : DIA 19 %, SPY 19 %, QQQ 24 %, TSLA 63 %. Une forte volatilité augmente autant les gains possibles que les pertes : elle ne garantit pas un meilleur rendement.
 
+**Registre des hypothèses (08/11/2026)** : toute idée de stratégie est inscrite dans `reports/lab_2026-11/registre_hypotheses.csv` avant le moindre calcul de rendement, règles dans `REGISTRE_HYPOTHESES.md`, contrôle `venv/bin/python src/registry.py`, et un lanceur appelle `registry.require("Hxx")`. Une idée née de résultats déjà vus ne se valide pas sur la période qui l'a inspirée. Pistes proposées : H14 règle de protection sur mauvaise nouvelle, H15/H16 suivre les robots ou parier sur le rebond sur QQQ, SPY, DIA (barres minute 2018-2024 dans `data/events/index_bars/`), H17 petit modèle hybride, H18 grand modèle, H19 motifs intraday, H20 vente à découvert.
+
 ## Question de recherche
 Un modèle d'IA peut-il obtenir de bons résultats en prédisant le marché, mieux qu'un simple placement passif (type ETF S&P 500 ou Nasdaq) ? L'hypothèse de départ est que non : les résultats seront probablement proches du hasard. Le but est de tout mettre en place pour maximiser le rendement ou minimiser les pertes, puis d'analyser honnêtement pourquoi chaque approche réussit ou échoue.
 
