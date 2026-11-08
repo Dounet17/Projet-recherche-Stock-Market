@@ -14,7 +14,7 @@ import pandas as pd
 
 PATH = Path(__file__).resolve().parents[1] / "reports" / "lab_2026-11" / "registre_hypotheses.csv"
 COLUMNS = ("id", "inscrite_le", "titre", "famille", "hypothese", "source", "inspiree_de_resultats_vus", "donnees",
-           "conception", "validation", "variantes_max", "statut", "protocole", "resultat")
+           "conception", "validation", "variantes_max", "statut", "protocole", "resultat", "rapport", "liee_a")
 FAMILIES = ("heuristique", "adaptative", "hybride", "evenement", "reference")
 STATUSES = ("proposee", "protocole_fige", "lancee", "echec", "nulle", "reussie", "abandonnee")
 LAUNCHABLE = ("protocole_fige",)
@@ -48,6 +48,9 @@ def check(table):
             problems.append(f"{row.id} : résultat manquant pour un statut terminé")
         if row.statut in LAUNCHABLE + ("lancee",) + DONE[:3] and not row.protocole:
             problems.append(f"{row.id} : protocole manquant")
+        unknown = [h for h in row.liee_a.split() if h not in set(table.id)]
+        if unknown:
+            problems.append(f"{row.id} : liee_a cite des hypothèses inconnues {unknown}")
         # Une idée née de résultats déjà vus ne peut pas se valider sur la période qui l'a inspirée.
         if row.inspiree_de_resultats_vus == "oui" and "2018-2024" in row.validation:
             problems.append(f"{row.id} : inspirée de 2018-2024, elle doit se valider ailleurs")
