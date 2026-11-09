@@ -1,0 +1,92 @@
+{
+  "development_end": "2024-12-31",
+  "trials": {
+    "earnings_positive_20": {
+      "family": "heuristic",
+      "description": "Après surprise positive : TSLA pendant 20 séances"
+    },
+    "earnings_negative_exit_10": {
+      "family": "heuristic",
+      "description": "Après surprise négative : liquidités pendant 10 séances"
+    },
+    "earnings_exit_3": {
+      "family": "heuristic",
+      "description": "Après tout résultat : liquidités pendant 3 séances"
+    },
+    "earnings_proxy_drift_10": {
+      "family": "heuristic",
+      "description": "Avant date estimée du trimestre : TSLA pendant 10 jours calendaires"
+    },
+    "earnings_proxy_exit_3": {
+      "family": "heuristic",
+      "description": "Date trimestrielle estimée : liquidités à plus ou moins 3 jours calendaires"
+    },
+    "musk_activity_exit_5": {
+      "family": "adaptive",
+      "description": "Activité Musk sur 5 séances au dessus du quantile passé à 90 % : liquidités"
+    },
+    "musk_other_exit_5": {
+      "family": "adaptive",
+      "description": "Pic Musk et plus de 75 % de sujets extérieurs à Tesla : liquidités"
+    },
+    "musk_finbert_exit_5": {
+      "family": "adaptive",
+      "description": "Sentiment FinBERT Musk négatif sur 5 séances : liquidités"
+    },
+    "musk_jev_exit_5": {
+      "family": "adaptive",
+      "description": "Impact Jev Musk négatif sur 5 séances : liquidités"
+    },
+    "news_activity_exit_5": {
+      "family": "adaptive",
+      "description": "Volume de news sur 5 séances au dessus du quantile passé à 90 % : liquidités"
+    },
+    "news_finbert_exit_5": {
+      "family": "adaptive",
+      "description": "Sentiment FinBERT des titres négatif sur 5 séances : liquidités"
+    },
+    "hybrid_musk_trend_200": {
+      "family": "hybrid",
+      "description": "Tendance 200 séances et absence de pic Musk hors Tesla"
+    },
+    "hybrid_news_trend_200": {
+      "family": "hybrid",
+      "description": "Tendance 200 séances et absence de sentiment news négatif"
+    },
+    "control_trend_200": {
+      "family": "control",
+      "description": "Contrôle : tendance 200 séances seule"
+    },
+    "control_half_tsla": {
+      "family": "control",
+      "description": "Contrôle : exposition TSLA constante à 50 %"
+    }
+  },
+  "parameters": {
+    "signal_window_sessions": 5,
+    "past_quantile": 0.9,
+    "past_window": 252,
+    "past_minimum": 126,
+    "negative_sentiment_threshold": -0.1,
+    "other_topic_share": 0.75,
+    "earnings_proxy_days": 91,
+    "trend_sessions": 200,
+    "finbert_max_tokens": 128
+  },
+  "scenarios": [
+    {
+      "cost_bps": 5,
+      "cash": "zero"
+    },
+    {
+      "cost_bps": 10,
+      "cash": "zero"
+    },
+    {
+      "cost_bps": 5,
+      "cash": "BIL_proxy"
+    }
+  ],
+  "selection_rule": "Hors contrôles : rendement supérieur à TSLA aux deux coûts, p corrigée <= 0.10 aux deux coûts, excès positif en 2022-2024 et au moins trois années positives; trois stratégies au maximum.",
+  "ml_gate": "Pas de ML si aucune règle sociale simple ne franchit les critères de préinscription."
+}

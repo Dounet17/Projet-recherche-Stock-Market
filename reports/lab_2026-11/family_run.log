@@ -1,0 +1,44 @@
+Famille prix : 199 essais
+Famille complète : 244 essais
+
+Les 12 plus faibles p d'excès, famille complète :
+                                       rw_p_excess_all  rw_p_alpha_all
+trial                                                                 
+claude:megacap_top3_mom_nofilter                0.0788          0.1268
+claude:megacap_top3_mom                         0.0800          0.1195
+claude:megacap_top3_voladj                      0.1338          0.1905
+claude:megacap_equal                            0.1430          0.6295
+claude:megacap_top1_mom                         0.1470          0.1782
+claude:robust_mega_top2_lb126                   0.4120          0.3042
+claude:robust_mega_top2_lb63                    0.5572          0.2532
+claude:robust_mega_top3_lb63                    0.7792          0.3728
+claude:robust_mega_top3_without_GOOGL           0.8532          0.7412
+claude:robust_mega_top3_lb126                   0.8580          0.7847
+claude:robust_mega_top3_without_AAPL            0.9215          0.7635
+claude:robust_mega_top4_lb63                    0.9610          0.3865
+
+Les 12 plus faibles p d'alpha, famille complète :
+                                          rw_p_excess_all  rw_p_alpha_all
+trial                                                                    
+codex:control_half_tsla__5bps__BIL_proxy           1.0000          0.0000
+claude:megacap_top3_mom                            0.0800          0.1195
+claude:megacap_top3_mom_nofilter                   0.0788          0.1268
+claude:megacap_top1_mom                            0.1470          0.1782
+claude:megacap_top3_voladj                         0.1338          0.1905
+claude:robust_mega_top2_lb63                       0.5572          0.2532
+claude:robust_mega_top2_lb126                      0.4120          0.3042
+claude:robust_mega_top3_lb63                       0.7792          0.3728
+claude:robust_mega_top4_lb63                       0.9610          0.3865
+claude:NVDA__trend_vol_target_30                   1.0000          0.4808
+claude:META__rsi2_reversion                        1.0000          0.5815
+claude:megacap_equal                               0.1430          0.6295
+
+Candidates :
+                                       rw_p_excess_all  rw_p_alpha_all
+trial                                                                 
+claude:robust_mega_top3_lb126                   0.8580          0.7847
+claude:megacap_top3_mom                         0.0800          0.1195
+claude:TSLA__market_filter_qqq                  0.9982          0.9665
+claude:robust_tsla_filter_QQQ_200               0.9982          0.9665
+claude:TSLA__vol_target_30                      1.0000          1.0000
+codex:news_finbert_exit_5__5bps__zero           0.9905          0.9080

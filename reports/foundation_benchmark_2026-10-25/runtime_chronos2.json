@@ -1,0 +1,29 @@
+[
+  {
+    "model": "chronos2",
+    "variant": "univariate",
+    "rows": 18000,
+    "device": "cuda",
+    "seconds": 229.16514274699057,
+    "median_batch_seconds": 0.40908286800004134,
+    "batch_size": 32
+  },
+  {
+    "model": "chronos2",
+    "variant": "market",
+    "rows": 18000,
+    "device": "cuda",
+    "seconds": 241.4521935119883,
+    "median_batch_seconds": 0.43221068200000445,
+    "batch_size": 32
+  },
+  {
+    "model": "chronos2",
+    "variant": "jev",
+    "rows": 18000,
+    "device": "cuda",
+    "seconds": 300.1386207930036,
+    "median_batch_seconds": 0.3600983839996843,
+    "batch_size": 32
+  }
+]

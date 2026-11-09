@@ -1,0 +1,17 @@
+{
+  "earnings_positive_20": true,
+  "earnings_negative_exit_10": true,
+  "earnings_exit_3": true,
+  "earnings_proxy_drift_10": true,
+  "earnings_proxy_exit_3": true,
+  "musk_activity_exit_5": true,
+  "musk_other_exit_5": true,
+  "musk_finbert_exit_5": true,
+  "musk_jev_exit_5": true,
+  "news_activity_exit_5": true,
+  "news_finbert_exit_5": true,
+  "hybrid_musk_trend_200": true,
+  "hybrid_news_trend_200": true,
+  "control_trend_200": true,
+  "control_half_tsla": true
+}

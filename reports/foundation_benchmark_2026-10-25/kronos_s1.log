@@ -1,0 +1,32 @@
+Loading weights from local directory
+Loading weights from local directory
+/home/tomda/Documents/Projet-recherche-Stock-Market/.venv-forecast/lib/python3.12/site-packages/torch/nn/modules/linear.py:125: UserWarning: Attempting to use hipBLASLt on an unsupported architecture! Overriding blas backend to hipblas (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:310.)
+  return F.linear(input, self.weight, self.bias)
+kronos_s1_univariate: 32/18000, 2.6 s écoulées
+kronos_s1_univariate: 1312/18000, 87.9 s écoulées
+kronos_s1_univariate: 2592/18000, 156.1 s écoulées
+kronos_s1_univariate: 3872/18000, 221.3 s écoulées
+kronos_s1_univariate: 5152/18000, 286.6 s écoulées
+kronos_s1_univariate: 6432/18000, 351.8 s écoulées
+kronos_s1_univariate: 7712/18000, 417.1 s écoulées
+kronos_s1_univariate: 8992/18000, 466.6 s écoulées
+kronos_s1_univariate: 10272/18000, 508.4 s écoulées
+kronos_s1_univariate: 11552/18000, 550.3 s écoulées
+kronos_s1_univariate: 12832/18000, 592.3 s écoulées
+kronos_s1_univariate: 14112/18000, 634.2 s écoulées
+kronos_s1_univariate: 15392/18000, 676.2 s écoulées
+kronos_s1_univariate: 16672/18000, 718.1 s écoulées
+kronos_s1_univariate: 17952/18000, 760.2 s écoulées
+kronos_s1_univariate: 18000/18000, 761.9 s écoulées
+[
+  {
+    "model": "kronos",
+    "variant": "univariate",
+    "rows": 18000,
+    "device": "cuda",
+    "seconds": 761.6070979009874,
+    "median_batch_seconds": 1.0619044390005001,
+    "batch_size": 32,
+    "sample_count": 1
+  }
+]

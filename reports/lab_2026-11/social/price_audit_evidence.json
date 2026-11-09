@@ -1,0 +1,129 @@
+{
+  "source_sha256": {
+    "src/price_lab.py": "0aef9b324be915f5b973c59f588cfd7d9b9e7ff10adfd27490e0c770d4946b10",
+    "reports/run_price_lab.py": "5801c0298be05e395affd05688a9ddfd0e601062a0a1ee9df7d3c6ff67eced15",
+    "reports/run_price_robustness.py": "68710cb9b96fd52382baa552e7b87a9c0d8cd99f8a6cfff750132b8c6a37a12e",
+    "reports/lab_2026-11/preregistration_claude.json": "9a78feb9618fbf793a23133c2e18c64136b21191456ad48f3f5a3af2167aee09"
+  },
+  "end": "2024-12-31",
+  "initial_trials": 175,
+  "robustness_trials": 24,
+  "ledger_trials": 199,
+  "joint_pvalues": {
+    "mega_top3_lb126": {
+      "published": 0.297,
+      "joint_199": 0.80575
+    },
+    "tsla_filter_QQQ_200": {
+      "published": 0.60275,
+      "joint_199": 0.99275
+    }
+  },
+  "rebalancing": {
+    "megacap_equal": {
+      "final_capital": 93832.2618780179,
+      "turnover_per_year": 3.29966233961287,
+      "outside_decision_trade_days": 1674,
+      "outside_decision_turnover": 19.789445793822757,
+      "capital_without_only_those_fees_same_daily_allocations": 94765.31837805688,
+      "fees_capital_drag_same_allocations": 933.0565000389761
+    },
+    "megacap_top3_mom": {
+      "final_capital": 193836.33999757972,
+      "turnover_per_year": 6.048343436039117,
+      "outside_decision_trade_days": 1455,
+      "outside_decision_turnover": 16.032078673001017,
+      "capital_without_only_those_fees_same_daily_allocations": 195396.39188160028,
+      "fees_capital_drag_same_allocations": 1560.0518840205623
+    },
+    "tsla_vol_target_30": {
+      "final_capital": 83592.40607796617,
+      "turnover_per_year": 5.213377195054084,
+      "outside_decision_trade_days": 1531,
+      "outside_decision_turnover": 10.005963070874394,
+      "capital_without_only_those_fees_same_daily_allocations": 84011.66657500995,
+      "fees_capital_drag_same_allocations": 419.2604970437824
+    }
+  },
+  "candidate_alpha": {
+    "tsla_vol_target_30": {
+      "annual_alpha": 0.03939371744566537,
+      "alpha_p_one_sided": 0.22275,
+      "alpha_ci95": [
+        -0.06039759760112802,
+        0.14879101396235228
+      ],
+      "sharpe_difference": 0.04895446403164805,
+      "sharpe_diff_p_one_sided": 0.3585,
+      "rw_fixed_beta_p": 0.99925
+    }
+  },
+  "causality": {
+    "dual_momentum": true,
+    "gtaa5_trend": true,
+    "gtaa9_trend": true,
+    "sector_top3_mom": true,
+    "sector_top3_mom_nofilter": true,
+    "assets_top3_mom": true,
+    "inverse_vol_4": true,
+    "qqq_trend_ief": true,
+    "qqq_trend_gld": true,
+    "spy_trend_ief": true,
+    "megacap_equal": true,
+    "megacap_top3_mom": true,
+    "megacap_top3_mom_nofilter": true,
+    "megacap_top1_mom": true,
+    "megacap_top3_voladj": true,
+    "TSLA_sma200": true,
+    "TSLA_sma200_monthly": true,
+    "TSLA_sma100": true,
+    "TSLA_golden_cross": true,
+    "TSLA_tsmom_252": true,
+    "TSLA_tsmom_126": true,
+    "TSLA_donchian_100_50": true,
+    "TSLA_bollinger_reversion": true,
+    "TSLA_rsi2_reversion": true,
+    "TSLA_vol_target_30": true,
+    "TSLA_trend_vol_target_30": true,
+    "TSLA_vol_regime": true,
+    "TSLA_drawdown_stop_25": true,
+    "TSLA_market_filter_qqq": true,
+    "TSLA_ml_logistic": true,
+    "TSLA_ml_boosting": true
+  },
+  "rsi_affected_development_rows": {
+    "TSLA_2": 0,
+    "TSLA_14": 0,
+    "NVDA_2": 0,
+    "NVDA_14": 0,
+    "AAPL_2": 0,
+    "AAPL_14": 0,
+    "MSFT_2": 0,
+    "MSFT_14": 0,
+    "AMZN_2": 0,
+    "AMZN_14": 0,
+    "GOOGL_2": 0,
+    "GOOGL_14": 0,
+    "META_2": 0,
+    "META_14": 0,
+    "SPY_2": 0,
+    "SPY_14": 0,
+    "QQQ_2": 0,
+    "QQQ_14": 0,
+    "IWM_2": 0,
+    "IWM_14": 0
+  },
+  "drawdown_conflict_days": {
+    "TSLA": 10,
+    "NVDA": 10,
+    "AAPL": 0,
+    "MSFT": 0,
+    "AMZN": 4,
+    "GOOGL": 0,
+    "META": 4,
+    "SPY": 0,
+    "QQQ": 0,
+    "IWM": 0
+  },
+  "market_filter_matches_public_factory": true
+}

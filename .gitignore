@@ -1,28 +1,22 @@
-# Environnements virtuels
+# Environnements virtuels et secrets
+.env
 venv/
 env/
-.env
+.venv-forecast/
 
 # Fichiers de cache Python
 __pycache__/
 *.py[cod]
 *$py.class
 
-# Dossiers de données
-data/raw/*
-data/processed/*
-!data/raw/.gitkeep
-!data/processed/.gitkeep
-*.csv
-*.json
-*.pkl
-*.h5
-
-# Résultats et graphiques
+# Dossiers de données (jamais versionnés)
+data/
 results/metrics/*
 results/figures/*
 !results/metrics/.gitkeep
 !results/figures/.gitkeep
+*.pkl
+*.h5
 
 # Fichiers Jupyter Notebook
 .ipynb_checkpoints/
@@ -36,3 +30,13 @@ results/figures/*
 *.pt
 *.bin
 *.safetensors
+
+# Résultats de calcul volumineux, régénérables par les scripts de reports/
+reports/**/chunks/
+reports/lab_2026-11/trials/
+reports/**/*.parquet
+web/site_data.js
+vault/
+
+# Journaux d'exécution locaux
+*.log

@@ -1,0 +1,39 @@
+{
+  "owner": "claude (coordinateur)",
+  "frozen_on": "2026-11-06",
+  "validation_read": false,
+  "why": "Ajout décidé par le coordinateur avant toute lecture de 2025-2026. Cette règle NE satisfait PAS la règle de sélection stricte de Codex (p corrigée 0,771 contre un seuil de 0,10). Elle est testée à titre exploratoire car elle est la seule variante sociale ou news à excès positif sur 2018-2021 et 2022-2024, et ses données de validation sont disponibles gratuitement.",
+  "code_sha256": {
+    "src/lab.py": "542f24f8a527fd1395082f1ce79172b1bd9662fcc24e6fb521edf7aa754e860d",
+    "src/price_lab.py": "011eddd9cc3ab872c63e0030fd58b9ac0114f12d2bb73e131fd8150dc00f4b00",
+    "src/social_lab.py": "03d84abd159d43fab6d478d3717c5fdf57255b94e028a595c4fdb12867a6c2e3"
+  },
+  "strategies": [
+    {
+      "name": "news_finbert_exit_5",
+      "call": "social_lab.strategy_weights(panel,'news_finbert_exit_5',allow_holdout=True)",
+      "assets": [
+        "TSLA"
+      ],
+      "primary_reference": "TSLA",
+      "success": "Économique : capital final et Sharpe supérieurs au buy and hold TSLA, à 5 et 10 pb. Statistique : Holm < 0,05 sur excess_p_one_sided.",
+      "dev_evidence": "327 218 contre 203 541 USD, Sharpe 1,108 contre 0,977, p corrigée 0,771 dans les 45 essais de Codex, 0.991 dans la famille complète : non significatif."
+    }
+  ],
+  "excluded": {
+    "musk_jev_exit_5": "Posts Musk disponibles seulement jusqu'au 08/05/2025 et classification Jev payante : validation trop courte, non testée."
+  },
+  "statistics": "Mêmes tests et même correction de Holm que preregistration_claude.json.",
+  "significance_level": 0.05,
+  "decision": "Deux verdicts séparés par stratégie, jamais fusionnés. (1) Condition économique : estimations ponctuelles à 5 ET 10 pb, sur la validation. (2) Preuve statistique : p de Holm < 0,05 sur le test principal de la stratégie, à 5 pb. Sans (2), le résultat se décrit comme encourageant ou non, jamais comme une supériorité démontrée.",
+  "holm_family": [
+    "megacap_top3_mom : excess_p_one_sided contre megacap_equal",
+    "tsla_filter_qqq_200 : excess_p_one_sided contre TSLA",
+    "tsla_vol_target_30 : sharpe_diff_p_one_sided contre TSLA",
+    "news_finbert_exit_5 : excess_p_one_sided contre TSLA"
+  ],
+  "secondary_descriptive": "QQQ et SPY comme références supplémentaires, liquidités BIL, tests de 1 an avec un départ par mois. Aucun de ces résultats ne peut transformer un échec du test principal en succès.",
+  "power_warning": "22 mois donnent peu de puissance : ne pas franchir 0,05 ne prouve pas l'absence d'effet.",
+  "amended_on": "2026-11-06, après audit de Codex et avant toute lecture de la validation",
+  "derogation": "4 stratégies déclarées par le coordinateur au lieu de 3 : voir la section Dérogation de PROTOCOLE.md."
+}

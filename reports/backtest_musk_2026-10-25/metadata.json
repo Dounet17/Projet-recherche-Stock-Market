@@ -1,0 +1,102 @@
+{
+  "initial_capital": 10000.0,
+  "accounting_currency": "USD; equivalent unités EUR uniquement si taux de change constant",
+  "train_initial_years": [
+    2018,
+    2021
+  ],
+  "test_years": [
+    2022,
+    2023,
+    2024
+  ],
+  "hold_minutes": 15,
+  "information_delay_seconds": 60,
+  "signal_threshold": 0.5,
+  "costs_bps_per_side": [
+    0,
+    2,
+    5,
+    10
+  ],
+  "training": "Expanding window, refit each January, fixed logistic C=1, no tuning",
+  "grid_quality": {
+    "scheduled_intervals": 42084,
+    "missing_execution_intervals": 63,
+    "feature_missing_fraction": {
+      "price_tsla_return_1": 0.001568291987453664,
+      "price_tsla_return_5": 0.001615815987073472,
+      "price_tsla_return_15": 0.003136583974907328,
+      "price_tsla_return_60": 0.021290751829673986,
+      "price_tsla_volatility_15": 0.001401957988784336,
+      "price_qqq_return_1": 0.0012356239901150081,
+      "price_qqq_return_5": 0.001259385989924912,
+      "price_qqq_return_15": 0.0016395779868833762,
+      "price_qqq_return_60": 0.006130595950955232,
+      "price_qqq_volatility_15": 0.0012831479897348161,
+      "clock_sin": 0.0,
+      "clock_cos": 0.0
+    }
+  },
+  "event_quality": {
+    "1": {
+      "ignored_overlaps": 0,
+      "missing_execution_pairs": 0
+    },
+    "5": {
+      "ignored_overlaps": 4,
+      "missing_execution_pairs": 0
+    },
+    "15": {
+      "ignored_overlaps": 8,
+      "missing_execution_pairs": 0
+    },
+    "60": {
+      "ignored_overlaps": 9,
+      "missing_execution_pairs": 0
+    }
+  },
+  "paired_uncertainty": {
+    "prices_finbert": {
+      "annualized_paired_log_return_difference": -0.019464367080627855,
+      "ci95_month_block_bootstrap": [
+        -0.07755603844998994,
+        0.039429307656962426
+      ],
+      "resamples": 3000,
+      "months": 36
+    },
+    "prices_jev": {
+      "annualized_paired_log_return_difference": 0.010365971627892571,
+      "ci95_month_block_bootstrap": [
+        -0.044248169091191,
+        0.0721394789358859
+      ],
+      "resamples": 3000,
+      "months": 36
+    }
+  },
+  "data_sha256": {
+    "calendar.parquet": "87d0bbb94b61e3f5d48d45bf5065ba921f45c5506bf2b03ebf683bf80cc76f03",
+    "tsla_1min.parquet": "04dd4b5550bfd4fde77e62d35d9aa0c987c34de812a42bea81cdcbf4deb6b6f4",
+    "qqq_1min.parquet": "a6d34e58e54b97f9d260936bdf80ec3c3f7111c3c7fde92d51fbd780cea1454c",
+    "musk_posts.parquet": "1fa9370b1bd931e2b72e2da41f8036968694bc58b6dab2c05a4a0454354e654d",
+    "finbert_musk_tesla.parquet": "781814ba99b9ade4c91cf8d50aa69dc6ff1a634ace9ca093d0c73a40d70f0b4d",
+    "jev_musk_tesla.parquet": "3e46dcfb5e5101d73f5c6fe73d030ddae2ce75de5fdb57964464761a5873b296"
+  },
+  "versions": {
+    "python": "3.12.3",
+    "pandas": "3.0.6",
+    "numpy": "2.5.4",
+    "sklearn": "1.9.1"
+  },
+  "limitations": [
+    "Période historique déjà explorée ; évaluation rétrospective et non test final vierge",
+    "Entraînement des classifieurs de texte potentiellement postérieur aux événements",
+    "Cours de transaction par minute, pas cotations bid/ask ni exécutions garanties",
+    "Les intervalles sans prix d'entrée ou de sortie exact sont exclus",
+    "Drawdown à la grille pour les stratégies, quotidien pour le placement passif",
+    "Intérêts du cash, fiscalité, EUR/USD, impact de marché non modélisés",
+    "Pas de données Trump utilisées"
+  ]
+}

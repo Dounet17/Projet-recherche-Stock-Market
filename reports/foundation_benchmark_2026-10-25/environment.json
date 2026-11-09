@@ -1,0 +1,22 @@
+{
+  "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+  "packages": {
+    "torch": "2.6.0+rocm6.2.4",
+    "timesfm": "3.0.2",
+    "chronos-forecasting": "2.3.2",
+    "transformers": "5.19.0",
+    "huggingface-hub": "2.2.0",
+    "accelerate": "1.15.0",
+    "einops": "0.8.2",
+    "numpy": "2.5.4",
+    "pandas": "3.0.6",
+    "scipy": "1.18.1",
+    "scikit-learn": "1.9.1",
+    "safetensors": "0.8.0",
+    "pyarrow": "26.0.0",
+    "matplotlib": "3.11.2"
+  },
+  "torch_rocm_wheel_index": "https://download.pytorch.org/whl/rocm6.2.4",
+  "HSA_OVERRIDE_GFX_VERSION": "10.3.0",
+  "environment": ".venv-forecast ; r\u00e9utilise les biblioth\u00e8ques g\u00e9n\u00e9rales du venv initial par un fichier .pth"
+}

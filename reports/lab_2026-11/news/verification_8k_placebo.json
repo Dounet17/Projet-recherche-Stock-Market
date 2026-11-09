@@ -1,0 +1,32 @@
+{
+ "true_eps": {
+  "n": 6000,
+  "current": 0.871,
+  "historical_only": 0.105,
+  "absent": 0.024
+ },
+ "cited_estimate": {
+  "n": 5992,
+  "absent": 0.798,
+  "historical_only": 0.127,
+  "current": 0.075
+ },
+ "eps_plus_0.07": {
+  "n": 6000,
+  "absent": 0.843,
+  "historical_only": 0.111,
+  "current": 0.046
+ },
+ "eps_minus_0.13": {
+  "n": 6000,
+  "absent": 0.823,
+  "historical_only": 0.122,
+  "current": 0.056
+ },
+ "eps_of_another_publication": {
+  "n": 5986,
+  "absent": 0.848,
+  "historical_only": 0.113,
+  "current": 0.039
+ }
+}

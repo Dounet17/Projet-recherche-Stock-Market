@@ -1,0 +1,96 @@
+{
+ "revision": "4556d13015211d73dccd3fdd39d39232506f3e43",
+ "articles_scored": 949850,
+ "unique_headlines": 936914,
+ "labels_by_category": {
+  "analyst": {
+   "p_positive": 0.572,
+   "p_neutral": 0.288,
+   "p_negative": 0.14
+  },
+  "company_news": {
+   "p_neutral": 0.569,
+   "p_positive": 0.312,
+   "p_negative": 0.119
+  },
+  "earnings": {
+   "p_positive": 0.474,
+   "p_negative": 0.293,
+   "p_neutral": 0.233
+  },
+  "guidance": {
+   "p_positive": 0.492,
+   "p_neutral": 0.296,
+   "p_negative": 0.211
+  }
+ },
+ "labels_by_year": {
+  "2018": {
+   "p_neutral": 0.44,
+   "p_positive": 0.357,
+   "p_negative": 0.203
+  },
+  "2019": {
+   "p_neutral": 0.409,
+   "p_positive": 0.389,
+   "p_negative": 0.201
+  },
+  "2020": {
+   "p_positive": 0.45,
+   "p_neutral": 0.389,
+   "p_negative": 0.16
+  },
+  "2021": {
+   "p_positive": 0.441,
+   "p_neutral": 0.441,
+   "p_negative": 0.118
+  },
+  "2022": {
+   "p_neutral": 0.439,
+   "p_positive": 0.398,
+   "p_negative": 0.163
+  },
+  "2023": {
+   "p_positive": 0.446,
+   "p_neutral": 0.395,
+   "p_negative": 0.16
+  },
+  "2024": {
+   "p_positive": 0.463,
+   "p_neutral": 0.405,
+   "p_negative": 0.132
+  }
+ },
+ "checks": {
+  "eps_beat_vs_miss": {
+   "good": 50498,
+   "bad": 23361,
+   "auc": 0.7170280843685553,
+   "auc_positive_words_only": 0.8061204347594241,
+   "good_read_positive": 0.6429363539150066,
+   "good_read_negative": 0.1941463028238742,
+   "bad_read_positive": 0.3530670776079791,
+   "bad_read_negative": 0.5195411155344377
+  },
+  "upgrade_vs_downgrade": {
+   "good": 25149,
+   "bad": 30239,
+   "auc": 0.9390691697726925,
+   "auc_positive_words_only": 0.9639042296372234,
+   "good_read_positive": 0.7064296791124896,
+   "good_read_negative": 0.005884925841981788,
+   "bad_read_positive": 0.1444492212044049,
+   "bad_read_negative": 0.6035252488508218
+  },
+  "guidance_raise_vs_cut": {
+   "good": 5791,
+   "bad": 2023,
+   "auc": 0.9784700089874746,
+   "auc_positive_words_only": 0.9955511616411271,
+   "good_read_positive": 0.8444137454671041,
+   "good_read_negative": 0.016750129511310656,
+   "bad_read_positive": 0.05239742956005932,
+   "bad_read_negative": 0.9045971329708354
+  }
+ }
+}

@@ -1,0 +1,393 @@
+{
+  "rows_adjusted": 22727467,
+  "symbols_adjusted": 19875,
+  "rows_without_raw": 0,
+  "symbols_without_raw": [],
+  "rows_without_adjusted": 0,
+  "symbols_invalid_adjustment": [
+    "JTAI",
+    "LDTC",
+    "PRSR"
+  ],
+  "rows_before": 22727467,
+  "symbols_before": 19875,
+  "zero_raw_volume_rows_before": 1504482,
+  "rows_ghost_removed": 422893,
+  "reused_symbol_cuts": 543,
+  "zero_raw_volume_rows_kept_thin": 1081589,
+  "alias_pairs": 1670,
+  "alias_securities_dropped": 1670,
+  "alias_rows_not_in_kept_security": 10206,
+  "raw_vs_adjusted_mismatches": 2592,
+  "raw_vs_adjusted_unexplained": 511,
+  "daily_moves_above_100pct_after": 3721,
+  "suspect_prints": 1659,
+  "securities_with_trusted_name": 11277,
+  "sec_instance_prefixes": 15136,
+  "sec_link_agreement_ticker_vs_prefix": {
+    "pairs": 3900,
+    "same_company": 0.9695
+  },
+  "sec_link_agreement_name_vs_prefix": {
+    "pairs": 3589,
+    "same_company": 0.9568
+  },
+  "manual_security_rows": 158,
+  "security_overrides": 13,
+  "relisted_same_company": 48,
+  "splits_linked_to_companies": 2048,
+  "eps_suspect_quarters": 437,
+  "eps_quarters": 254472,
+  "eps_q4_derived": 32200,
+  "eps_companies": 10368,
+  "rows_after": 20934736,
+  "securities_after": 18745,
+  "last_date": "2024-12-31 05:00:00+00:00",
+  "security_types": {
+    "common": 6777,
+    "fund": 4490,
+    "unknown": 3552,
+    "adr": 1409,
+    "derivative": 1277,
+    "preferred": 903,
+    "spac": 309,
+    "test": 24,
+    "duplicate": 4
+  },
+  "alive_at_end": 10891,
+  "exit_reasons_all": {
+    "unknown": 3134,
+    "renamed": 1094,
+    "unknown_distress": 947,
+    "merger_terms_unknown": 915,
+    "cash_merger": 851,
+    "stock_merger": 394,
+    "bankruptcy": 321,
+    "stock_and_cash_merger": 80,
+    "worthless": 56,
+    "relisted": 48,
+    "redemption": 12,
+    "failed_bank": 2
+  },
+  "exit_reasons_equities": {
+    "unknown": 1948,
+    "merger_terms_unknown": 856,
+    "cash_merger": 806,
+    "unknown_distress": 691,
+    "renamed": 676,
+    "bankruptcy": 318,
+    "stock_merger": 317,
+    "stock_and_cash_merger": 78,
+    "relisted": 45,
+    "worthless": 35,
+    "redemption": 12,
+    "failed_bank": 2
+  },
+  "sec_coverage": {
+    "all_operating": {
+      "n": 11523,
+      "linked": 0.6943,
+      "with_eps": 0.5561
+    },
+    "alive": {
+      "n": 5985,
+      "linked": 0.876,
+      "with_eps": 0.7031
+    },
+    "disappeared": {
+      "n": 5538,
+      "linked": 0.4978,
+      "with_eps": 0.3973
+    },
+    "top_500": {
+      "n": 500,
+      "linked": 0.99,
+      "with_eps": 0.92
+    },
+    "top_500_disappeared": {
+      "n": 62,
+      "linked": 0.9194,
+      "with_eps": 0.8871
+    },
+    "top_1000": {
+      "n": 1000,
+      "linked": 0.988,
+      "with_eps": 0.88
+    },
+    "top_1000_disappeared": {
+      "n": 178,
+      "linked": 0.9326,
+      "with_eps": 0.8315
+    },
+    "top_3000": {
+      "n": 3000,
+      "linked": 0.9733,
+      "with_eps": 0.842
+    },
+    "top_3000_disappeared": {
+      "n": 811,
+      "linked": 0.9174,
+      "with_eps": 0.7867
+    }
+  },
+  "sec_link_methods": {
+    "none": 9258,
+    "ticker": 5850,
+    "filing_prefix": 3459,
+    "name": 168,
+    "manual": 10
+  },
+  "equities_with_fund_name_now": [
+    "BRKL",
+    "ELON",
+    "LAZR",
+    "LMNX",
+    "PINC"
+  ],
+  "watch": {
+    "SBNY": [
+      {
+        "id": "SBNY#0",
+        "first": "2016-01-04",
+        "last": "2023-03-10",
+        "type": "common",
+        "cik": null,
+        "link": "none",
+        "exit": "failed_bank",
+        "exit_base": -1.0,
+        "aliases": []
+      }
+    ],
+    "FB": [
+      {
+        "id": "META#0",
+        "first": "2016-01-04",
+        "last": "2024-12-31",
+        "type": "common",
+        "cik": 1326801,
+        "link": "ticker",
+        "exit": NaN,
+        "exit_base": null,
+        "aliases": [
+          "FB"
+        ]
+      }
+    ],
+    "META": [
+      {
+        "id": "META#0",
+        "first": "2016-01-04",
+        "last": "2024-12-31",
+        "type": "common",
+        "cik": 1326801,
+        "link": "ticker",
+        "exit": NaN,
+        "exit_base": null,
+        "aliases": [
+          "FB"
+        ]
+      }
+    ],
+    "ANTM": [
+      {
+        "id": "ELV#0",
+        "first": "2016-01-04",
+        "last": "2024-12-31",
+        "type": "common",
+        "cik": 1156039,
+        "link": "ticker",
+        "exit": NaN,
+        "exit_base": null,
+        "aliases": [
+          "ANTM"
+        ]
+      }
+    ],
+    "ELV": [
+      {
+        "id": "ELV#0",
+        "first": "2016-01-04",
+        "last": "2024-12-31",
+        "type": "common",
+        "cik": 1156039,
+        "link": "ticker",
+        "exit": NaN,
+        "exit_base": null,
+        "aliases": [
+          "ANTM"
+        ]
+      }
+    ],
+    "LB": [
+      {
+        "id": "LB#0",
+        "first": "2016-01-04",
+        "last": "2021-08-02",
+        "type": "common",
+        "cik": 701985,
+        "link": "filing_prefix",
+        "exit": "merger_terms_unknown",
+        "exit_base": 0.0,
+        "aliases": []
+      },
+      {
+        "id": "LB#1",
+        "first": "2024-06-28",
+        "last": "2024-12-31",
+        "type": "common",
+        "cik": 1995807,
+        "link": "ticker",
+        "exit": NaN,
+        "exit_base": null,
+        "aliases": []
+      }
+    ],
+    "CA": [
+      {
+        "id": "CA#0",
+        "first": "2016-01-04",
+        "last": "2018-11-02",
+        "type": "common",
+        "cik": 356028,
+        "link": "filing_prefix",
+        "exit": "merger_terms_unknown",
+        "exit_base": 0.0,
+        "aliases": []
+      },
+      {
+        "id": "CA#1",
+        "first": "2023-12-15",
+        "last": "2024-12-31",
+        "type": "unknown",
+        "cik": null,
+        "link": "none",
+        "exit": NaN,
+        "exit_base": null,
+        "aliases": []
+      }
+    ],
+    "MON": [
+      {
+        "id": "MON#0",
+        "first": "2016-01-04",
+        "last": "2018-06-06",
+        "type": "common",
+        "cik": 1110783,
+        "link": "filing_prefix",
+        "exit": "merger_terms_unknown",
+        "exit_base": 0.0,
+        "aliases": []
+      },
+      {
+        "id": "MON#1",
+        "first": "2021-03-16",
+        "last": "2022-12-23",
+        "type": "unknown",
+        "cik": null,
+        "link": "none",
+        "exit": "unknown",
+        "exit_base": 0.0,
+        "aliases": []
+      }
+    ],
+    "TWTR": [
+      {
+        "id": "TWTR#0",
+        "first": "2016-01-04",
+        "last": "2022-10-27",
+        "type": "common",
+        "cik": 1418091,
+        "link": "filing_prefix",
+        "exit": "cash_merger",
+        "exit_base": 0.0093,
+        "aliases": []
+      }
+    ],
+    "SIVB": [
+      {
+        "id": "SIVB#0",
+        "first": "2016-01-04",
+        "last": "2023-03-09",
+        "type": "common",
+        "cik": 719739,
+        "link": "filing_prefix",
+        "exit": "bankruptcy",
+        "exit_base": -1.0,
+        "aliases": []
+      }
+    ],
+    "BBBYQ": [
+      {
+        "id": "BBBYQ#0",
+        "first": "2016-01-04",
+        "last": "2023-05-02",
+        "type": "common",
+        "cik": 886158,
+        "link": "filing_prefix",
+        "exit": "bankruptcy",
+        "exit_base": -1.0,
+        "aliases": [
+          "BBBY"
+        ]
+      }
+    ],
+    "FRCB": [
+      {
+        "id": "FRCB#0",
+        "first": "2016-01-04",
+        "last": "2023-04-28",
+        "type": "common",
+        "cik": null,
+        "link": "none",
+        "exit": "failed_bank",
+        "exit_base": -1.0,
+        "aliases": [
+          "FRC"
+        ]
+      }
+    ],
+    "TQQQ": [
+      {
+        "id": "TQQQ#0",
+        "first": "2016-01-04",
+        "last": "2024-12-31",
+        "type": "fund",
+        "cik": null,
+        "link": "none",
+        "exit": NaN,
+        "exit_base": null,
+        "aliases": []
+      }
+    ],
+    "WHLR": [
+      {
+        "id": "WHLR#0",
+        "first": "2016-01-04",
+        "last": "2024-12-31",
+        "type": "common",
+        "cik": 1527541,
+        "link": "ticker",
+        "exit": NaN,
+        "exit_base": null,
+        "aliases": []
+      }
+    ],
+    "TSLA": [
+      {
+        "id": "TSLA#0",
+        "first": "2016-01-04",
+        "last": "2024-12-31",
+        "type": "common",
+        "cik": 1318605,
+        "link": "ticker",
+        "exit": NaN,
+        "exit_base": null,
+        "aliases": []
+      }
+    ]
+  },
+  "alias_contains": {
+    "FB-META": true,
+    "ANTM-ELV": true
+  }
+}

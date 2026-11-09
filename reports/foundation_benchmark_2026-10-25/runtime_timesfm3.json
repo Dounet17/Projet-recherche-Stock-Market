@@ -1,0 +1,47 @@
+[
+  {
+    "model": "timesfm3",
+    "variant": "univariate",
+    "rows": 18000,
+    "device": "cuda",
+    "seconds": 55.4311921070057,
+    "median_batch_seconds": 0.0971797250003874,
+    "batch_size": 32
+  },
+  {
+    "model": "timesfm3",
+    "variant": "market",
+    "rows": 18000,
+    "device": "cuda",
+    "seconds": 78.71591722199537,
+    "median_batch_seconds": 0.11533703999975842,
+    "batch_size": 32
+  },
+  {
+    "model": "timesfm3",
+    "variant": "finbert",
+    "rows": 18000,
+    "device": "cuda",
+    "seconds": 114.02971057899867,
+    "median_batch_seconds": 0.15591510000012931,
+    "batch_size": 32
+  },
+  {
+    "model": "timesfm3",
+    "variant": "jev",
+    "rows": 18000,
+    "device": "cuda",
+    "seconds": 520.979459353005,
+    "median_batch_seconds": 0.9634222730001056,
+    "batch_size": 32
+  },
+  {
+    "model": "timesfm3",
+    "variant": "zero_jev",
+    "rows": 18000,
+    "device": "cuda",
+    "seconds": 453.5881362699911,
+    "median_batch_seconds": 0.7658298820006166,
+    "batch_size": 32
+  }
+]

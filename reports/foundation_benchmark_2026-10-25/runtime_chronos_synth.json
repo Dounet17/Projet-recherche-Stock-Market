@@ -1,0 +1,47 @@
+[
+  {
+    "model": "chronos_synth",
+    "variant": "univariate",
+    "rows": 18000,
+    "device": "cuda",
+    "seconds": 37.14608213201427,
+    "median_batch_seconds": 0.07095779500014032,
+    "batch_size": 32
+  },
+  {
+    "model": "chronos_synth",
+    "variant": "market",
+    "rows": 18000,
+    "device": "cuda",
+    "seconds": 40.312556122005844,
+    "median_batch_seconds": 0.08062880699981179,
+    "batch_size": 32
+  },
+  {
+    "model": "chronos_synth",
+    "variant": "finbert",
+    "rows": 18000,
+    "device": "cuda",
+    "seconds": 69.26361500900566,
+    "median_batch_seconds": 0.1220979139998235,
+    "batch_size": 32
+  },
+  {
+    "model": "chronos_synth",
+    "variant": "jev",
+    "rows": 18000,
+    "device": "cuda",
+    "seconds": 241.1294359319918,
+    "median_batch_seconds": 0.5070104180003909,
+    "batch_size": 32
+  },
+  {
+    "model": "chronos_synth",
+    "variant": "zero_jev",
+    "rows": 18000,
+    "device": "cuda",
+    "seconds": 265.8030079329883,
+    "median_batch_seconds": 0.5014502610001728,
+    "batch_size": 32
+  }
+]

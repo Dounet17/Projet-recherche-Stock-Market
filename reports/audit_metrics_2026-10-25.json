@@ -1,0 +1,458 @@
+{
+  "date": "2026-10-25",
+  "posts": 2894,
+  "kinds": {
+    "reply": 2170,
+    "original": 535,
+    "quote": 189
+  },
+  "sessions": {
+    "closed": 1561,
+    "regular": 679,
+    "post": 484,
+    "pre": 170
+  },
+  "events": 546,
+  "event_days": 351,
+  "events_by_year": {
+    "2018": 86,
+    "2019": 112,
+    "2020": 80,
+    "2021": 56,
+    "2022": 50,
+    "2023": 59,
+    "2024": 103
+  },
+  "posts_with_previous_event_within_60min": 172,
+  "timestamp_mismatches": 0,
+  "agreement": 0.5463026952315134,
+  "kappa": 0.20195479828252638,
+  "finbert_neutral_fraction": 0.8182446440912232,
+  "jev_versions": {
+    "jev-1.13.0": 2894
+  },
+  "bar_checks": {
+    "tsla": {
+      "duplicate_timestamps": 0,
+      "missing_reference_bars": 0,
+      "missing_end_bars": {
+        "1": 0,
+        "5": 1,
+        "15": 2,
+        "60": 3
+      },
+      "missing_next_open_bars": 0
+    },
+    "qqq": {
+      "duplicate_timestamps": 0,
+      "missing_reference_bars": 0,
+      "missing_end_bars": {
+        "1": 0,
+        "5": 0,
+        "15": 0,
+        "60": 0
+      },
+      "missing_next_open_bars": 0
+    }
+  },
+  "news_updated_later_than_created": 16780,
+  "earnings_in_period": 28,
+  "correlations": [
+    {
+      "mode": "notebook_total_reaction",
+      "model": "FinBERT",
+      "horizon_label_min": 1,
+      "n": 546,
+      "rho": 0.055242201801890045,
+      "p_naive": 0.19744995321432537,
+      "p_bonferroni_12": 1.0,
+      "signed_mean_bp_jev_impact": null,
+      "n_directional_jev_impact": null
+    },
+    {
+      "mode": "notebook_total_reaction",
+      "model": "Jev sentiment",
+      "horizon_label_min": 1,
+      "n": 546,
+      "rho": 0.06955608506442773,
+      "p_naive": 0.10447527318029282,
+      "p_bonferroni_12": 1.0,
+      "signed_mean_bp_jev_impact": null,
+      "n_directional_jev_impact": null
+    },
+    {
+      "mode": "notebook_total_reaction",
+      "model": "Jev impact",
+      "horizon_label_min": 1,
+      "n": 546,
+      "rho": 0.12747436568551931,
+      "p_naive": 0.002845033652626691,
+      "p_bonferroni_12": 0.03414040383152029,
+      "signed_mean_bp_jev_impact": 4.849176980676845,
+      "n_directional_jev_impact": 231
+    },
+    {
+      "mode": "notebook_total_reaction",
+      "model": "FinBERT",
+      "horizon_label_min": 5,
+      "n": 546,
+      "rho": -0.04655022377327891,
+      "p_naive": 0.2775593863694979,
+      "p_bonferroni_12": 1.0,
+      "signed_mean_bp_jev_impact": null,
+      "n_directional_jev_impact": null
+    },
+    {
+      "mode": "notebook_total_reaction",
+      "model": "Jev sentiment",
+      "horizon_label_min": 5,
+      "n": 546,
+      "rho": -0.00604347134620527,
+      "p_naive": 0.8879542458578432,
+      "p_bonferroni_12": 1.0,
+      "signed_mean_bp_jev_impact": null,
+      "n_directional_jev_impact": null
+    },
+    {
+      "mode": "notebook_total_reaction",
+      "model": "Jev impact",
+      "horizon_label_min": 5,
+      "n": 546,
+      "rho": -0.005314241130967666,
+      "p_naive": 0.9014005781968839,
+      "p_bonferroni_12": 1.0,
+      "signed_mean_bp_jev_impact": 2.215059214046634,
+      "n_directional_jev_impact": 231
+    },
+    {
+      "mode": "notebook_total_reaction",
+      "model": "FinBERT",
+      "horizon_label_min": 15,
+      "n": 546,
+      "rho": -0.004492698397485686,
+      "p_naive": 0.9165827424886238,
+      "p_bonferroni_12": 1.0,
+      "signed_mean_bp_jev_impact": null,
+      "n_directional_jev_impact": null
+    },
+    {
+      "mode": "notebook_total_reaction",
+      "model": "Jev sentiment",
+      "horizon_label_min": 15,
+      "n": 546,
+      "rho": 0.05572717395778155,
+      "p_naive": 0.1935381853166774,
+      "p_bonferroni_12": 1.0,
+      "signed_mean_bp_jev_impact": null,
+      "n_directional_jev_impact": null
+    },
+    {
+      "mode": "notebook_total_reaction",
+      "model": "Jev impact",
+      "horizon_label_min": 15,
+      "n": 546,
+      "rho": 0.012655107139840638,
+      "p_naive": 0.7679621894534199,
+      "p_bonferroni_12": 1.0,
+      "signed_mean_bp_jev_impact": 4.263434577329838,
+      "n_directional_jev_impact": 231
+    },
+    {
+      "mode": "notebook_total_reaction",
+      "model": "FinBERT",
+      "horizon_label_min": 60,
+      "n": 546,
+      "rho": -0.041056362851378134,
+      "p_naive": 0.33828744245062353,
+      "p_bonferroni_12": 1.0,
+      "signed_mean_bp_jev_impact": null,
+      "n_directional_jev_impact": null
+    },
+    {
+      "mode": "notebook_total_reaction",
+      "model": "Jev sentiment",
+      "horizon_label_min": 60,
+      "n": 546,
+      "rho": 0.03192275457328786,
+      "p_naive": 0.45662978363488144,
+      "p_bonferroni_12": 1.0,
+      "signed_mean_bp_jev_impact": null,
+      "n_directional_jev_impact": null
+    },
+    {
+      "mode": "notebook_total_reaction",
+      "model": "Jev impact",
+      "horizon_label_min": 60,
+      "n": 546,
+      "rho": 0.027975112826343726,
+      "p_naive": 0.5141986065667837,
+      "p_bonferroni_12": 1.0,
+      "signed_mean_bp_jev_impact": 7.3215676200259345,
+      "n_directional_jev_impact": 231
+    },
+    {
+      "mode": "after_post_minute_close",
+      "model": "FinBERT",
+      "horizon_label_min": 1,
+      "n": 546,
+      "rho": 0.04808131032271581,
+      "p_naive": 0.2620441496583435,
+      "p_bonferroni_12": 1.0,
+      "signed_mean_bp_jev_impact": null,
+      "n_directional_jev_impact": null
+    },
+    {
+      "mode": "after_post_minute_close",
+      "model": "Jev sentiment",
+      "horizon_label_min": 1,
+      "n": 546,
+      "rho": 0.06205895305879637,
+      "p_naive": 0.14756610737964557,
+      "p_bonferroni_12": 1.0,
+      "signed_mean_bp_jev_impact": null,
+      "n_directional_jev_impact": null
+    },
+    {
+      "mode": "after_post_minute_close",
+      "model": "Jev impact",
+      "horizon_label_min": 1,
+      "n": 546,
+      "rho": 0.0979595645847504,
+      "p_naive": 0.02206491652828341,
+      "p_bonferroni_12": 0.26477899833940094,
+      "signed_mean_bp_jev_impact": 2.6709542364208607,
+      "n_directional_jev_impact": 231
+    },
+    {
+      "mode": "after_post_minute_close",
+      "model": "FinBERT",
+      "horizon_label_min": 5,
+      "n": 545,
+      "rho": -0.031386883701630744,
+      "p_naive": 0.4646374643261271,
+      "p_bonferroni_12": 1.0,
+      "signed_mean_bp_jev_impact": null,
+      "n_directional_jev_impact": null
+    },
+    {
+      "mode": "after_post_minute_close",
+      "model": "Jev sentiment",
+      "horizon_label_min": 5,
+      "n": 545,
+      "rho": -0.00455506933252112,
+      "p_naive": 0.9155065340870179,
+      "p_bonferroni_12": 1.0,
+      "signed_mean_bp_jev_impact": null,
+      "n_directional_jev_impact": null
+    },
+    {
+      "mode": "after_post_minute_close",
+      "model": "Jev impact",
+      "horizon_label_min": 5,
+      "n": 545,
+      "rho": -0.03504525886452234,
+      "p_naive": 0.41420725597535407,
+      "p_bonferroni_12": 1.0,
+      "signed_mean_bp_jev_impact": 0.007863679931422018,
+      "n_directional_jev_impact": 230
+    },
+    {
+      "mode": "after_post_minute_close",
+      "model": "FinBERT",
+      "horizon_label_min": 15,
+      "n": 544,
+      "rho": 0.006575532898675323,
+      "p_naive": 0.8783861777149173,
+      "p_bonferroni_12": 1.0,
+      "signed_mean_bp_jev_impact": null,
+      "n_directional_jev_impact": null
+    },
+    {
+      "mode": "after_post_minute_close",
+      "model": "Jev sentiment",
+      "horizon_label_min": 15,
+      "n": 544,
+      "rho": 0.045955166532851414,
+      "p_naive": 0.2846421305594302,
+      "p_bonferroni_12": 1.0,
+      "signed_mean_bp_jev_impact": null,
+      "n_directional_jev_impact": null
+    },
+    {
+      "mode": "after_post_minute_close",
+      "model": "Jev impact",
+      "horizon_label_min": 15,
+      "n": 544,
+      "rho": -0.009095688361956268,
+      "p_naive": 0.8323703618826223,
+      "p_bonferroni_12": 1.0,
+      "signed_mean_bp_jev_impact": 2.3980770133117018,
+      "n_directional_jev_impact": 229
+    },
+    {
+      "mode": "after_post_minute_close",
+      "model": "FinBERT",
+      "horizon_label_min": 60,
+      "n": 543,
+      "rho": -0.04634455029479301,
+      "p_naive": 0.28102124465464473,
+      "p_bonferroni_12": 1.0,
+      "signed_mean_bp_jev_impact": null,
+      "n_directional_jev_impact": null
+    },
+    {
+      "mode": "after_post_minute_close",
+      "model": "Jev sentiment",
+      "horizon_label_min": 60,
+      "n": 543,
+      "rho": 0.021465209520107664,
+      "p_naive": 0.6177125422808265,
+      "p_bonferroni_12": 1.0,
+      "signed_mean_bp_jev_impact": null,
+      "n_directional_jev_impact": null
+    },
+    {
+      "mode": "after_post_minute_close",
+      "model": "Jev impact",
+      "horizon_label_min": 60,
+      "n": 543,
+      "rho": 0.014041520588567571,
+      "p_naive": 0.7440743473535724,
+      "p_bonferroni_12": 1.0,
+      "signed_mean_bp_jev_impact": 5.449250235808024,
+      "n_directional_jev_impact": 229
+    },
+    {
+      "mode": "next_minute_open_proxy",
+      "model": "FinBERT",
+      "horizon_label_min": 1,
+      "n": 546,
+      "rho": 0.0733444342245499,
+      "p_naive": 0.08686126938345368,
+      "p_bonferroni_12": 1.0,
+      "signed_mean_bp_jev_impact": null,
+      "n_directional_jev_impact": null
+    },
+    {
+      "mode": "next_minute_open_proxy",
+      "model": "Jev sentiment",
+      "horizon_label_min": 1,
+      "n": 546,
+      "rho": 0.08438791622945564,
+      "p_naive": 0.04873990993666459,
+      "p_bonferroni_12": 0.584878919239975,
+      "signed_mean_bp_jev_impact": null,
+      "n_directional_jev_impact": null
+    },
+    {
+      "mode": "next_minute_open_proxy",
+      "model": "Jev impact",
+      "horizon_label_min": 1,
+      "n": 546,
+      "rho": 0.1064930242427678,
+      "p_naive": 0.012782753274725785,
+      "p_bonferroni_12": 0.15339303929670942,
+      "signed_mean_bp_jev_impact": 2.633005702745765,
+      "n_directional_jev_impact": 231
+    },
+    {
+      "mode": "next_minute_open_proxy",
+      "model": "FinBERT",
+      "horizon_label_min": 5,
+      "n": 545,
+      "rho": -0.02797594648742467,
+      "p_naive": 0.5145733753571856,
+      "p_bonferroni_12": 1.0,
+      "signed_mean_bp_jev_impact": null,
+      "n_directional_jev_impact": null
+    },
+    {
+      "mode": "next_minute_open_proxy",
+      "model": "Jev sentiment",
+      "horizon_label_min": 5,
+      "n": 545,
+      "rho": 7.339592003333948e-05,
+      "p_naive": 0.9986360082835508,
+      "p_bonferroni_12": 1.0,
+      "signed_mean_bp_jev_impact": null,
+      "n_directional_jev_impact": null
+    },
+    {
+      "mode": "next_minute_open_proxy",
+      "model": "Jev impact",
+      "horizon_label_min": 5,
+      "n": 545,
+      "rho": -0.03184911690141019,
+      "p_naive": 0.4580835572246682,
+      "p_bonferroni_12": 1.0,
+      "signed_mean_bp_jev_impact": 0.002692609272296657,
+      "n_directional_jev_impact": 230
+    },
+    {
+      "mode": "next_minute_open_proxy",
+      "model": "FinBERT",
+      "horizon_label_min": 15,
+      "n": 544,
+      "rho": 0.005342538952674475,
+      "p_naive": 0.9010598457975669,
+      "p_bonferroni_12": 1.0,
+      "signed_mean_bp_jev_impact": null,
+      "n_directional_jev_impact": null
+    },
+    {
+      "mode": "next_minute_open_proxy",
+      "model": "Jev sentiment",
+      "horizon_label_min": 15,
+      "n": 544,
+      "rho": 0.04460989690084384,
+      "p_naive": 0.298992471326123,
+      "p_bonferroni_12": 1.0,
+      "signed_mean_bp_jev_impact": null,
+      "n_directional_jev_impact": null
+    },
+    {
+      "mode": "next_minute_open_proxy",
+      "model": "Jev impact",
+      "horizon_label_min": 15,
+      "n": 544,
+      "rho": -0.013022176774423048,
+      "p_naive": 0.7618586508933068,
+      "p_bonferroni_12": 1.0,
+      "signed_mean_bp_jev_impact": 2.393309796772127,
+      "n_directional_jev_impact": 229
+    },
+    {
+      "mode": "next_minute_open_proxy",
+      "model": "FinBERT",
+      "horizon_label_min": 60,
+      "n": 543,
+      "rho": -0.044582765876367274,
+      "p_naive": 0.2997333983244975,
+      "p_bonferroni_12": 1.0,
+      "signed_mean_bp_jev_impact": null,
+      "n_directional_jev_impact": null
+    },
+    {
+      "mode": "next_minute_open_proxy",
+      "model": "Jev sentiment",
+      "horizon_label_min": 60,
+      "n": 543,
+      "rho": 0.024650831972372087,
+      "p_naive": 0.5665188051494376,
+      "p_bonferroni_12": 1.0,
+      "signed_mean_bp_jev_impact": null,
+      "n_directional_jev_impact": null
+    },
+    {
+      "mode": "next_minute_open_proxy",
+      "model": "Jev impact",
+      "horizon_label_min": 60,
+      "n": 543,
+      "rho": 0.013390622924524776,
+      "p_naive": 0.7555512758725692,
+      "p_bonferroni_12": 1.0,
+      "signed_mean_bp_jev_impact": 5.442894561741606,
+      "n_directional_jev_impact": 229
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+[
+  {
+    "model": "kronos",
+    "variant": "univariate",
+    "rows": 18000,
+    "device": "cuda",
+    "seconds": 761.6070979009874,
+    "median_batch_seconds": 1.0619044390005001,
+    "batch_size": 32,
+    "sample_count": 1
+  }
+]

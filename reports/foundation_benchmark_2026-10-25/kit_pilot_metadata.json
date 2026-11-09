@@ -1,0 +1,14 @@
+{
+  "paths": 8,
+  "euler_steps": 16,
+  "precision": "fp16",
+  "device": "cuda",
+  "context": 1200,
+  "native_horizon": 120,
+  "evaluated_horizon_min": 15,
+  "selection": "premi\u00e8re s\u00e9ance de chaque mois \u00e0 12 h New York",
+  "rows": 36,
+  "training_cutoff": "2025-12-31",
+  "tsla_embedding_id": 4884,
+  "scope": "pilote descriptif s\u00e9par\u00e9 ; p\u00e9riode ant\u00e9rieure \u00e0 la borne de pr\u00e9entra\u00eenement"
+}

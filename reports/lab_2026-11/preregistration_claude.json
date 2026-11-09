@@ -1,0 +1,87 @@
+{
+  "owner": "claude",
+  "frozen_on": "2026-11-06",
+  "basis": "Développement 02/01/2018-31/12/2024 uniquement. Validation 2025-2026 jamais lue au moment du gel.",
+  "code_sha256": {
+    "src/lab.py": "542f24f8a527fd1395082f1ce79172b1bd9662fcc24e6fb521edf7aa754e860d",
+    "src/price_lab.py": "011eddd9cc3ab872c63e0030fd58b9ac0114f12d2bb73e131fd8150dc00f4b00",
+    "src/social_lab.py": "03d84abd159d43fab6d478d3717c5fdf57255b94e028a595c4fdb12867a6c2e3"
+  },
+  "cost_bps": {
+    "primary": 5,
+    "sensitivity": 10
+  },
+  "holdout_window": [
+    "2025-01-02",
+    "2026-10-30"
+  ],
+  "strategies": [
+    {
+      "name": "megacap_top3_mom",
+      "call": "price_lab.momentum_top(price_lab.MEGACAPS, top=3, lookback=126, trend_filter=True)",
+      "assets": [
+        "TSLA",
+        "NVDA",
+        "AAPL",
+        "MSFT",
+        "AMZN",
+        "GOOGL",
+        "META"
+      ],
+      "references": [
+        "megacap_equal",
+        "QQQ",
+        "SPY"
+      ],
+      "primary_reference": "megacap_equal",
+      "hypothesis": "Le momentum mensuel ajoute au simple panier des mêmes titres.",
+      "success": "Économique : capital final et Sharpe supérieurs à megacap_equal, à 5 et 10 pb. Statistique : Holm < 0,05 sur excess_p_one_sided.",
+      "dev_evidence": "196,415 contre 95,603 USD, Sharpe 1.376 contre 1.180, p corrigée prix 0.812, famille complète 0.858 : non significatif.",
+      "reference_call": "price_lab.equal_weight(price_lab.MEGACAPS)",
+      "trading_policy": "Ordre le premier jour de bourse du mois, positions laissées à dériver entre deux ordres, comme le panier de référence."
+    },
+    {
+      "name": "tsla_filter_qqq_200",
+      "call": "price_lab.single_strategy('market_filter_qqq', 'TSLA')",
+      "assets": [
+        "TSLA"
+      ],
+      "references": [
+        "TSLA"
+      ],
+      "primary_reference": "TSLA",
+      "hypothesis": "Sortir de TSLA quand le Nasdaq-100 est sous sa moyenne à 200 jours évite les pires baisses sans coûter de rendement.",
+      "success": "Économique : capital final et Sharpe supérieurs au buy and hold TSLA, à 5 et 10 pb. Statistique : Holm < 0,05 sur excess_p_one_sided.",
+      "dev_evidence": "320,181 contre 203,541 USD, Sharpe 1.140 contre 0.977, p corrigée famille complète 0.998 : non significatif ; effet concentré sur 2020 et 2022 ; variante SPY non gagnante."
+    },
+    {
+      "name": "tsla_vol_target_30",
+      "call": "price_lab.single_strategy('vol_target_30', 'TSLA')",
+      "assets": [
+        "TSLA"
+      ],
+      "references": [
+        "TSLA"
+      ],
+      "primary_reference": "TSLA",
+      "hypothesis": "Réduire l'exposition quand TSLA s'agite améliore le rapport gain/risque, en acceptant de gagner moins.",
+      "success": "Économique (gagner mieux, critère 2 du protocole) : Sharpe supérieur et alpha positif, plus drawdown moins profond, à 5 et 10 pb. Capital final non exigé mais publié. Statistique : Holm < 0,05 sur sharpe_diff_p_one_sided.",
+      "dev_evidence": "Sharpe 1.012 contre 0.977, alpha 0.034, drawdown -0.470 contre -0.750, capital 81,105 contre 203,541 USD.",
+      "trading_policy": "Bande de 10 points autour du poids d'un portefeuille fictif sans frais, lancé au début de l'historique et mis à jour aux ouvertures et clôtures connues : c'est un signal, aucun ordre à l'intérieur de la bande."
+    }
+  ],
+  "statistics": "Tests unilatéraux de lab.compare, n_boot=4000, mean_block=21, seed=0. Correction de Holm au seuil de 0,05 sur les 4 hypothèses de holm_family.",
+  "significance_level": 0.05,
+  "decision": "Deux verdicts séparés par stratégie, jamais fusionnés. (1) Condition économique : estimations ponctuelles à 5 ET 10 pb, sur la validation. (2) Preuve statistique : p de Holm < 0,05 sur le test principal de la stratégie, à 5 pb. Sans (2), le résultat se décrit comme encourageant ou non, jamais comme une supériorité démontrée.",
+  "holm_family": [
+    "megacap_top3_mom : excess_p_one_sided contre megacap_equal",
+    "tsla_filter_qqq_200 : excess_p_one_sided contre TSLA",
+    "tsla_vol_target_30 : sharpe_diff_p_one_sided contre TSLA",
+    "news_finbert_exit_5 : excess_p_one_sided contre TSLA"
+  ],
+  "secondary_descriptive": "QQQ et SPY comme références supplémentaires, liquidités BIL, tests de 1 an avec un départ par mois. Aucun de ces résultats ne peut transformer un échec du test principal en succès.",
+  "power_warning": "22 mois donnent peu de puissance : ne pas franchir 0,05 ne prouve pas l'absence d'effet.",
+  "amended_on": "2026-11-06, après audit de Codex et avant toute lecture de la validation",
+  "universe_note": "Les 7 grandes valeurs sont choisies uniquement sur les données arrêtées à fin 2024, avec un gel réalisé en novembre 2026 sans lecture de la validation. Le résultat ne se généralise pas à toutes les actions.",
+  "derogation": "4 stratégies déclarées par le coordinateur au lieu de 3 : voir la section Dérogation de PROTOCOLE.md."
+}

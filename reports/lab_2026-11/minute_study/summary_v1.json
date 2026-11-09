@@ -1,0 +1,473 @@
+{
+ "funnel": {
+  "publications": 49310,
+  "verified": 43009,
+  "verified_and_listed": 43007,
+  "entry_before_2025": 43007,
+  "in_daily_universe": 43007,
+  "tradable": 35794,
+  "principal": 17659,
+  "principal_tradable": 15486,
+  "principal_tradable_nonzero": 15459,
+  "principal_tradable_positive": 12103,
+  "principal_tradable_negative": 3356,
+  "principal_tradable_liquid": 4465,
+  "principal_tradable_before_open": 7534
+ },
+ "extreme_minute_moves": 0,
+ "confirmatory": {
+  "H1": {
+   "quarters": 28,
+   "mean": 0.005218375113997846,
+   "t": 3.789512103391055,
+   "p": 0.000770296210415341,
+   "ci_low": 0.002392887026557598,
+   "ci_high": 0.008043863201438094,
+   "events_positive": 12017,
+   "events_negative": 3322,
+   "p_holm": 0.0021932792709480004
+  },
+  "H2": {
+   "quarters": 28,
+   "mean": 0.0037299118777058536,
+   "t": 1.6626145963052863,
+   "p": 0.10795719577465245,
+   "ci_low": -0.0008731675319578231,
+   "ci_high": 0.00833299128736953,
+   "events_positive": 12102,
+   "events_negative": 3356,
+   "p_holm": 0.10795719577465245
+  },
+  "H3": {
+   "quarters": 28,
+   "mean": -0.0030561674275341767,
+   "t": -3.8094443820078823,
+   "p": 0.0007310930903160002,
+   "ci_low": -0.004702270366037374,
+   "ci_high": -0.0014100644890309793,
+   "events": 12017,
+   "p_holm": 0.0021932792709480004
+  }
+ },
+ "secondary": {
+  "S1_open_30m": {
+   "quarters": 28,
+   "mean": 0.0017553050678831342,
+   "t": 1.4915935772160929,
+   "p": 0.14739821222901214,
+   "ci_low": -0.0006592859836130175,
+   "ci_high": 0.004169896119379286,
+   "events_positive": 12017,
+   "events_negative": 3322,
+   "p_holm_secondary": 0.4421946366870364
+  },
+  "S2_open_60m": {
+   "quarters": 28,
+   "mean": 0.0027094535575806424,
+   "t": 2.2470142940424207,
+   "p": 0.0330157332551629,
+   "ci_low": 0.00023535292227552448,
+   "ci_high": 0.00518355419288576,
+   "events_positive": 12017,
+   "events_negative": 3322,
+   "p_holm_secondary": 0.1320629330206516
+  },
+  "S3_daily_1": {
+   "quarters": 28,
+   "mean": 0.005224443534214861,
+   "t": 3.788339688113416,
+   "p": 0.0007726651863523082,
+   "ci_low": 0.0023947942530891412,
+   "ci_high": 0.008054092815340582,
+   "events_positive": 12102,
+   "events_negative": 3356,
+   "p_holm_secondary": 0.006181321490818466
+  },
+  "S4_daily_20": {
+   "quarters": 28,
+   "mean": 0.0032581246692553584,
+   "t": 0.7105263268763563,
+   "p": 0.4834705427835332,
+   "ci_low": -0.006150562060573166,
+   "ci_high": 0.012666811399083884,
+   "events_positive": 12054,
+   "events_negative": 3337,
+   "p_holm_secondary": 0.7459072562409481
+  },
+  "S5_entry_0935": {
+   "quarters": 28,
+   "mean": 0.0046412582306701216,
+   "t": 3.4756883653215875,
+   "p": 0.0017387595132338078,
+   "ci_low": 0.001901347665738583,
+   "ci_high": 0.00738116879560166,
+   "events_positive": 11884,
+   "events_negative": 3277,
+   "p_holm_secondary": 0.012171316592636655
+  },
+  "S6_extended_spread": {
+   "quarters": 28,
+   "mean": 0.005176815992885132,
+   "t": 2.819924386604333,
+   "p": 0.008890725910087478,
+   "ci_low": 0.0014100664009942922,
+   "ci_high": 0.008943565584775971,
+   "events_positive": 3140,
+   "events_negative": 607,
+   "p_holm_secondary": 0.04893925335500548
+  },
+  "S7_extended_long_net": {
+   "quarters": 28,
+   "mean": -0.0035791429555497587,
+   "t": -4.4688013789111745,
+   "p": 0.00012686846906161505,
+   "ci_low": -0.005222490716248793,
+   "ci_high": -0.0019357951948507249,
+   "events": 3140,
+   "p_holm_secondary": 0.0011418162215545355
+  },
+  "S8_verified_H1": {
+   "quarters": 28,
+   "mean": 0.003609052891791985,
+   "t": 2.8558099981038176,
+   "p": 0.008156542225834246,
+   "ci_low": 0.0010160355468400986,
+   "ci_high": 0.0062020702367438715,
+   "events_positive": 26756,
+   "events_negative": 8742,
+   "p_holm_secondary": 0.04893925335500548
+  },
+  "S9_verified_H2": {
+   "quarters": 28,
+   "mean": 0.0019354174813382384,
+   "t": 0.9059938890619741,
+   "p": 0.37295362812047406,
+   "ci_low": -0.0024477783638906523,
+   "ci_high": 0.006318613326567129,
+   "events_positive": 26934,
+   "events_negative": 8812,
+   "p_holm_secondary": 0.7459072562409481
+  }
+ },
+ "controls": {
+  "placebo_previous_session": {
+   "quarters": 28,
+   "mean": 0.001237254011287257,
+   "t": 2.5691792645159572,
+   "p": 0.01603690899061752,
+   "ci_low": 0.00024914252679140016,
+   "ci_high": 0.002225365495783114,
+   "events_positive": 12068,
+   "events_negative": 3349
+  },
+  "sign_placebo_p": {
+   "H1": 0.000999000999000999,
+   "H2": 0.04595404595404595
+  },
+  "two_way_cluster_t": {
+   "H1": 3.4832831568040468,
+   "H2": 2.8112066490431995,
+   "H3": -5.401624941656615
+  },
+  "exit_scenarios_H2": {
+   "base": 0.0037299118777058536,
+   "optimistic": 0.0037299118777058536,
+   "pessimistic": 0.0037299118777058536
+  },
+  "exit_scenarios_S4": {
+   "base": 0.0032581246692553584,
+   "optimistic": 0.0032581246692553584,
+   "pessimistic": 0.0030840184759090283
+  },
+  "H3_double_costs": {
+   "quarters": 28,
+   "mean": -0.006439202565769876,
+   "t": -7.954718733219028,
+   "p": 1.5007252148104913e-08,
+   "ci_low": -0.008100122677384964,
+   "ci_high": -0.0047782824541547884,
+   "events": 12017
+  },
+  "no_entry_bar": 120
+ },
+ "portfolio_usd": {
+  "strategy": 43.17614338027189,
+  "strategy_double_costs": 0.8569351274056433,
+  "spy_buy_and_hold": 24372.026688334823,
+  "spy_intraday_same_days": 3338.3648545850547,
+  "days_with_trades": 1211
+ },
+ "decomposition": {
+  "all": {
+   "open": {
+    "positive": 0.013532457170535682,
+    "negative": -0.03881901966733538,
+    "share_of_close_spread": 0.920974641220742
+   },
+   "open_30m_mark": {
+    "positive": 0.013522919144639859,
+    "negative": -0.04030385173002344,
+    "share_of_close_spread": 0.9469282241623973
+   },
+   "close": {
+    "positive": 0.013872884033220234,
+    "negative": -0.04297067549028601,
+    "share_of_close_spread": 1.0
+   }
+  },
+  "liquid": {
+   "wire_5m": {
+    "positive": 0.0055198347305930665,
+    "negative": -0.018680904088188437,
+    "share_of_close_spread": 0.6479188667399617
+   },
+   "wire_30m": {
+    "positive": 0.005532250622888201,
+    "negative": -0.023975251347979072,
+    "share_of_close_spread": 0.7899951890086188
+   },
+   "wire_60m": {
+    "positive": 0.006088134393475999,
+    "negative": -0.026247379671389952,
+    "share_of_close_spread": 0.8657086787822662
+   },
+   "open": {
+    "positive": 0.005969389390227806,
+    "negative": -0.029129800517242847,
+    "share_of_close_spread": 0.9396997140719568
+   },
+   "open_30m_mark": {
+    "positive": 0.006883599616189872,
+    "negative": -0.027567008872828327,
+    "share_of_close_spread": 0.9223354451221932
+   },
+   "close": {
+    "positive": 0.007300927015963838,
+    "negative": -0.030050568767063458,
+    "share_of_close_spread": 1.0
+   }
+  }
+ },
+ "descriptive": {
+  "ab_h1": {
+   "year": {
+    "2018": {
+     "positive": -0.00025485395313923386,
+     "negative": -0.0015687428485537407,
+     "spread": 0.001313888895414507,
+     "n_positive": 1141,
+     "n_negative": 259
+    },
+    "2019": {
+     "positive": 0.0034995254057783158,
+     "negative": -0.0012640579990891947,
+     "spread": 0.00476358340486751,
+     "n_positive": 1078,
+     "n_negative": 272
+    },
+    "2020": {
+     "positive": -0.003613968073788202,
+     "negative": -0.005854536538889034,
+     "spread": 0.0022405684651008316,
+     "n_positive": 1354,
+     "n_negative": 279
+    },
+    "2021": {
+     "positive": -0.000515980282581389,
+     "negative": -0.005810139664983763,
+     "spread": 0.005294159382402374,
+     "n_positive": 1530,
+     "n_negative": 272
+    },
+    "2022": {
+     "positive": 0.0031184577885705255,
+     "negative": -0.008565757137407431,
+     "spread": 0.011684214925977956,
+     "n_positive": 1029,
+     "n_negative": 284
+    },
+    "2023": {
+     "positive": 0.0004570483982602885,
+     "negative": -0.007798418725659068,
+     "spread": 0.008255467123919356,
+     "n_positive": 1965,
+     "n_negative": 560
+    },
+    "2024": {
+     "positive": -0.00025927734382906177,
+     "negative": -0.0022092521668754684,
+     "spread": 0.0019499748230464066,
+     "n_positive": 3920,
+     "n_negative": 1396
+    }
+   },
+   "basis": {
+    "adjusted": {
+     "positive": 0.00019011585056732418,
+     "negative": -0.003791417073247246,
+     "spread": 0.00398153292381457,
+     "n_positive": 11091,
+     "n_negative": 2811
+    },
+    "gaap": {
+     "positive": -0.0013164271023684327,
+     "negative": -0.006242923683378155,
+     "spread": 0.004926496581009723,
+     "n_positive": 926,
+     "n_negative": 511
+    }
+   },
+   "liquidity": {
+    "1-10M": {
+     "positive": 0.0007478503543625751,
+     "negative": -0.01021791982529291,
+     "spread": 0.010965770179655485,
+     "n_positive": 2616,
+     "n_negative": 1040
+    },
+    "10-100M": {
+     "positive": -0.000985885383931742,
+     "negative": -0.0015327905315856032,
+     "spread": 0.0005469051476538612,
+     "n_positive": 5628,
+     "n_negative": 1596
+    },
+    ">=100M": {
+     "positive": 0.0011878478175468784,
+     "negative": -0.0011295001288469332,
+     "spread": 0.0023173479463938114,
+     "n_positive": 3773,
+     "n_negative": 686
+    }
+   },
+   "before_open": {
+    "False": {
+     "positive": -0.0015055743103208107,
+     "negative": -0.002956186948070153,
+     "spread": 0.0014506126377493425,
+     "n_positive": 6116,
+     "n_negative": 1736
+    },
+    "True": {
+     "positive": 0.0017111770689325712,
+     "negative": -0.005495502429542535,
+     "spread": 0.007206679498475106,
+     "n_positive": 5901,
+     "n_negative": 1586
+    }
+   }
+  },
+  "ab_d5_base": {
+   "year": {
+    "2018": {
+     "positive": 0.00016206902076165987,
+     "negative": 0.002463028621631669,
+     "spread": -0.002300959600870009,
+     "n_positive": 1150,
+     "n_negative": 260
+    },
+    "2019": {
+     "positive": -0.00013975718841069504,
+     "negative": -0.0027078024539843645,
+     "spread": 0.0025680452655736695,
+     "n_positive": 1081,
+     "n_negative": 277
+    },
+    "2020": {
+     "positive": -0.006568054812779659,
+     "negative": -0.007235315791415705,
+     "spread": 0.0006672609786360457,
+     "n_positive": 1360,
+     "n_negative": 284
+    },
+    "2021": {
+     "positive": 0.003904830354535131,
+     "negative": 0.0032945591490644603,
+     "spread": 0.0006102712054706708,
+     "n_positive": 1540,
+     "n_negative": 276
+    },
+    "2022": {
+     "positive": 0.009594322586885804,
+     "negative": -0.00779640946551123,
+     "spread": 0.017390732052397034,
+     "n_positive": 1035,
+     "n_negative": 286
+    },
+    "2023": {
+     "positive": -0.0030197717733416534,
+     "negative": -0.008689753071899854,
+     "spread": 0.0056699812985582,
+     "n_positive": 1983,
+     "n_negative": 564
+    },
+    "2024": {
+     "positive": -0.0025021079837706044,
+     "negative": -0.007677138420702029,
+     "spread": 0.005175030436931424,
+     "n_positive": 3953,
+     "n_negative": 1409
+    }
+   },
+   "basis": {
+    "adjusted": {
+     "positive": -0.0005439870426177772,
+     "negative": -0.004887783290657997,
+     "spread": 0.00434379624804022,
+     "n_positive": 11170,
+     "n_negative": 2842
+    },
+    "gaap": {
+     "positive": -0.002957505460414815,
+     "negative": -0.010334643891355185,
+     "spread": 0.00737713843094037,
+     "n_positive": 932,
+     "n_negative": 514
+    }
+   },
+   "liquidity": {
+    "1-10M": {
+     "positive": -0.0005369973256012437,
+     "negative": -0.014952907922853604,
+     "spread": 0.014415910597252361,
+     "n_positive": 2647,
+     "n_negative": 1055
+    },
+    "10-100M": {
+     "positive": -0.0018207141408751427,
+     "negative": -0.002387920277282619,
+     "spread": 0.0005672061364074765,
+     "n_positive": 5677,
+     "n_negative": 1614
+    },
+    ">=100M": {
+     "positive": 0.0007741915678844625,
+     "negative": 0.000620573673854595,
+     "spread": 0.0001536178940298675,
+     "n_positive": 3778,
+     "n_negative": 687
+    }
+   },
+   "before_open": {
+    "False": {
+     "positive": -0.002653638926610131,
+     "negative": -0.004217069839931498,
+     "spread": 0.001563430913321367,
+     "n_positive": 6164,
+     "n_negative": 1760
+    },
+    "True": {
+     "positive": 0.0012671438175273942,
+     "negative": -0.007381606612736314,
+     "spread": 0.008648750430263709,
+     "n_positive": 5938,
+     "n_negative": 1596
+    }
+   }
+  }
+ },
+ "zero_surprise": {
+  "events": 27,
+  "mean_ab_h1": -0.011840694607754136
+ }
+}

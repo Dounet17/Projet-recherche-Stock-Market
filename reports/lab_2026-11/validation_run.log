@@ -1,0 +1,37 @@
+{"window": ["2025-01-02", "2026-10-30"], "days": 458}
+megacap_equal: 5pb 13274 Sharpe 0.693 DD -0.302 | 10pb 13252
+TSLA: 5pb 10070 Sharpe 0.280 DD -0.483 | 10pb 10060
+QQQ: 5pb 13658 Sharpe 0.876 DD -0.242 | 10pb 13644
+SPY: 5pb 13159 Sharpe 0.966 DD -0.198 | 10pb 13146
+
+megacap_top3_mom (réf megacap_equal, test excess_p_one_sided)
+  5pb capital 10050 Sharpe 0.141 DD -0.294 beta 0.720 alpha -0.104 expo 0.92 turn/an 7.0
+  10pb capital 9986 Sharpe 0.127 | BIL 5pb 10105
+  excès -0.153 IC [-0.358, 0.042] | diff Sharpe -0.552 IC [-1.279, 0.137]
+  p brute 0.9345 p Holm 1.0000 | économique False | statistique False
+  contre QQQ capital écart -0.169 | contre SPY -0.148
+  glissant 1 an : {'tests': 10, 'share_beats_reference': 0.0, 'median_final': 10709.36, 'reference_median_final': 12527.69, 'worst_final': 9456.43, 'reference_worst_final': 11535.52}
+
+tsla_filter_qqq_200 (réf TSLA, test excess_p_one_sided)
+  5pb capital 8527 Sharpe 0.032 DD -0.485 beta 0.674 alpha -0.090 expo 0.88 turn/an 4.4
+  10pb capital 8493 Sharpe 0.027 | BIL 5pb 8604
+  excès -0.091 IC [-0.412, 0.163] | diff Sharpe -0.248 IC [-0.922, 0.291]
+  p brute 0.7548 p Holm 1.0000 | économique False | statistique False
+  contre QQQ capital écart -0.259 | contre SPY -0.239
+  glissant 1 an : {'tests': 10, 'share_beats_reference': 0.5, 'median_final': 11226.25, 'reference_median_final': 12236.09, 'worst_final': 8567.38, 'reference_worst_final': 7926.05}
+
+tsla_vol_target_30 (réf TSLA, test sharpe_diff_p_one_sided)
+  5pb capital 10178 Sharpe 0.185 DD -0.302 beta 0.529 alpha -0.024 expo 0.62 turn/an 3.9
+  10pb capital 10142 Sharpe 0.179 | BIL 5pb 10462
+  excès 0.006 IC [-0.295, 0.297] | diff Sharpe -0.095 IC [-0.511, 0.29]
+  p brute 0.6877 p Holm 1.0000 | économique False | statistique False
+  contre QQQ capital écart -0.162 | contre SPY -0.141
+  glissant 1 an : {'tests': 10, 'share_beats_reference': 0.3, 'median_final': 11205.59, 'reference_median_final': 12236.09, 'worst_final': 8581.88, 'reference_worst_final': 7926.05}
+
+news_finbert_exit_5 (réf TSLA, test excess_p_one_sided)
+  5pb capital 8090 Sharpe -0.037 DD -0.493 beta 0.660 alpha -0.119 expo 0.86 turn/an 26.4
+  10pb capital 7898 Sharpe -0.067 | BIL 5pb 8179
+  excès -0.120 IC [-0.47, 0.172] | diff Sharpe -0.317 IC [-1.036, 0.348]
+  p brute 0.7795 p Holm 1.0000 | économique False | statistique False
+  contre QQQ capital écart -0.288 | contre SPY -0.268
+  glissant 1 an : {'tests': 10, 'share_beats_reference': 0.4, 'median_final': 11231.01, 'reference_median_final': 12236.09, 'worst_final': 8433.19, 'reference_worst_final': 7926.05}

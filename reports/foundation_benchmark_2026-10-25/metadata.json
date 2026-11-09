@@ -1,0 +1,96 @@
+{
+  "model_revisions": {
+    "timesfm3": {
+      "model_id": "google/timesfm-3.0-pytorch",
+      "revision": "43046b85ec22d584a13f8098c2ed39c889e129c2",
+      "download_seconds": 9.952785096999833
+    },
+    "chronos_synth": {
+      "model_id": "autogluon/chronos-2-synth",
+      "revision": "3607918a9fd027d5c465d8213e46b98e2c041cea",
+      "download_seconds": 9.265305674000047
+    },
+    "chronos2": {
+      "model_id": "amazon/chronos-2",
+      "revision": "29ec3766d36d6f73f0696f85560a422f50e8498c",
+      "download_seconds": 3.6137492790003307
+    },
+    "kronos": {
+      "model_id": "NeoQuasar/Kronos-small",
+      "revision": "901c26c1332695a2a8f243eb2f37243a37bea320",
+      "download_seconds": 5.172661543999311
+    },
+    "kronos_tokenizer": {
+      "model_id": "NeoQuasar/Kronos-Tokenizer-base",
+      "revision": "0e0117387f39004a9016484a186a908917e22426",
+      "download_seconds": 1.0598917139996047
+    },
+    "kit": {
+      "model_id": "Lucifer744/KiT_model",
+      "revision": "ec3f25574491d0340fdb57873ae8c0c2c11d141d",
+      "download_seconds": 5.573005776000173,
+      "bundle": "step_market_284M"
+    }
+  },
+  "source_revisions": {
+    "timesfm": "e51928e27119cb17bebc005be2696b75e0a9e688",
+    "Kronos": "67b630e67f6a18c9e9be918d9b4337c960db1e9a",
+    "KiT": "9957a684faffa629e69fbcedb842bed5b21e3e47"
+  },
+  "device": "AMD Radeon RX 6750 XT",
+  "torch": "2.6.0+rocm6.2.4",
+  "hip": "6.2.41134-65d174c3e",
+  "python": "3.12.3",
+  "packages": {
+    "timesfm": "3.0.2",
+    "chronos-forecasting": "2.3.2",
+    "pandas": "3.0.6",
+    "numpy": "2.5.4",
+    "transformers": "5.19.0"
+  },
+  "reference_predictions_sha256": "ecf69c123bdaf2544151577f2090c847310dbd85e5dbe16148d9d6b7fcf2a322",
+  "code_sha256": {
+    "foundation_benchmark.py": "3b76cf21c58e9891c64efa724a6f80cd212294252a116b14327bc7d11937e1a6",
+    "backtest.py": "36ebab7bf9a1d1191ecdbefd3efcefb536f1e91f9ece57e618cc4d4c8f3c8f74",
+    "score_foundation_benchmark.py": "fcc2256cacc9866ba4909596ac64796dc93c2c73f0a300a803a297bc76313f05"
+  },
+  "rows": 18000,
+  "test_years": [
+    2022,
+    2023,
+    2024
+  ],
+  "zero_shot": true,
+  "context_regular_bars": 128,
+  "information_delay_seconds": 60,
+  "target": "prix d'ouverture prévus à t et t+15 ; signal construit sans prix d'exécution réel",
+  "rule_sign": "achat si rendement prévu > 0",
+  "rule_margin10bp": "achat si rendement prévu > 0,001 ; seuil fixé sans optimisation",
+  "costs_bps_per_side": [
+    0,
+    2,
+    5,
+    10
+  ],
+  "kronos_sample_count": 1,
+  "seed": 20261025,
+  "cross_learning_between_origins": false,
+  "pretraining_warning": "Évaluation rétrospective ; l'historique peut figurer dans le préentraînement. KiT connaît l'instrument TSLA et sa borne d'apprentissage est 2025-12-31.",
+  "main_complete_models": [
+    "chronos2_jev",
+    "chronos2_market",
+    "chronos2_univariate",
+    "chronos_synth_finbert",
+    "chronos_synth_jev",
+    "chronos_synth_market",
+    "chronos_synth_univariate",
+    "chronos_synth_zero_jev",
+    "kronos_s1_univariate",
+    "timesfm3_finbert",
+    "timesfm3_jev",
+    "timesfm3_market",
+    "timesfm3_univariate",
+    "timesfm3_zero_jev"
+  ],
+  "kit_scope": "pilote mensuel séparé, non assimilable au backtest complet"
+}
